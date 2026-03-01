@@ -1,8 +1,8 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+// ============================================================
+// Multi-Tenant E-Commerce Platform — Prisma Schema
+// Roles: Super Admin, Platform Admin (Role-based), Seller, Customer
+// Features: Wallet, Subscription, Orders, Products, Shipping, etc.
+// ============================================================
 
 generator client {
   provider = "prisma-client-js"
@@ -11,4 +11,819 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+// ============================================================
+// ENUMS
+// ============================================================
+
+enum PlatformRole {
+  SUPER_ADMIN
+  SUPPORT_ADMIN
+  FINANCE_ADMIN
+  OPERATIONS_ADMIN
+  MARKETING_ADMIN
+}
+
+enum SellerStatus {
+  PENDING
+  ACTIVE
+  SUSPENDED
+  BANNED
+}
+
+enum SellerStaffRole {
+  MANAGER
+  ORDER_HANDLER
+  INVENTORY_HANDLER
+  SUPPORT
+}
+
+enum ProductType {
+  PHYSICAL
+  DIGITAL
+  SERVICE
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+  REFUNDED
+}
+
+enum PaymentMethod {
+  UPI
+  CARD
+  NETBANKING
+  WALLET
+  COD
+}
+
+enum WalletTransactionType {
+  CREDIT
+  DEBIT
+  CASHBACK
+  REFUND
+  TOPUP
+}
+
+enum SubscriptionFrequency {
+  DAILY
+  WEEKLY
+  BIWEEKLY
+  MONTHLY
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  PAUSED
+  CANCELLED
+  EXPIRED
+}
+
+enum DeliveryStatus {
+  SCHEDULED
+  DELIVERED
+  SKIPPED
+  FAILED
+}
+
+enum PlanTier {
+  FREE
+  BASIC
+  PRO
+  ENTERPRISE
+}
+
+enum CouponType {
+  FLAT
+  PERCENTAGE
+  BOGO
+  FREE_SHIPPING
+}
+
+// ============================================================
+// PLATFORM ADMIN (Super Admin + Role-Based Admins)
+// ============================================================
+
+model PlatformAdmin {
+  id           String        @id @default(cuid())
+  name         String
+  email        String        @unique
+  passwordHash String
+  role         PlatformRole  @default(SUPPORT_ADMIN)
+  isActive     Boolean       @default(true)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  // Super Admin can create other admins
+  createdBy    String?
+  creator      PlatformAdmin?  @relation("AdminCreatedBy", fields: [createdBy], references: [id])
+  createdAdmins PlatformAdmin[] @relation("AdminCreatedBy")
+
+  // Audit log
+  activityLogs AdminActivityLog[]
+
+  @@map("platform_admins")
+}
+
+model AdminActivityLog {
+  id          String        @id @default(cuid())
+  adminId     String
+  admin       PlatformAdmin @relation(fields: [adminId], references: [id])
+  action      String        // e.g. "APPROVED_SELLER", "SUSPENDED_STORE"
+  targetType  String?       // e.g. "Seller", "Order"
+  targetId    String?
+  meta        Json?
+  createdAt   DateTime      @default(now())
+
+  @@map("admin_activity_logs")
+}
+
+// ============================================================
+// PLATFORM PLANS & FEATURE FLAGS
+// ============================================================
+
+model PlatformPlan {
+  id                    String    @id @default(cuid())
+  name                  String    // Free, Basic, Pro, Enterprise
+  tier                  PlanTier  @default(FREE)
+  price                 Float
+  billingCycleDays      Int       @default(30)
+
+  // Feature Flags
+  walletAllowed         Boolean   @default(false)
+  subscriptionAllowed   Boolean   @default(false)
+  customDomainAllowed   Boolean   @default(false)
+  appBuilderAllowed     Boolean   @default(false)
+  maxProducts           Int       @default(10)
+  maxStaffAccounts      Int       @default(1)
+  commissionRate        Float     @default(5.0) // platform commission %
+
+  isActive              Boolean   @default(true)
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  sellers               Seller[]
+
+  @@map("platform_plans")
+}
+
+// ============================================================
+// SELLER
+// ============================================================
+
+model Seller {
+  id           String       @id @default(cuid())
+  name         String
+  email        String       @unique
+  passwordHash String
+  phone        String?
+  status       SellerStatus @default(PENDING)
+
+  // KYC
+  gstNumber    String?
+  panNumber    String?
+  kycVerified  Boolean      @default(false)
+  kycDocuments Json?
+
+  // Plan
+  planId       String
+  plan         PlatformPlan @relation(fields: [planId], references: [id])
+  planStartsAt DateTime?
+  planEndsAt   DateTime?
+
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  // Relations
+  store        Store?
+  staff        SellerStaff[]
+  payouts      SellerPayout[]
+
+  @@map("sellers")
+}
+
+model SellerStaff {
+  id           String          @id @default(cuid())
+  sellerId     String
+  seller       Seller          @relation(fields: [sellerId], references: [id])
+  name         String
+  email        String          @unique
+  passwordHash String
+  role         SellerStaffRole @default(ORDER_HANDLER)
+  permissions  Json?           // fine-grained permission overrides
+  isActive     Boolean         @default(true)
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+
+  @@map("seller_staff")
+}
+
+// ============================================================
+// STORE (Seller's Shop)
+// ============================================================
+
+model Store {
+  id              String   @id @default(cuid())
+  sellerId        String   @unique
+  seller          Seller   @relation(fields: [sellerId], references: [id])
+
+  // Identity
+  name            String
+  slug            String   @unique  // store URL: platform.com/store/slug
+  description     String?
+  logoUrl         String?
+  bannerUrl       String?
+
+  // Domain
+  customDomain    String?  @unique
+
+  // Theme
+  themeId         String?
+  primaryColor    String?
+
+  // Feature toggles (gated by plan)
+  walletEnabled        Boolean @default(false)
+  subscriptionEnabled  Boolean @default(false)
+
+  // Wallet config (if enabled)
+  walletMinTopup       Float?
+  walletMaxTopup       Float?
+  walletCashbackRate   Float?  // % cashback on purchase
+
+  // SEO
+  metaTitle       String?
+  metaDescription String?
+
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  // Relations
+  settings        StoreSettings?
+  categories      Category[]
+  products        Product[]
+  services        Service[]
+  coupons         Coupon[]
+  customers       Customer[]
+  orders          Order[]
+  subscriptionPlans SubscriptionPlan[]
+  announcements   Announcement[]
+  widgets         StoreWidget[]
+  shippingRules   ShippingRule[]
+
+  @@map("stores")
+}
+
+model StoreSettings {
+  id                   String  @id @default(cuid())
+  storeId              String  @unique
+  store                Store   @relation(fields: [storeId], references: [id])
+
+  // Payment
+  razorpayKeyId        String?
+  razorpayKeySecret    String?
+  codEnabled           Boolean @default(true)
+
+  // Tax
+  gstEnabled           Boolean @default(false)
+  defaultGstRate       Float?
+
+  // Notifications
+  whatsappEnabled      Boolean @default(false)
+  whatsappApiKey       String?
+  emailEnabled         Boolean @default(true)
+  smsEnabled           Boolean @default(false)
+
+  // App Builder
+  firebaseApiKey       String?
+  firebaseProjectId    String?
+  facebookAppId        String?
+  sha256Certificate    String?
+
+  // Shipping
+  defaultCourierId     String?
+
+  updatedAt            DateTime @updatedAt
+
+  @@map("store_settings")
+}
+
+// ============================================================
+// PRODUCTS & SERVICES
+// ============================================================
+
+model Category {
+  id          String    @id @default(cuid())
+  storeId     String
+  store       Store     @relation(fields: [storeId], references: [id])
+  name        String
+  slug        String
+  imageUrl    String?
+  parentId    String?
+  parent      Category? @relation("CategoryParent", fields: [parentId], references: [id])
+  children    Category[] @relation("CategoryParent")
+  products    Product[]
+  services    Service[]
+  sortOrder   Int       @default(0)
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+
+  @@unique([storeId, slug])
+  @@map("categories")
+}
+
+model Product {
+  id              String        @id @default(cuid())
+  storeId         String
+  store           Store         @relation(fields: [storeId], references: [id])
+  categoryId      String?
+  category        Category?     @relation(fields: [categoryId], references: [id])
+
+  name            String
+  slug            String
+  description     String?
+  productType     ProductType   @default(PHYSICAL)
+
+  // Pricing
+  basePrice       Float
+  compareAtPrice  Float?        // original/strike-through price
+  gstRate         Float?
+
+  // Inventory
+  sku             String?
+  trackInventory  Boolean       @default(true)
+  stock           Int           @default(0)
+  lowStockAlert   Int?
+
+  // Digital Product
+  downloadUrl     String?
+
+  // Media
+  images          ProductImage[]
+
+  // SEO
+  metaTitle       String?
+  metaDescription String?
+  tags            String[]
+
+  isActive        Boolean       @default(true)
+  isFeatured      Boolean       @default(false)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  variants        ProductVariant[]
+  orderItems      OrderItem[]
+  subscriptionPlans SubscriptionPlan[]
+  reviews         ProductReview[]
+
+  @@unique([storeId, slug])
+  @@map("products")
+}
+
+model ProductImage {
+  id        String  @id @default(cuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  url       String
+  altText   String?
+  sortOrder Int     @default(0)
+
+  @@map("product_images")
+}
+
+model ProductVariant {
+  id          String  @id @default(cuid())
+  productId   String
+  product     Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  name        String  // e.g. "500g", "1kg", "Red - M"
+  sku         String?
+  price       Float
+  stock       Int     @default(0)
+  imageUrl    String?
+  isActive    Boolean @default(true)
+
+  orderItems  OrderItem[]
+
+  @@map("product_variants")
+}
+
+model Service {
+  id              String    @id @default(cuid())
+  storeId         String
+  store           Store     @relation(fields: [storeId], references: [id])
+  categoryId      String?
+  category        Category? @relation(fields: [categoryId], references: [id])
+
+  name            String
+  slug            String
+  description     String?
+  price           Float
+  duration        String?   // e.g. "1 hour", "1 day"
+  imageUrl        String?
+  isRecurring     Boolean   @default(false)
+  isActive        Boolean   @default(true)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  subscriptionPlans SubscriptionPlan[]
+
+  @@unique([storeId, slug])
+  @@map("services")
+}
+
+// ============================================================
+// CUSTOMER (per Store)
+// ============================================================
+
+model Customer {
+  id           String   @id @default(cuid())
+  storeId      String
+  store        Store    @relation(fields: [storeId], references: [id])
+  name         String
+  email        String?
+  phone        String
+  passwordHash String?
+  avatarUrl    String?
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  addresses     Address[]
+  orders        Order[]
+  wallet        Wallet?
+  subscriptions Subscription[]
+  cart          Cart?
+  reviews       ProductReview[]
+  loyaltyPoints LoyaltyPoints?
+
+  @@unique([storeId, phone])
+  @@map("customers")
+}
+
+model Address {
+  id           String   @id @default(cuid())
+  customerId   String
+  customer     Customer @relation(fields: [customerId], references: [id])
+  label        String?  // Home, Office
+  line1        String
+  line2        String?
+  city         String
+  state        String
+  pincode      String
+  country      String   @default("India")
+  isDefault    Boolean  @default(false)
+  createdAt    DateTime @default(now())
+
+  orders       Order[]
+
+  @@map("addresses")
+}
+
+// ============================================================
+// WALLET
+// ============================================================
+
+model Wallet {
+  id               String   @id @default(cuid())
+  customerId       String   @unique
+  customer         Customer @relation(fields: [customerId], references: [id])
+  balance          Float    @default(0)
+  cashbackBalance  Float    @default(0)
+  isActive         Boolean  @default(true)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  transactions     WalletTransaction[]
+
+  @@map("wallets")
+}
+
+model WalletTransaction {
+  id          String               @id @default(cuid())
+  walletId    String
+  wallet      Wallet               @relation(fields: [walletId], references: [id])
+  type        WalletTransactionType
+  amount      Float
+  description String?
+  referenceId String?              // orderId or topupId
+  balanceBefore Float
+  balanceAfter  Float
+  createdAt   DateTime             @default(now())
+
+  @@map("wallet_transactions")
+}
+
+// ============================================================
+// ORDERS
+// ============================================================
+
+model Order {
+  id              String        @id @default(cuid())
+  storeId         String
+  store           Store         @relation(fields: [storeId], references: [id])
+  customerId      String
+  customer        Customer      @relation(fields: [customerId], references: [id])
+  addressId       String?
+  address         Address?      @relation(fields: [addressId], references: [id])
+
+  orderNumber     String        @unique // e.g. ORD-20240301-001
+  status          OrderStatus   @default(PENDING)
+  paymentMethod   PaymentMethod @default(UPI)
+  paymentStatus   String        @default("PENDING") // PENDING, PAID, FAILED
+
+  // Amounts
+  subtotal        Float
+  discountAmount  Float         @default(0)
+  walletAmountUsed Float        @default(0)
+  shippingCharge  Float         @default(0)
+  taxAmount       Float         @default(0)
+  totalAmount     Float
+
+  // Coupon
+  couponId        String?
+  coupon          Coupon?       @relation(fields: [couponId], references: [id])
+
+  // Payment gateway ref
+  paymentGatewayId String?
+  razorpayOrderId  String?
+  razorpayPaymentId String?
+
+  // Shipping
+  trackingNumber  String?
+  courierName     String?
+  shippedAt       DateTime?
+  deliveredAt     DateTime?
+
+  notes           String?
+  isSubscriptionOrder Boolean @default(false)
+  subscriptionId  String?
+
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  items           OrderItem[]
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id              String          @id @default(cuid())
+  orderId         String
+  order           Order           @relation(fields: [orderId], references: [id])
+  productId       String?
+  product         Product?        @relation(fields: [productId], references: [id])
+  variantId       String?
+  variant         ProductVariant? @relation(fields: [variantId], references: [id])
+  name            String          // snapshot at time of order
+  sku             String?
+  quantity        Int
+  unitPrice       Float
+  totalPrice      Float
+
+  @@map("order_items")
+}
+
+// ============================================================
+// SUBSCRIPTION
+// ============================================================
+
+model SubscriptionPlan {
+  id              String                @id @default(cuid())
+  storeId         String
+  store           Store                 @relation(fields: [storeId], references: [id])
+  productId       String?
+  product         Product?              @relation(fields: [productId], references: [id])
+  serviceId       String?
+  service         Service?              @relation(fields: [serviceId], references: [id])
+
+  name            String
+  description     String?
+  frequency       SubscriptionFrequency @default(MONTHLY)
+  price           Float                 // per cycle price
+  discountPercent Float?                // e.g. 10% off vs one-time
+  cycleCount      Int?                  // null = indefinite
+  trialDays       Int?
+
+  isActive        Boolean               @default(true)
+  createdAt       DateTime              @default(now())
+  updatedAt       DateTime              @updatedAt
+
+  subscriptions   Subscription[]
+
+  @@map("subscription_plans")
+}
+
+model Subscription {
+  id              String               @id @default(cuid())
+  customerId      String
+  customer        Customer             @relation(fields: [customerId], references: [id])
+  planId          String
+  plan            SubscriptionPlan     @relation(fields: [planId], references: [id])
+
+  status          SubscriptionStatus   @default(ACTIVE)
+  startDate       DateTime
+  nextBillingDate DateTime
+  endDate         DateTime?
+
+  cyclesCompleted Int                  @default(0)
+  totalCycles     Int?                 // null = indefinite
+
+  // Address for delivery
+  deliveryAddressLine1 String?
+  deliveryCity         String?
+  deliveryPincode      String?
+
+  pausedAt        DateTime?
+  cancelledAt     DateTime?
+  cancelReason    String?
+
+  notes           String?
+  createdAt       DateTime             @default(now())
+  updatedAt       DateTime             @updatedAt
+
+  deliveries      SubscriptionDelivery[]
+
+  @@map("subscriptions")
+}
+
+model SubscriptionDelivery {
+  id             String         @id @default(cuid())
+  subscriptionId String
+  subscription   Subscription   @relation(fields: [subscriptionId], references: [id])
+  scheduledDate  DateTime
+  status         DeliveryStatus @default(SCHEDULED)
+  deliveredAt    DateTime?
+  skippedReason  String?
+  orderId        String?        // linked order if generated
+  notes          String?
+  createdAt      DateTime       @default(now())
+
+  @@map("subscription_deliveries")
+}
+
+// ============================================================
+// COUPONS & OFFERS
+// ============================================================
+
+model Coupon {
+  id              String     @id @default(cuid())
+  storeId         String
+  store           Store      @relation(fields: [storeId], references: [id])
+  code            String
+  type            CouponType @default(FLAT)
+  value           Float      // flat amount or % value
+  minOrderAmount  Float?
+  maxDiscount     Float?     // cap for percentage discounts
+  usageLimit      Int?       // total usage limit
+  usedCount       Int        @default(0)
+  perCustomerLimit Int?
+  validFrom       DateTime?
+  validUntil      DateTime?
+  isActive        Boolean    @default(true)
+  createdAt       DateTime   @default(now())
+
+  orders          Order[]
+
+  @@unique([storeId, code])
+  @@map("coupons")
+}
+
+// ============================================================
+// SHIPPING
+// ============================================================
+
+model ShippingRule {
+  id              String   @id @default(cuid())
+  storeId         String
+  store           Store    @relation(fields: [storeId], references: [id])
+  name            String
+  minWeight       Float?
+  maxWeight       Float?
+  pincodesAllowed String[] // empty = all pincodes
+  flatRate        Float?
+  freeAbove       Float?   // free shipping if order > this amount
+  courierName     String?
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+
+  @@map("shipping_rules")
+}
+
+// ============================================================
+// WEBSITE & WIDGETS
+// ============================================================
+
+model Announcement {
+  id        String   @id @default(cuid())
+  storeId   String
+  store     Store    @relation(fields: [storeId], references: [id])
+  message   String
+  linkUrl   String?
+  bgColor   String?
+  isActive  Boolean  @default(true)
+  startsAt  DateTime?
+  endsAt    DateTime?
+  createdAt DateTime @default(now())
+
+  @@map("announcements")
+}
+
+model StoreWidget {
+  id          String   @id @default(cuid())
+  storeId     String
+  store       Store    @relation(fields: [storeId], references: [id])
+  pageSlug    String   // "home", "category", etc.
+  widgetType  String   // "banner_cross_link", "product_group", "category_group", "testimonial"
+  title       String?
+  layout      String?  // "grid", "carousel", "single"
+  config      Json
+  sortOrder   Int      @default(0)
+  isActive    Boolean  @default(true)
+  isAutomated Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("store_widgets")
+}
+
+// ============================================================
+// REVIEWS & LOYALTY
+// ============================================================
+
+model ProductReview {
+  id         String   @id @default(cuid())
+  customerId String
+  customer   Customer @relation(fields: [customerId], references: [id])
+  productId  String
+  product    Product  @relation(fields: [productId], references: [id])
+  rating     Int      // 1-5
+  title      String?
+  body       String?
+  isApproved Boolean  @default(false)
+  createdAt  DateTime @default(now())
+
+  @@map("product_reviews")
+}
+
+model LoyaltyPoints {
+  id         String   @id @default(cuid())
+  customerId String   @unique
+  customer   Customer @relation(fields: [customerId], references: [id])
+  points     Int      @default(0)
+  updatedAt  DateTime @updatedAt
+
+  @@map("loyalty_points")
+}
+
+// ============================================================
+// CART
+// ============================================================
+
+model Cart {
+  id         String     @id @default(cuid())
+  customerId String     @unique
+  customer   Customer   @relation(fields: [customerId], references: [id])
+  updatedAt  DateTime   @updatedAt
+  items      CartItem[]
+
+  @@map("carts")
+}
+
+model CartItem {
+  id        String  @id @default(cuid())
+  cartId    String
+  cart      Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  productId String
+  variantId String?
+  quantity  Int
+  addedAt   DateTime @default(now())
+
+  @@map("cart_items")
+}
+
+// ============================================================
+// SELLER PAYOUTS
+// ============================================================
+
+model SellerPayout {
+  id            String   @id @default(cuid())
+  sellerId      String
+  seller        Seller   @relation(fields: [sellerId], references: [id])
+  amount        Float
+  commissionDeducted Float
+  netAmount     Float
+  status        String   @default("PENDING") // PENDING, PROCESSED, FAILED
+  utrNumber     String?  // bank transfer reference
+  processedAt   DateTime?
+  periodFrom    DateTime
+  periodTo      DateTime
+  createdAt     DateTime @default(now())
+
+  @@map("seller_payouts")
 }
