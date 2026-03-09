@@ -400,7 +400,21 @@ const TREE_DATA = {
                         { id: 'se-pay-e1', name: 'Bank Change Verify', icon: '⚠️', color: 'edge', edge: 'Re-verify on bank change' }
                     ]
                 },
-                { id: 'se-store', name: 'Store →', icon: '🏬', color: 'store', desc: 'Expands to Store module' }
+                { id: 'se-store', name: 'Store →', icon: '🏬', color: 'store', desc: 'Expands to Store module' },
+                {
+                    id: 'se-onboard', name: 'Onboarding Wizard', icon: '🧙', color: 'seller',
+                    desc: 'Guided first-time setup experience',
+                    children: [
+                        { id: 'se-ob-welcome', name: 'Welcome Screen', icon: '👋', color: 'seller', desc: 'Introduction, setup overview, estimated time' },
+                        { id: 'se-ob-store', name: 'Store Setup', icon: '🏪', color: 'store', desc: 'Name, category, logo — wizard step 1' },
+                        { id: 'se-ob-product', name: 'First Product', icon: '📦', color: 'product', desc: 'Add first product with AI assist — step 2' },
+                        { id: 'se-ob-payment', name: 'Payment Setup', icon: '💳', color: 'order', desc: 'Connect Razorpay/bank account — step 3' },
+                        { id: 'se-ob-shipping', name: 'Shipping Config', icon: '🚚', color: 'shipping', desc: 'Set delivery zones & rates — step 4' },
+                        { id: 'se-ob-launch', name: 'Go Live!', icon: '🚀', color: 'seller', desc: 'Final review & publish store' },
+                        { id: 'se-ob-progress', name: 'Progress Tracker', icon: '📊', color: 'seller', desc: 'Checklist widget on dashboard until all steps done' },
+                        { id: 'se-ob-e1', name: 'Abandoned Onboarding', icon: '⚠️', color: 'edge', edge: 'Seller drops off mid-setup — reminder email/WhatsApp after 24h' }
+                    ]
+                }
             ]
         },
         // ── STORE ──────────────────────────────────────────────
@@ -430,11 +444,13 @@ const TREE_DATA = {
                     id: 'st-settings', name: 'Store Settings', icon: '⚙️', color: 'storeCfg',
                     children: [
                         { id: 'st-set-pay', name: 'Payment Gateway', icon: '💳', color: 'storeCfg', desc: 'Razorpay API keys' },
-                        { id: 'st-set-cod', name: 'COD Toggle', icon: '💵', color: 'storeCfg', desc: 'Enable/disable cash on delivery' },
+                        { id: 'st-set-payment-mode', name: 'Payment Mode Config', icon: '💵', color: 'storeCfg', desc: 'Only Online / Only COD / Online + COD — fully customizable payment filters' },
                         { id: 'st-set-gst', name: 'GST Config', icon: '📊', color: 'storeCfg', desc: 'Tax rate, HSN codes' },
                         { id: 'st-set-notif', name: 'Notification Channels', icon: '🔔', color: 'storeCfg', desc: 'WhatsApp, Email, SMS config' },
                         { id: 'st-set-firebase', name: 'Firebase Config', icon: '🔥', color: 'storeCfg', desc: 'Push notification setup' },
                         { id: 'st-set-fb', name: 'Facebook App ID', icon: '📘', color: 'storeCfg', desc: 'Social login & pixel' },
+                        { id: 'st-set-contact', name: 'Contact Details Update', icon: '📞', color: 'storeCfg', desc: 'Seller updates phone, email, address — no developer dependency' },
+                        { id: 'st-set-shop-toggle', name: 'Shop Open / Close', icon: '🏪', color: 'storeCfg', desc: 'One-click store open/temporarily close — auto-control for non-working hours' },
                         { id: 'st-set-e1', name: 'Gateway Failover', icon: '⚠️', color: 'edge', edge: 'Test mode vs live mode switching' }
                     ]
                 },
@@ -502,6 +518,8 @@ const TREE_DATA = {
                         { id: 'pr-ty-physical', name: 'Physical Product', icon: '📦', color: 'product', desc: 'With inventory tracking' },
                         { id: 'pr-ty-digital', name: 'Digital Product', icon: '💾', color: 'product', desc: 'Download link delivery' },
                         { id: 'pr-ty-service', name: 'Service-linked', icon: '🛠️', color: 'product', desc: 'Linked to service model' },
+                        { id: 'pr-ty-scheduled', name: 'Scheduled Publish', icon: '📅', color: 'product', desc: 'Schedule product to go live at a future date/time' },
+                        { id: 'pr-ty-labels', name: 'Product Labels / Tags', icon: '🏷️', color: 'product', desc: 'New, Bestseller, Trending, Limited Edition, Organic — visual badges on cards' },
                         { id: 'pr-ty-e1', name: 'Type Change', icon: '⚠️', color: 'edge', edge: 'Switching type after orders exist' },
                         { id: 'pr-ty-e2', name: 'Digital Piracy', icon: '⚠️', color: 'edge', edge: 'Download link sharing, DRM protection' }
                     ]
@@ -511,9 +529,11 @@ const TREE_DATA = {
                     children: [
                         { id: 'pr-d-name', name: 'Name, Slug, Description', icon: '📝', color: 'product', desc: 'Rich text editor' },
                         { id: 'pr-d-price', name: 'Pricing', icon: '💰', color: 'product', desc: 'Base price + strikethrough price' },
-                        { id: 'pr-d-gst', name: 'GST Rate', icon: '📊', color: 'product', desc: 'Per-product tax rate' },
+                        { id: 'pr-d-gst', name: 'Custom GST Pricing', icon: '📊', color: 'product', desc: 'Per-product custom GST rate & pricing — flexible tax management' },
                         { id: 'pr-d-sku', name: 'SKU Code', icon: '🏷️', color: 'product', desc: 'Unique stock keeping unit' },
                         { id: 'pr-d-seo', name: 'SEO Meta', icon: '🔍', color: 'product', desc: 'Title, description, tags' },
+                        { id: 'pr-d-qty-limit', name: 'Purchase Qty Limit', icon: '🔒', color: 'product', desc: 'Max purchase quantity per customer per product (for offers/promotions)' },
+                        { id: 'pr-d-keywords', name: 'Custom Search Keywords', icon: '🔤', color: 'product', desc: 'Seller-defined keywords per product for improved search accuracy' },
                         { id: 'pr-d-e1', name: 'Duplicate SKU', icon: '⚠️', color: 'edge', edge: 'Unique SKU enforcement' }
                     ]
                 },
@@ -536,8 +556,13 @@ const TREE_DATA = {
                         { id: 'pr-i-oos', name: 'Out-of-Stock Behavior', icon: '🚫', color: 'product', desc: 'Hide or show as "coming soon"' },
                         { id: 'pr-i-warehouse', name: 'Multi-warehouse', icon: '🏢', color: 'product', desc: 'Stock split across locations, auto-route nearest' },
                         { id: 'pr-i-reorder', name: 'Auto-reorder Point', icon: '🔄', color: 'product', desc: 'Alert seller to restock when qty < threshold' },
+                        { id: 'pr-i-forecast', name: 'AI Inventory Forecast', icon: '🔮', color: 'product', desc: 'AI-based demand prediction, seasonal patterns, smart restock suggestions' },
+                        { id: 'pr-i-preorder', name: 'Pre-order / Waitlist', icon: '📋', color: 'product', desc: 'Accept pre-orders for out-of-stock or upcoming products, "Notify Me" button' },
+                        { id: 'pr-i-omni', name: 'Omnichannel Stock Sync', icon: '🔄', color: 'product', desc: 'Single inventory for online + offline — real-time sync across POS & website' },
                         { id: 'pr-i-e1', name: 'Race Condition', icon: '⚠️', color: 'edge', edge: 'Concurrent order stock sync' },
-                        { id: 'pr-i-e2', name: 'Overselling', icon: '⚠️', color: 'edge', edge: 'Sold more than available, auto-cancel or backorder' }
+                        { id: 'pr-i-e2', name: 'Overselling', icon: '⚠️', color: 'edge', edge: 'Sold more than available, auto-cancel or backorder' },
+                        { id: 'pr-i-e3', name: 'Forecast Inaccuracy', icon: '⚠️', color: 'edge', edge: 'AI prediction wrong due to market shift, manual override needed' },
+                        { id: 'pr-i-e4', name: 'Online-Offline Sync Delay', icon: '⚠️', color: 'edge', edge: 'Offline sale not synced due to no internet — queue & retry when online' }
                     ]
                 },
                 {
@@ -555,6 +580,7 @@ const TREE_DATA = {
                         { id: 'pr-b-import', name: 'CSV Import', icon: '📥', color: 'product', desc: 'Bulk product upload' },
                         { id: 'pr-b-export', name: 'CSV Export', icon: '📤', color: 'product', desc: 'Download catalog' },
                         { id: 'pr-b-price', name: 'Bulk Price Update', icon: '💰', color: 'product', desc: 'Mass price changes' },
+                        { id: 'pr-b-stock', name: 'Bulk Stock Update', icon: '📊', color: 'product', desc: 'Update multiple products stock at once — time-saving inventory management' },
                         { id: 'pr-b-e1', name: 'Import Errors', icon: '⚠️', color: 'edge', edge: 'Validation errors, rollback' }
                     ]
                 },
@@ -588,7 +614,9 @@ const TREE_DATA = {
                         { id: 'cu-r-otp', name: 'Phone OTP Login', icon: '📱', color: 'customer', desc: 'Primary for India' },
                         { id: 'cu-r-email', name: 'Email Signup', icon: '📧', color: 'customer', desc: 'Optional secondary' },
                         { id: 'cu-r-social', name: 'Social Login', icon: '🔗', color: 'customer', desc: 'Google, Facebook' },
-                        { id: 'cu-r-e1', name: 'Duplicate Phone', icon: '⚠️', color: 'edge', edge: 'Same phone, different store handling' }
+                        { id: 'cu-r-pincode', name: 'Pincode Filter at Login', icon: '📍', color: 'customer', desc: 'Pincode verification at customer entry — only serviceable area customers get access' },
+                        { id: 'cu-r-e1', name: 'Duplicate Phone', icon: '⚠️', color: 'edge', edge: 'Same phone, different store handling' },
+                        { id: 'cu-r-e2', name: 'Invalid Pincode', icon: '⚠️', color: 'edge', edge: 'Customer pincode not serviceable — show message & block or redirect' }
                     ]
                 },
                 {
@@ -604,6 +632,8 @@ const TREE_DATA = {
                 { id: 'cu-cart', name: 'My Cart →', icon: '🛒', color: 'cart', desc: 'Cart items & checkout' },
                 { id: 'cu-orders', name: 'My Orders →', icon: '📦', color: 'order', desc: 'Order history & tracking' },
                 { id: 'cu-subs', name: 'My Subscriptions →', icon: '🔄', color: 'subscription', desc: 'Active plans' },
+                { id: 'cu-recent', name: 'Recently Viewed', icon: '👁️', color: 'customer', desc: 'Browsing history — recently viewed products widget' },
+                { id: 'cu-group-price', name: 'Customer Group Pricing', icon: '💰', color: 'customer', desc: 'Wholesale/B2B pricing, VIP customer special rates per group' },
                 {
                     id: 'cu-loyalty', name: 'Loyalty Points', icon: '🏆', color: 'loyalty',
                     children: [
@@ -701,7 +731,9 @@ const TREE_DATA = {
                         { id: 'or-it-snap', name: 'Product Snapshot', icon: '📸', color: 'orderSub', desc: 'Name, price, image at order time' },
                         { id: 'or-it-variant', name: 'Variant Details', icon: '🔀', color: 'orderSub', desc: 'Size, color selected' },
                         { id: 'or-it-qty', name: 'Qty & Line Total', icon: '🔢', color: 'orderSub', desc: 'Quantity × unit price' },
-                        { id: 'or-it-e1', name: 'Deleted Product', icon: '⚠️', color: 'edge', edge: 'Product removed after order placed' }
+                        { id: 'or-it-split', name: 'Order Splitting', icon: '✂️', color: 'orderSub', desc: 'Split into multiple shipments — multi-warehouse or mixed delivery modes' },
+                        { id: 'or-it-e1', name: 'Deleted Product', icon: '⚠️', color: 'edge', edge: 'Product removed after order placed' },
+                        { id: 'or-it-e2', name: 'Split Refund Complexity', icon: '⚠️', color: 'edge', edge: 'Partial return on split order, per-shipment refund calculation' }
                     ]
                 },
                 {
@@ -709,6 +741,7 @@ const TREE_DATA = {
                     children: [
                         { id: 'or-inv-auto', name: 'Auto-generate PDF', icon: '📄', color: 'order', desc: 'On order confirmation' },
                         { id: 'or-inv-gst', name: 'GST Invoice Format', icon: '📊', color: 'order', desc: 'GSTIN, HSN, tax breakup' },
+                        { id: 'or-inv-template', name: 'Custom Invoice Template', icon: '🎨', color: 'order', desc: 'Seller custom invoice design — logo, layout, terms, branding' },
                         { id: 'or-inv-e1', name: 'Credit Notes', icon: '⚠️', color: 'edge', edge: 'Generated on refunds' }
                     ]
                 },
@@ -729,7 +762,21 @@ const TREE_DATA = {
                         { id: 'or-so-link', name: 'Linked subscriptionId', icon: '🔗', color: 'subscription', desc: 'Reference to parent subscription' },
                         { id: 'or-so-e1', name: 'Failed Sub Payment', icon: '⚠️', color: 'edge', edge: 'Retry logic, pause subscription' }
                     ]
-                }
+                },
+                {
+                    id: 'or-reconcile', name: 'Payment Reconciliation', icon: '🔍', color: 'order',
+                    desc: 'Match gateway settlements with platform records',
+                    children: [
+                        { id: 'or-rc-daily', name: 'Daily Settlement Match', icon: '📊', color: 'order', desc: 'Razorpay/PhonePe settlement vs platform orders' },
+                        { id: 'or-rc-mismatch', name: 'Mismatch Report', icon: '❌', color: 'order', desc: 'Unmatched payments, missing settlements' },
+                        { id: 'or-rc-refund', name: 'Refund Reconciliation', icon: '💰', color: 'order', desc: 'Refund issued vs refund received by customer' },
+                        { id: 'or-rc-e1', name: 'Settlement Delay', icon: '⚠️', color: 'edge', edge: 'Gateway holds funds, T+2 vs T+7 settlement cycles' }
+                    ]
+                },
+                { id: 'or-paylink', name: 'Payment Links', icon: '🔗', color: 'order', desc: 'Generate shareable pay link — send via WhatsApp/SMS, track clicks & conversions' },
+                { id: 'or-edit', name: 'Order Editing', icon: '✏️', color: 'order', desc: 'Modify order post-placement (before shipping) — change qty, add item, update address' },
+                { id: 'or-priority', name: 'Order Priority / Flagging', icon: '🚩', color: 'order', desc: 'Flag VIP orders, urgent delivery, fraud review — priority queue for fulfillment' },
+                { id: 'or-edit-e1', name: 'Edit After Payment', icon: '⚠️', color: 'edge', edge: 'Price changes after payment — partial refund or additional charge needed' }
             ]
         },
         // ── SUBSCRIPTIONS ──────────────────────────────────────
@@ -808,6 +855,7 @@ const TREE_DATA = {
                 { id: 'cp-referral', name: 'Referral Programs', icon: '🤝', color: 'coupon', desc: 'Share & earn credits' },
                 { id: 'cp-auto', name: 'Auto-apply Coupons', icon: '🤖', color: 'coupon', desc: 'Best coupon auto-selected at checkout' },
                 { id: 'cp-analytics', name: 'Coupon Analytics', icon: '📊', color: 'analytics', desc: 'Usage count, revenue impact, ROI per coupon' },
+                { id: 'cp-scheduled', name: 'Scheduled Discounts', icon: '⏰', color: 'coupon', desc: 'Time-based offers that auto-start & auto-expire — festival/flash scheduling' },
                 { id: 'cp-e1', name: 'Stacking Rules', icon: '⚠️', color: 'edge', edge: 'Can coupons stack? Single use?' },
                 { id: 'cp-e2', name: 'Abuse Detection', icon: '⚠️', color: 'edge', edge: 'Multiple accounts, Bot redemption' },
                 { id: 'cp-e3', name: 'Expired During Checkout', icon: '⚠️', color: 'edge', edge: 'Coupon expires between cart add and payment' },
@@ -825,10 +873,15 @@ const TREE_DATA = {
                 { id: 'sh-pincode', name: 'Pincode Check', icon: '📍', color: 'shipping', desc: 'Serviceability by pincode' },
                 { id: 'sh-courier', name: 'Courier Integration', icon: '🚛', color: 'shipping', desc: 'Shiprocket, Delhivery APIs' },
                 { id: 'sh-returns', name: 'Return Shipping', icon: '↩️', color: 'shipping', desc: 'RTO & customer returns' },
+                { id: 'sh-ndr', name: 'NDR Management', icon: '📋', color: 'shipping', desc: 'Non-Delivery Report handling — reattempt, RTO, customer contact, resolution workflow' },
+                { id: 'sh-manifest', name: 'Manifest & Pickup', icon: '📦', color: 'shipping', desc: 'Generate manifest, schedule courier pickup, bulk pickup request' },
+                { id: 'sh-insurance', name: 'Shipping Insurance', icon: '🛡️', color: 'shipping', desc: 'Insure high-value shipments, auto-claim on damage/loss' },
+                { id: 'sh-rating', name: 'Delivery Partner Rating', icon: '⭐', color: 'shipping', desc: 'Rate courier performance, auto-select best partner per zone' },
                 { id: 'sh-e1', name: 'Remote Surcharge', icon: '⚠️', color: 'edge', edge: 'Remote area extra charge, COD limits per pincode' },
                 { id: 'sh-e2', name: 'Weight Mismatch', icon: '⚠️', color: 'edge', edge: 'Actual weight differs from declared, courier dispute' },
                 { id: 'sh-e3', name: 'Courier API Down', icon: '⚠️', color: 'edge', edge: 'Fallback courier, manual AWB entry' },
-                { id: 'sh-e4', name: 'Multi-item Split Ship', icon: '⚠️', color: 'edge', edge: 'Order split into multiple shipments' }
+                { id: 'sh-e4', name: 'Multi-item Split Ship', icon: '⚠️', color: 'edge', edge: 'Order split into multiple shipments' },
+                { id: 'sh-e5', name: 'NDR Escalation Loop', icon: '⚠️', color: 'edge', edge: 'Customer unreachable after 3 attempts — auto-RTO vs hold' }
             ]
         },
         // ── WEBSITE BUILDER ──────────────────────────────────
@@ -840,7 +893,7 @@ const TREE_DATA = {
                 {
                     id: 'wb-widgets', name: 'Widget System', icon: '🧩', color: 'widget',
                     children: [
-                        { id: 'wb-w-banner', name: 'Banner/Carousel', icon: '🖼️', color: 'widget', desc: 'Image sliders & links' },
+                        { id: 'wb-w-banner', name: 'Banner/Carousel (GIF)', icon: '🖼️', color: 'widget', desc: 'Image sliders, animated GIF banners & links — attractive offer/promotion display' },
                         { id: 'wb-w-prodgrp', name: 'Product Group', icon: '📦', color: 'widget', desc: 'Featured / new arrivals / popular' },
                         { id: 'wb-w-catgrp', name: 'Category Group', icon: '📂', color: 'widget', desc: 'Browse by category' },
                         { id: 'wb-w-testi', name: 'Testimonials', icon: '💬', color: 'widget', desc: 'Customer feedback display' },
@@ -850,9 +903,21 @@ const TREE_DATA = {
                         { id: 'wb-w-e2', name: 'Broken Widget', icon: '⚠️', color: 'edge', edge: 'Widget references deleted product/category' }
                     ]
                 },
-                { id: 'wb-seo', name: 'SEO Configuration', icon: '🔍', color: 'widget', desc: 'Meta title, description, OG tags' },
+                {
+                    id: 'wb-seo', name: 'SEO Tools', icon: '🔍', color: 'widget',
+                    desc: 'Complete SEO management',
+                    children: [
+                        { id: 'wb-seo-meta', name: 'Meta Tags', icon: '📝', color: 'widget', desc: 'Title, description, OG tags per page' },
+                        { id: 'wb-seo-sitemap', name: 'Auto Sitemap.xml', icon: '🗺️', color: 'widget', desc: 'Auto-generated sitemap for Google indexing' },
+                        { id: 'wb-seo-robots', name: 'Robots.txt Config', icon: '🤖', color: 'widget', desc: 'Control crawler access, noindex/nofollow rules' },
+                        { id: 'wb-seo-schema', name: 'Schema Markup', icon: '📊', color: 'widget', desc: 'Product, Breadcrumb, FAQ structured data for rich snippets' },
+                        { id: 'wb-seo-score', name: 'SEO Audit Score', icon: '📈', color: 'widget', desc: 'Page-level SEO score with improvement suggestions' },
+                        { id: 'wb-seo-e1', name: 'Duplicate Content', icon: '⚠️', color: 'edge', edge: 'Canonical URLs, pagination SEO, variant page dedup' }
+                    ]
+                },
                 { id: 'wb-announce', name: 'Announcement Bar', icon: '📢', color: 'widget', desc: 'Top banner message' },
                 { id: 'wb-theme', name: 'Global Theme', icon: '🎨', color: 'widget', desc: 'Colors, fonts, layout' },
+                { id: 'wb-darkmode', name: 'Dark Mode Toggle', icon: '🌙', color: 'widget', desc: 'Customer dark/light mode switch — auto-detect system preference' },
                 { id: 'wb-e1', name: 'Draft/Publish', icon: '⚠️', color: 'edge', edge: 'Page versioning, preview before publish' }
             ]
         },
@@ -866,11 +931,16 @@ const TREE_DATA = {
                 { id: 'cm-sms', name: 'SMS Alerts', icon: '📱', color: 'comm', desc: 'OTP, order confirmation' },
                 { id: 'cm-push', name: 'Push Notifications', icon: '🔔', color: 'comm', desc: 'Firebase web/app push' },
                 { id: 'cm-cart', name: 'Abandoned Cart Recovery', icon: '🛒', color: 'comm', desc: 'Auto-reminder sequence' },
+                { id: 'cm-email-tpl', name: 'Email Template Editor', icon: '🎨', color: 'comm', desc: 'Drag-drop email builder — branded templates for orders, promotions, welcome' },
+                { id: 'cm-wa-broadcast', name: 'WhatsApp Broadcast', icon: '📢', color: 'comm', desc: 'Bulk promo messages to customer segments — template approval, scheduling' },
+                { id: 'cm-wa-commerce', name: 'WhatsApp Commerce', icon: '🛒', color: 'comm', desc: 'Browse catalog & place orders via WhatsApp — conversational commerce' },
+                { id: 'cm-push-campaign', name: 'Push Notification Campaigns', icon: '📣', color: 'comm', desc: 'Targeted push campaigns — segment-based, scheduled, A/B test titles' },
                 { id: 'cm-e1', name: 'Opt-out Management', icon: '⚠️', color: 'edge', edge: 'Unsubscribe, delivery rate tracking' },
                 { id: 'cm-e2', name: 'WhatsApp API Limit', icon: '⚠️', color: 'edge', edge: '24hr window, template-only outside window' },
                 { id: 'cm-e3', name: 'Email Bounce', icon: '⚠️', color: 'edge', edge: 'Hard/soft bounce handling, sender reputation' },
                 { id: 'cm-e4', name: 'SMS DND', icon: '⚠️', color: 'edge', edge: 'TRAI DND list, promotional vs transactional' },
-                { id: 'cm-e5', name: 'Push Token Expired', icon: '⚠️', color: 'edge', edge: 'FCM token refresh, unregistered device cleanup' }
+                { id: 'cm-e5', name: 'Push Token Expired', icon: '⚠️', color: 'edge', edge: 'FCM token refresh, unregistered device cleanup' },
+                { id: 'cm-e6', name: 'WhatsApp Template Rejected', icon: '⚠️', color: 'edge', edge: 'Meta rejects message template — rewrite & resubmit' }
             ]
         },
         // ── APP BUILDER ──────────────────────────────────────
@@ -978,9 +1048,11 @@ const TREE_DATA = {
                 { id: 'ca-items', name: 'Cart Items', icon: '🛍️', color: 'cart', desc: 'Product + variant + quantity' },
                 { id: 'ca-calc', name: 'Price Calculation', icon: '🧮', color: 'cart', desc: 'Subtotal, discount, tax, shipping, wallet' },
                 { id: 'ca-coupon', name: 'Coupon Application', icon: '🎁', color: 'cart', desc: 'Apply discount code at cart' },
+                { id: 'ca-recovery', name: 'Abandoned Cart Recovery', icon: '📧', color: 'comm', desc: 'Auto WhatsApp/Email reminder with discount — recover lost sales' },
                 { id: 'ca-e1', name: 'Cart Expiry', icon: '⚠️', color: 'edge', edge: 'Auto-clear after N days' },
                 { id: 'ca-e2', name: 'Price Changed', icon: '⚠️', color: 'edge', edge: 'Price change between add & checkout' },
-                { id: 'ca-e3', name: 'Stock Reserved', icon: '⚠️', color: 'edge', edge: 'Temporary stock lock on checkout start' }
+                { id: 'ca-e3', name: 'Stock Reserved', icon: '⚠️', color: 'edge', edge: 'Temporary stock lock on checkout start' },
+                { id: 'ca-e4', name: 'Recovery Spam', icon: '⚠️', color: 'edge', edge: 'Max 2 reminders, unsubscribe option, cooldown period' }
             ]
         },
         // ── AUTH & SECURITY (Phase 6) ──────────────────────────
@@ -1253,7 +1325,8 @@ const TREE_DATA = {
                         { id: 'ck-sm-items', name: 'Item List', icon: '📋', color: 'order', desc: 'Products, variants, quantities' },
                         { id: 'ck-sm-breakdown', name: 'Price Breakdown', icon: '💰', color: 'order', desc: 'Subtotal, discount, tax, shipping, wallet' },
                         { id: 'ck-sm-address', name: 'Delivery Details', icon: '📍', color: 'order', desc: 'Address + estimated delivery date' },
-                        { id: 'ck-sm-edit', name: 'Edit Options', icon: '✏️', color: 'order', desc: 'Change address/coupon/qty inline' }
+                        { id: 'ck-sm-edit', name: 'Edit Options', icon: '✏️', color: 'order', desc: 'Change address/coupon/qty inline' },
+                        { id: 'ck-sm-custom', name: 'Custom Checkout Fields', icon: '📝', color: 'order', desc: 'Seller-defined extra fields — company name, GSTIN, special instructions' }
                     ]
                 },
                 {
@@ -1315,6 +1388,7 @@ const TREE_DATA = {
                 { id: 'sd-growth', name: 'Growth Metrics', icon: '📈', color: 'seller', desc: 'Month-over-month comparison' },
                 { id: 'sd-csat', name: 'Customer Satisfaction', icon: '⭐', color: 'seller', desc: 'Avg rating, NPS score' },
                 { id: 'sd-alerts', name: 'System Alerts', icon: '🔔', color: 'seller', desc: 'Low stock, plan expiry, KYC pending' },
+                { id: 'sd-fee', name: 'Platform Fee Calculator', icon: '🧮', color: 'seller', desc: 'Transparent breakdown — commission, shipping margin, plan fee, GST before seller commits' },
                 { id: 'sd-e1', name: 'Dashboard Data Stale', icon: '⚠️', color: 'edge', edge: 'Cache invalidation, real-time vs batch' }
             ]
         },
@@ -1424,7 +1498,8 @@ const TREE_DATA = {
                         { id: 'rp-pre-inventory', name: 'Inventory Report', icon: '📦', color: 'analytics', desc: 'Stock levels, low stock, dead stock' },
                         { id: 'rp-pre-customer', name: 'Customer Report', icon: '👥', color: 'analytics', desc: 'Acquisition, retention, LTV' },
                         { id: 'rp-pre-tax', name: 'Tax Report', icon: '📊', color: 'analytics', desc: 'GST collected, HSN-wise breakup' },
-                        { id: 'rp-pre-payout', name: 'Payout Report', icon: '💸', color: 'analytics', desc: 'Seller earnings, commission, UTR history' }
+                        { id: 'rp-pre-payout', name: 'Payout Report', icon: '💸', color: 'analytics', desc: 'Seller earnings, commission, UTR history' },
+                        { id: 'rp-pre-utm', name: 'UTM / Campaign Report', icon: '🎯', color: 'analytics', desc: 'Traffic & sales by UTM source, medium, campaign — attribution tracking' }
                     ]
                 }
             ]
@@ -1468,6 +1543,16 @@ const TREE_DATA = {
                 },
                 { id: 'cpl-age', name: 'Age Verification', icon: '🔞', color: 'superadmin', desc: 'Required for alcohol, tobacco categories' },
                 { id: 'cpl-fssai', name: 'FSSAI License', icon: '🏷️', color: 'superadmin', desc: 'Food sellers must display license number' },
+                {
+                    id: 'cpl-tds', name: 'TDS/TCS Compliance', icon: '💰', color: 'admin',
+                    desc: 'Tax deducted/collected at source — legal requirement',
+                    children: [
+                        { id: 'cpl-tds-calc', name: 'Auto TCS Calculation', icon: '🧮', color: 'admin', desc: '1% TCS on e-commerce sales above threshold per Finance Act' },
+                        { id: 'cpl-tds-deduct', name: 'TDS on Payouts', icon: '💸', color: 'admin', desc: 'Deduct TDS before seller payout, issue Form 16A' },
+                        { id: 'cpl-tds-report', name: 'TDS/TCS Filing Report', icon: '📊', color: 'admin', desc: 'Quarterly TCS returns, Form 27EQ generation' },
+                        { id: 'cpl-tds-e1', name: 'PAN Not Verified', icon: '⚠️', color: 'edge', edge: 'Higher TDS rate (20%) if seller PAN not verified' }
+                    ]
+                },
                 { id: 'cpl-e1', name: 'Compliance Audit', icon: '⚠️', color: 'edge', edge: 'Scheduled platform-wide compliance check' }
             ]
         },
@@ -1541,6 +1626,13 @@ const TREE_DATA = {
                     ]
                 },
                 { id: 'inf-rateLimit', name: 'Rate Limiting', icon: '⏱️', color: 'analytics', desc: 'Per-IP, per-user, per-API endpoint limits' },
+                { id: 'inf-rateStore', name: 'Per-Store Rate Limit', icon: '🏪', color: 'analytics', desc: 'Isolate noisy tenants, per-store API quota' },
+                { id: 'inf-ddos', name: 'DDoS / WAF Protection', icon: '🛡️', color: 'analytics', desc: 'Cloudflare WAF, rate limiting, bot detection, IP blacklisting' },
+                { id: 'inf-k8s', name: 'Container Orchestration', icon: '🐳', color: 'analytics', desc: 'Docker containers, Kubernetes/ECS, pod auto-scaling, health checks' },
+                { id: 'inf-autoscale', name: 'Auto-scaling Config', icon: '📈', color: 'analytics', desc: 'Horizontal pod autoscaler, CPU/memory thresholds, scale-to-zero' },
+                { id: 'inf-dbmigrate', name: 'Database Migrations', icon: '🗄️', color: 'analytics', desc: 'Prisma migrate, schema versioning, zero-downtime migration strategy' },
+                { id: 'inf-maintenance', name: 'Scheduled Maintenance', icon: '🔧', color: 'analytics', desc: 'Planned downtime page, auto-enable/disable, advance notification' },
+                { id: 'inf-changelog', name: 'Changelog / Release Notes', icon: '📝', color: 'analytics', desc: 'Platform updates feed, "What\'s New" in seller dashboard, versioned releases' },
                 { id: 'inf-e1', name: 'Cold Start Latency', icon: '⚠️', color: 'edge', edge: 'Serverless cold starts, keep-warm strategy' }
             ]
         },
@@ -1905,7 +1997,10 @@ const TREE_DATA = {
                 { id: 'wh-retry', name: 'Auto-retry', icon: '🔄', color: 'analytics', desc: 'Exponential backoff on failure' },
                 { id: 'wh-api-keys', name: 'API Key Management', icon: '🔑', color: 'analytics', desc: 'Generate/revoke API keys per integration' },
                 { id: 'wh-docs', name: 'API Documentation', icon: '📖', color: 'analytics', desc: 'Auto-generated Swagger/OpenAPI docs' },
-                { id: 'wh-e1', name: 'Webhook Flood', icon: '⚠️', color: 'edge', edge: 'Rate limiting outbound webhooks, circuit breaker' }
+                { id: 'wh-version', name: 'API Versioning', icon: '🔢', color: 'analytics', desc: 'v1/v2 versioned endpoints, backward compatibility, deprecation notices' },
+                { id: 'wh-graphql', name: 'GraphQL API', icon: '⚡', color: 'analytics', desc: 'Flexible GraphQL layer for custom integrations, storefront API, mobile apps' },
+                { id: 'wh-e1', name: 'Webhook Flood', icon: '⚠️', color: 'edge', edge: 'Rate limiting outbound webhooks, circuit breaker' },
+                { id: 'wh-e2', name: 'API Version Sunset', icon: '⚠️', color: 'edge', edge: 'v1 deprecated — migration deadline, fallback, breaking change notification' }
             ]
         },
         // ── LIVE CHAT / SUPPORT ──────────────────────────────
@@ -1987,7 +2082,8 @@ const TREE_DATA = {
                 { id: 'mg-e1', name: 'Data Mapping Mismatch', icon: '⚠️', color: 'edge', edge: 'Source fields dont match destination schema' },
                 { id: 'mg-e2', name: 'Duplicate Detection', icon: '⚠️', color: 'edge', edge: 'Product already exists, merge or skip?' },
                 { id: 'mg-e3', name: 'Image Download Fail', icon: '⚠️', color: 'edge', edge: 'Source images 404, broken links' },
-                { id: 'mg-e4', name: 'Customer Consent', icon: '⚠️', color: 'edge', edge: 'GDPR: re-consent required for imported customers' }
+                { id: 'mg-e4', name: 'Customer Consent', icon: '⚠️', color: 'edge', edge: 'GDPR: re-consent required for imported customers' },
+                { id: 'mg-clone', name: 'Store Cloning / Template', icon: '📋', color: 'store', desc: 'Clone a successful store setup to create new stores instantly — copy products, settings, theme' }
             ]
         },
         // ── GUEST CHECKOUT ──────────────────────────────────
@@ -2049,6 +2145,7 @@ const TREE_DATA = {
                 { id: 'pt-barcode', name: 'Product Barcode', icon: '📊', color: 'product', desc: 'Generate barcode/QR per SKU' },
                 { id: 'pt-thermal', name: 'Thermal Printer', icon: '🖨️', color: 'shipping', desc: '4x6 thermal label format support' },
                 { id: 'pt-custom', name: 'Custom Branding', icon: '🎨', color: 'shipping', desc: 'Logo, thank-you note on packing slip' },
+                { id: 'pt-invoice-tpl', name: 'Custom Invoice Template', icon: '🧾', color: 'shipping', desc: 'Seller-designed invoice layout — logo, colors, payment terms, custom footer' },
                 { id: 'pt-e1', name: 'Printer Compatibility', icon: '⚠️', color: 'edge', edge: 'Browser print dialog, thermal vs A4 format' },
                 { id: 'pt-e2', name: 'Wrong Label', icon: '⚠️', color: 'edge', edge: 'Label printed for wrong order, re-print flow' }
             ]
@@ -2094,6 +2191,122 @@ const TREE_DATA = {
                 { id: 'ms-pricing', name: 'Per-store Pricing', icon: '💰', color: 'product', desc: 'Same product, different price per store' },
                 { id: 'ms-e1', name: 'Inventory Conflict', icon: '⚠️', color: 'edge', edge: 'Same product sold on 2 stores, stock sync' },
                 { id: 'ms-e2', name: 'Plan Limits', icon: '⚠️', color: 'edge', edge: 'Max stores per plan, upgrade required' }
+            ]
+        },
+        // ── QR CODE COMMERCE ──────────────────────────────────
+        {
+            id: 'qr-commerce', name: 'QR CODE COMMERCE', icon: '📱', color: 'order',
+            desc: 'QR-based product discovery & payments',
+            children: [
+                { id: 'qr-product', name: 'Product QR Code', icon: '📦', color: 'product', desc: 'Unique QR per product — scan to view/buy instantly' },
+                { id: 'qr-store', name: 'Store QR Code', icon: '🏪', color: 'store', desc: 'Scan to open store — print on visiting cards, packaging' },
+                { id: 'qr-upi', name: 'UPI QR Payment', icon: '💳', color: 'order', desc: 'Direct UPI payment QR at checkout — India-first' },
+                { id: 'qr-table', name: 'Table/Location QR', icon: '🍽️', color: 'order', desc: 'Restaurant/cafe table ordering via QR scan' },
+                { id: 'qr-bulk', name: 'Bulk QR Generation', icon: '📊', color: 'product', desc: 'Generate QR codes for entire catalogue at once' },
+                { id: 'qr-analytics', name: 'QR Scan Analytics', icon: '📈', color: 'analytics', desc: 'Track scans by location, time, conversion rate' },
+                { id: 'qr-e1', name: 'QR Expired/Invalid', icon: '⚠️', color: 'edge', edge: 'Product deleted or QR tampered, show graceful error' },
+                { id: 'qr-e2', name: 'Duplicate QR Scan', icon: '⚠️', color: 'edge', edge: 'Same QR scanned multiple times, dedup logic' }
+            ]
+        },
+        // ── MULTI-VENDOR MARKETPLACE ─────────────────────────
+        {
+            id: 'marketplace', name: 'MARKETPLACE MODE', icon: '🏬', color: 'plan',
+            desc: 'Multi-vendor marketplace — Custom Plan only (very selective)',
+            children: [
+                { id: 'mp-vendor-reg', name: 'Vendor Registration', icon: '📝', color: 'seller', desc: 'Vendors apply to sell on marketplace — admin approval required' },
+                { id: 'mp-vendor-panel', name: 'Vendor Dashboard', icon: '📊', color: 'seller', desc: 'Per-vendor orders, products, earnings view' },
+                { id: 'mp-commission', name: 'Commission Rules', icon: '💰', color: 'admin', desc: 'Marketplace owner sets % commission per vendor/category' },
+                { id: 'mp-payout', name: 'Vendor Payouts', icon: '💸', color: 'admin', desc: 'Auto/manual payout to vendors — settlement cycle config' },
+                { id: 'mp-products', name: 'Vendor Product Mgmt', icon: '📦', color: 'product', desc: 'Vendors manage own products, marketplace admin approves' },
+                { id: 'mp-shipping', name: 'Per-vendor Shipping', icon: '🚚', color: 'shipping', desc: 'Each vendor sets own shipping rules or uses marketplace logistics' },
+                { id: 'mp-reviews', name: 'Vendor Ratings', icon: '⭐', color: 'customer', desc: 'Customers rate vendors separately from products' },
+                { id: 'mp-e1', name: 'Multi-vendor Cart', icon: '⚠️', color: 'edge', edge: 'Cart has items from 3 vendors — split checkout, combined shipping?' },
+                { id: 'mp-e2', name: 'Vendor Disputes', icon: '⚠️', color: 'edge', edge: 'Customer complaint — marketplace mediates between buyer & vendor' },
+                { id: 'mp-e3', name: 'Vendor Goes Inactive', icon: '⚠️', color: 'edge', edge: 'Vendor stops fulfilling, auto-disable products, refund pending orders' }
+            ]
+        },
+        // ── POS & OFFLINE BILLING ────────────────────────────
+        {
+            id: 'pos', name: 'POS & OFFLINE BILLING', icon: '🛍️', color: 'order',
+            desc: 'Point of Sale for offline shop — unified inventory with online store',
+            children: [
+                {
+                    id: 'pos-billing', name: 'Offline Billing', icon: '🧾', color: 'order',
+                    desc: 'Counter billing for walk-in customers',
+                    children: [
+                        { id: 'pos-b-quick', name: 'Quick Bill', icon: '⚡', color: 'order', desc: 'Scan barcode or search product → add to bill instantly' },
+                        { id: 'pos-b-customer', name: 'Walk-in Customer', icon: '🚶', color: 'customer', desc: 'Optional customer phone — link to existing or create new' },
+                        { id: 'pos-b-payment', name: 'Offline Payment', icon: '💵', color: 'order', desc: 'Cash, UPI scan, Card swipe, Mixed payment' },
+                        { id: 'pos-b-receipt', name: 'Print Receipt', icon: '🖨️', color: 'order', desc: 'Thermal receipt print + SMS/WhatsApp e-receipt' },
+                        { id: 'pos-b-return', name: 'Counter Return', icon: '↩️', color: 'order', desc: 'In-store return/exchange processing' },
+                        { id: 'pos-b-discount', name: 'Manual Discount', icon: '🏷️', color: 'coupon', desc: 'Counter staff applies instant discount' },
+                        { id: 'pos-b-e1', name: 'Printer Offline', icon: '⚠️', color: 'edge', edge: 'Thermal printer disconnected — queue print, send e-receipt' },
+                        { id: 'pos-b-e2', name: 'Cash Mismatch', icon: '⚠️', color: 'edge', edge: 'End-of-day cash count vs system total mismatch' }
+                    ]
+                },
+                {
+                    id: 'pos-sync', name: 'Online-Offline Sync', icon: '🔄', color: 'product',
+                    desc: 'Real-time inventory & order sync',
+                    children: [
+                        { id: 'pos-s-inventory', name: 'Unified Inventory', icon: '📦', color: 'product', desc: 'Single stock count for online website + offline counter' },
+                        { id: 'pos-s-realtime', name: 'Real-time Sync', icon: '⚡', color: 'product', desc: 'Offline sale instantly reduces online stock & vice versa' },
+                        { id: 'pos-s-offline-mode', name: 'Offline Mode', icon: '📴', color: 'product', desc: 'Works without internet — queues transactions, syncs when back online' },
+                        { id: 'pos-s-conflict', name: 'Conflict Resolution', icon: '⚖️', color: 'product', desc: 'Same product sold online + offline simultaneously — auto-resolve' },
+                        { id: 'pos-s-e1', name: 'Sync Failure', icon: '⚠️', color: 'edge', edge: 'Internet drops mid-sync — retry queue, manual override' },
+                        { id: 'pos-s-e2', name: 'Double Sold', icon: '⚠️', color: 'edge', edge: 'Product sold offline + online before sync — one order auto-cancelled' }
+                    ]
+                },
+                {
+                    id: 'pos-invoice', name: 'Unified Invoicing', icon: '🧾', color: 'order',
+                    desc: 'Bills from both channels',
+                    children: [
+                        { id: 'pos-inv-online', name: 'Online Invoice', icon: '🌐', color: 'order', desc: 'Auto-generated PDF for website/app orders' },
+                        { id: 'pos-inv-offline', name: 'Offline Invoice', icon: '🏪', color: 'order', desc: 'Counter bill with GST, thermal or A4 format' },
+                        { id: 'pos-inv-unified', name: 'Unified Invoice Series', icon: '🔢', color: 'order', desc: 'Single invoice number sequence across online + offline' },
+                        { id: 'pos-inv-gst', name: 'GST Compliance', icon: '📊', color: 'order', desc: 'Combined GST filing for online + offline sales' }
+                    ]
+                },
+                {
+                    id: 'pos-reports', name: 'Omnichannel Reports', icon: '📊', color: 'analytics',
+                    desc: 'Combined analytics for both channels',
+                    children: [
+                        { id: 'pos-r-sales', name: 'Combined Sales Report', icon: '📈', color: 'analytics', desc: 'Online + offline revenue in single dashboard' },
+                        { id: 'pos-r-channel', name: 'Channel Comparison', icon: '🔀', color: 'analytics', desc: 'Online vs offline — which channel performs better' },
+                        { id: 'pos-r-cashflow', name: 'Cash Flow Report', icon: '💰', color: 'analytics', desc: 'Cash + digital payments daily summary' },
+                        { id: 'pos-r-staff', name: 'Staff Sales Report', icon: '👥', color: 'analytics', desc: 'Per-counter-staff sales tracking for offline' }
+                    ]
+                },
+                { id: 'pos-barcode', name: 'Barcode Scanner', icon: '📷', color: 'product', desc: 'Camera/hardware barcode scan in POS — instant product lookup by barcode' },
+                { id: 'pos-staff-shift', name: 'Staff Shift / Schedule', icon: '🕒', color: 'seller', desc: 'Counter staff shift timing, attendance, handover notes' }
+            ]
+        },
+        // ── ONDC INTEGRATION ───────────────────────────────
+        {
+            id: 'ondc', name: 'ONDC INTEGRATION', icon: '🇮🇳', color: 'order',
+            desc: 'Open Network for Digital Commerce — India govt-backed interoperable e-commerce network',
+            children: [
+                { id: 'ondc-register', name: 'Seller Registration', icon: '📝', color: 'seller', desc: 'Register seller on ONDC network via Beckn protocol' },
+                { id: 'ondc-catalog', name: 'Catalog Sync', icon: '🔄', color: 'product', desc: 'Push products to ONDC catalog — auto-sync inventory & pricing' },
+                { id: 'ondc-order', name: 'Order Receive', icon: '📥', color: 'order', desc: 'Receive orders from any ONDC buyer app (Paytm, PhonePe, Google)' },
+                { id: 'ondc-fulfill', name: 'Fulfillment', icon: '🚚', color: 'shipping', desc: 'Ship ONDC orders via existing logistics or ONDC logistics network' },
+                { id: 'ondc-settle', name: 'Settlement', icon: '💰', color: 'order', desc: 'ONDC payment settlement to seller — T+1/T+2 cycle' },
+                { id: 'ondc-return', name: 'Return via ONDC', icon: '↩️', color: 'order', desc: 'Handle returns initiated from buyer apps' },
+                { id: 'ondc-e1', name: 'Protocol Version Mismatch', icon: '⚠️', color: 'edge', edge: 'ONDC protocol upgrade — backward compatibility needed' },
+                { id: 'ondc-e2', name: 'Multi-network Pricing', icon: '⚠️', color: 'edge', edge: 'Different price on ONDC vs own store — sync conflict' }
+            ]
+        },
+        // ── SELLER HELP CENTER ─────────────────────────────
+        {
+            id: 'help-center', name: 'SELLER HELP CENTER', icon: '📚', color: 'seller',
+            desc: 'Self-serve knowledge base & learning resources for sellers',
+            children: [
+                { id: 'hc-articles', name: 'Knowledge Base', icon: '📝', color: 'seller', desc: 'Searchable help articles organized by topic — getting started, payments, shipping' },
+                { id: 'hc-video', name: 'Video Tutorials', icon: '🎬', color: 'seller', desc: 'Step-by-step video guides for common tasks — add product, set shipping' },
+                { id: 'hc-faq', name: 'FAQ Section', icon: '❓', color: 'seller', desc: 'Most asked questions with quick answers' },
+                { id: 'hc-ticket', name: 'Support Ticket', icon: '🎫', color: 'seller', desc: 'Raise ticket if article doesn\'t solve, track status' },
+                { id: 'hc-chat', name: 'Live Support Chat', icon: '💬', color: 'comm', desc: 'Real-time chat with support team for urgent issues' },
+                { id: 'hc-changelog', name: 'Platform Changelog', icon: '📄', color: 'seller', desc: 'Latest updates, new features, bug fixes — "What\'s New" feed' },
+                { id: 'hc-e1', name: 'Article Outdated', icon: '⚠️', color: 'edge', edge: 'Feature changed but help article not updated — review cycle' }
             ]
         }
     ]
