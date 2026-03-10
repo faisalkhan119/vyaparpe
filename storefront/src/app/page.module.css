@@ -1,0 +1,305 @@
+.main {
+  min-height: 100vh;
+}
+
+.featuredSection {
+  padding: 3rem 0;
+  position: relative;
+  z-index: 2;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 2.5rem;
+}
+
+.sectionHeader h2 {
+  font-size: 2rem;
+  color: var(--text-main);
+}
+
+.viewAll {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.viewAll:hover {
+  text-decoration: underline;
+}
+
+/* Product Cards */
+.productGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.productCard {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: transform 0.2s, border-color 0.2s;
+  text-decoration: none !important;
+  color: inherit;
+}
+
+.productCard:hover {
+  transform: translateY(-4px);
+  border-color: rgba(99, 102, 241, 0.3);
+}
+
+.badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 5;
+  display: inline-block;
+  padding: 0.3rem 0.75rem;
+  border-radius: 4px;
+  background: var(--primary);
+  color: var(--text-main);
+  font-weight: 700;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.productImagePlaceholder {
+  height: 200px;
+  background: var(--bg-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.imageIcon {
+  font-size: 4rem;
+}
+
+.productInfo {
+  padding: 1.25rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.productCategory {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-bottom: 0.4rem;
+}
+
+.productInfo h3 {
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+  color: var(--text-main);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.productMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.productPrice {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.currentPrice {
+  font-size: 1.15rem;
+  font-weight: 700;
+  font-family: 'Outfit', sans-serif;
+  color: var(--text-main);
+}
+
+.originalPrice {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-decoration: line-through;
+}
+
+.productRating {
+  font-size: 0.85rem;
+  color: #FBBF24;
+  font-weight: 600;
+}
+
+.cardAction {
+  margin-top: 0.75rem;
+}
+
+/* Trending Grid */
+.trendingGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.trendingCard {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.25rem;
+  transition: transform 0.2s, border-color 0.2s;
+  text-decoration: none;
+  color: inherit;
+}
+
+.trendingCard:hover {
+  transform: translateY(-2px);
+  border-color: rgba(99, 102, 241, 0.3);
+}
+
+.trendRank {
+  font-size: 2rem;
+  font-weight: 900;
+  color: rgba(99, 102, 241, 0.3);
+  font-family: 'Outfit', sans-serif;
+  flex-shrink: 0;
+}
+
+.trendImage {
+  font-size: 2.5rem;
+  flex-shrink: 0;
+}
+
+.trendInfo {
+  min-width: 0;
+}
+
+.trendInfo h4 {
+  color: var(--text-main);
+  font-size: 0.95rem;
+  margin-bottom: 0.4rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.trendMeta {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.trendReviews {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* Recently Viewed */
+.recentGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.recentCard {
+  padding: 1rem;
+  text-align: center;
+  transition: transform 0.2s, border-color 0.2s;
+  text-decoration: none;
+  color: inherit;
+}
+
+.recentCard:hover {
+  transform: translateY(-3px);
+  border-color: var(--primary);
+}
+
+.recentImage {
+  font-size: 3rem;
+  margin-bottom: 0.75rem;
+}
+
+.recentInfo h4 {
+  font-size: 0.85rem;
+  color: var(--text-main);
+  margin-bottom: 0.5rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Brand Grid */
+.brandGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1.25rem;
+}
+
+.brandCard {
+  padding: 1.25rem;
+  text-align: center;
+  transition: transform 0.2s, border-color 0.2s;
+  text-decoration: none;
+  color: inherit;
+}
+
+.brandCard:hover {
+  transform: translateY(-2px);
+  border-color: var(--primary);
+}
+
+.brandName {
+  color: var(--text-main);
+  font-weight: 700;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.15rem;
+}
+
+/* Why Shop Grid */
+.whyGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.whyCard {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.whyIcon {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.whyCard h4 {
+  color: var(--text-main);
+  margin-bottom: 0.3rem;
+}
+
+.whyCard p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .sectionHeader h2 {
+    font-size: 1.5rem;
+  }
+
+  .productGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+}

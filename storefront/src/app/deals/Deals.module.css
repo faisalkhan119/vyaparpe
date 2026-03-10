@@ -1,0 +1,180 @@
+.dealsContainer {
+    padding: 120px 0 4rem 0;
+    min-height: calc(100vh - 300px);
+}
+
+.dealsHeader {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.dealsHeader h1 {
+    font-size: 3rem;
+    color: var(--text-main);
+    margin-bottom: 1rem;
+    font-family: 'Outfit', sans-serif;
+}
+
+.dealsHeader p {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+}
+
+.section {
+    margin-bottom: 4rem;
+}
+
+.sectionTitle {
+    font-size: 1.8rem;
+    color: var(--text-main);
+    margin-bottom: 2rem;
+}
+
+/* Flash Sales */
+.flashGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 2rem;
+}
+
+.flashCard {
+    padding: 1.5rem;
+    text-align: center;
+    position: relative;
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.flashCard:hover {
+    transform: translateY(-4px);
+    border-color: rgba(239, 68, 68, 0.4);
+}
+
+.flashTimer {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.flashImage {
+    font-size: 3.5rem;
+    margin: 1rem 0 1.5rem 0;
+}
+
+.flashName {
+    color: var(--text-main);
+    font-size: 1.05rem;
+    margin-bottom: 1rem;
+}
+
+.flashPricing {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.flashPrice {
+    font-weight: 800;
+    color: var(--text-main);
+    font-size: 1.25rem;
+}
+
+.flashOld {
+    text-decoration: line-through;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.flashOff {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--success);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+}
+
+/* Coupons */
+.couponGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.couponCard {
+    display: flex;
+    background: var(--bg-darker);
+    border: 1px dashed var(--border-color);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: border-color 0.2s;
+}
+
+.couponCard:hover {
+    border-color: var(--primary);
+}
+
+.couponLeft {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.1));
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 140px;
+    border-right: 2px dashed var(--border-color);
+}
+
+.couponCode {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--text-main);
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+}
+
+.couponType {
+    font-size: 0.75rem;
+    color: var(--primary);
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.couponRight {
+    padding: 1.25rem 1.5rem;
+    flex-grow: 1;
+}
+
+.couponDesc {
+    color: var(--text-main);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.couponMeta {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+@media (max-width: 600px) {
+    .couponCard {
+        flex-direction: column;
+    }
+
+    .couponLeft {
+        min-width: auto;
+        border-right: none;
+        border-bottom: 2px dashed var(--border-color);
+        padding: 1rem;
+    }
+}

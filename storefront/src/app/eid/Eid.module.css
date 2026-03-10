@@ -1,0 +1,468 @@
+.eidMain {
+    background-color: #fdfaf6;
+    /* Very light warm white */
+    min-height: 100vh;
+    padding-top: 80px;
+    /* Account for fixed Navbar */
+    padding-bottom: 4rem;
+}
+
+/* --- HERO SECTION --- */
+.heroSection {
+    background: linear-gradient(135deg, #004d40, #00251a);
+    /* Emerald Green to Dark Green */
+    color: #ffd700;
+    /* Gold text mostly */
+    padding: 4.5rem 1rem 3.5rem 1rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 0;
+}
+
+.heroContent {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.badge {
+    background: rgba(255, 215, 0, 0.15);
+    color: #ffd700;
+    border: 1px solid #ffd700;
+    padding: 0.25rem 1rem;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    margin-bottom: 1.5rem;
+}
+
+.heroTitle {
+    font-size: 3.5rem;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+    color: white;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.highlightText {
+    color: #ffd700;
+}
+
+.heroSubtitle {
+    font-size: 1.2rem;
+    color: #e0f2f1;
+    margin-bottom: 2rem;
+    font-weight: 300;
+}
+
+/* TIMER */
+.timerBox {
+    background: rgba(0, 77, 64, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: white;
+}
+
+.timerBox>span:first-child {
+    font-weight: 600;
+    margin-right: 0.5rem;
+    color: #ffd700;
+}
+
+.timeBlock {
+    background: #ffd700;
+    color: #004d40;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    font-weight: 800;
+    font-size: 1.5rem;
+    font-family: monospace;
+    display: flex;
+    align-items: baseline;
+    gap: 0.2rem;
+    min-width: 60px;
+    justify-content: center;
+    box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.2);
+}
+
+.timeBlock small {
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+
+.colon {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ffd700;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0.3;
+    }
+}
+
+/* DECORATIVE */
+.lantern1,
+.lantern2,
+.moon,
+.star1,
+.star2 {
+    position: absolute;
+    z-index: 1;
+    opacity: 0.8;
+}
+
+.lantern1 {
+    top: 10%;
+    left: 15%;
+    font-size: 4rem;
+    animation: swing 4s ease-in-out infinite alternate;
+    transform-origin: top center;
+}
+
+.lantern2 {
+    top: 30%;
+    right: 10%;
+    font-size: 3rem;
+    animation: swing 3.5s ease-in-out infinite alternate-reverse;
+    transform-origin: top center;
+}
+
+.moon {
+    top: 15%;
+    right: 25%;
+    font-size: 5rem;
+    opacity: 0.4;
+}
+
+.star1 {
+    bottom: 20%;
+    left: 20%;
+    font-size: 2rem;
+    animation: twinkle 2s infinite alternate;
+}
+
+.star2 {
+    top: 40%;
+    left: 30%;
+    font-size: 1.5rem;
+    animation: twinkle 3s infinite alternate-reverse;
+}
+
+@keyframes swing {
+    0% {
+        transform: rotate(-10deg);
+    }
+
+    100% {
+        transform: rotate(10deg);
+    }
+}
+
+@keyframes twinkle {
+    0% {
+        opacity: 0.3;
+        transform: scale(0.8);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+}
+
+
+/* --- EIDI STRIP --- */
+.eidiStrip {
+    background: #e8f5e9;
+    border-bottom: 2px solid #a5d6a7;
+    padding: 0.75rem 0;
+    margin-bottom: 2rem;
+}
+
+.eidiOfferContent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    color: #1b5e20;
+    font-size: 0.95rem;
+}
+
+.eidiIcon {
+    font-size: 1.5rem;
+}
+
+.eidiOfferContent strong {
+    color: #004d40;
+}
+
+.claimNowBtn {
+    color: #d84315;
+    text-decoration: underline;
+    font-weight: 600;
+    margin-left: 0.5rem;
+}
+
+
+/* --- SECTIONS --- */
+.sectionBlock {
+    margin-bottom: 4rem;
+}
+
+.sectionHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.sectionTitle {
+    font-size: 1.5rem;
+    font-family: 'Outfit', sans-serif;
+    color: #004d40;
+    font-weight: 700;
+}
+
+.viewAllBtn {
+    color: #004d40;
+    background: transparent;
+    border: 1px solid #004d40;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.viewAllBtn:hover {
+    background: #004d40;
+    color: #ffd700;
+}
+
+
+/* --- HORIZONTAL STEAL DEALS --- */
+.horizontalScroll {
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    padding-bottom: 1.5rem;
+    scrollbar-width: none;
+}
+
+.horizontalScroll::-webkit-scrollbar {
+    display: none;
+}
+
+.dealCard {
+    min-width: 200px;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+    flex-shrink: 0;
+}
+
+.dealCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 77, 64, 0.08);
+    border-color: #a5d6a7;
+}
+
+.discountBadge {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: #00695c;
+    color: #ffd700;
+    font-weight: 800;
+    font-size: 0.8rem;
+    padding: 0.5rem;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 1;
+    box-shadow: 0 4px 8px rgba(0, 105, 92, 0.4);
+}
+
+.dealImage {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dealInfo {
+    width: 100%;
+}
+
+.dealName {
+    font-size: 0.95rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dealPriceRow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+.dealPrice {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #004d40;
+}
+
+.dealOriginalPrice {
+    font-size: 0.85rem;
+    color: #999;
+    text-decoration: line-through;
+}
+
+
+/* --- CATEGORY OFFERS --- */
+.categoryGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.categoryOfferCard {
+    border-radius: 16px;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.categoryOfferCard:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+.catOfferText h3 {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 0.4rem;
+}
+
+.catOfferHighlight {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #004d40;
+}
+
+.catOfferIcon {
+    font-size: 3.5rem;
+    opacity: 0.9;
+}
+
+
+/* --- MID BANNER --- */
+.midBanner {
+    background: linear-gradient(135deg, #00695c, #004d40);
+    border-radius: 16px;
+    padding: 3rem 2rem;
+    color: white;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #004d40;
+}
+
+.midBannerContent {
+    position: relative;
+    z-index: 2;
+}
+
+.midBanner h2 {
+    font-size: 2.5rem;
+    font-family: 'Outfit', sans-serif;
+    margin-bottom: 0.5rem;
+    color: #ffd700;
+}
+
+.midBanner p {
+    font-size: 1.1rem;
+    color: #e0f2f1;
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+}
+
+.shopNowBtn {
+    display: inline-block;
+    background: #ffd700;
+    color: #004d40;
+    padding: 0.75rem 2rem;
+    border-radius: 30px;
+    font-weight: 800;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.shopNowBtn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(255, 215, 0, 0.3);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .heroTitle {
+        font-size: 2.2rem;
+    }
+
+    .timerBox {
+        padding: 0.75rem 1rem;
+    }
+
+    .timeBlock {
+        min-width: 45px;
+        font-size: 1.2rem;
+    }
+
+    .eidiOfferContent {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.3rem;
+    }
+
+    .eidiOfferContent strong {
+        display: block;
+    }
+}

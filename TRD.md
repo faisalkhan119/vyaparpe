@@ -1,6 +1,6 @@
 # VyapaarPe — Technical Requirements Document (TRD)
 
-> **Version:** 1.0 | **Date:** 01 March 2026  
+> **Version:** 2.0 | **Date:** 10 March 2026  
 > **Stack:** Java 21 + Spring Boot 3.x | **DB:** PostgreSQL 16 | **Cache:** Redis 7  
 > **Build:** Gradle (Kotlin DSL) | **Queue:** RabbitMQ | **Search:** Elasticsearch 8
 
@@ -225,6 +225,32 @@ vyapaarpe-backend/
 │   │   ├── model/BlogPost.java
 │   │   └── repository/PageRepository.java
 │   │
+│   ├── communication/                   # Communication (WhatsApp, SMS, Email)
+│   │   ├── controller/CommunicationController.java
+│   │   ├── service/EmailProviderService.java
+│   │   ├── service/WhatsappProviderService.java
+│   │   └── model/CommunicationLog.java
+│   │
+│   ├── appbuilder/                      # Mobile App Builder
+│   │   ├── controller/AppBuilderController.java
+│   │   ├── service/AppGenerationService.java
+│   │   └── model/AppConfiguration.java
+│   │
+│   ├── pluginstore/                     # Plugin Store Integration
+│   │   ├── controller/PluginController.java
+│   │   ├── service/PluginService.java
+│   │   └── model/StorePlugin.java
+│   │
+│   ├── i18n/                            # Multi-Language Support
+│   │   ├── controller/TranslationController.java
+│   │   ├── service/TranslationService.java
+│   │   └── model/TranslationStore.java
+│   │
+│   ├── compliance/                      # Compliance & Legal
+│   │   ├── controller/PolicyController.java
+│   │   ├── service/ComplianceService.java
+│   │   └── model/StorePolicy.java
+│   │
 │   ├── ai/                              # AI Module
 │   │   ├── controller/AiAssistantController.java
 │   │   ├── controller/AiCatalogueController.java
@@ -326,6 +352,54 @@ vyapaarpe-backend/
 │   │   ├── model/ApiKey.java
 │   │   └── repository/WebhookRepository.java
 │   │
+│   ├── qr/                               # QR Code Commerce
+│   │   ├── controller/QRCodeController.java
+│   │   ├── service/QRCodeService.java
+│   │   ├── service/QRAnalyticsService.java
+│   │   ├── model/QRCode.java
+│   │   ├── model/QRScanLog.java
+│   │   └── repository/QRCodeRepository.java
+│   │
+│   ├── marketplace/                      # Multi-Vendor Marketplace
+│   │   ├── controller/MarketplaceController.java
+│   │   ├── controller/VendorController.java
+│   │   ├── service/MarketplaceService.java
+│   │   ├── service/VendorPayoutService.java
+│   │   ├── model/MarketplaceVendor.java
+│   │   ├── model/VendorPayout.java
+│   │   ├── model/MarketplaceConfig.java
+│   │   └── repository/MarketplaceRepository.java
+│   │
+│   ├── pos/                              # POS & Offline Billing
+│   │   ├── controller/POSController.java
+│   │   ├── controller/StaffShiftController.java
+│   │   ├── service/POSService.java
+│   │   ├── service/OfflineSyncService.java
+│   │   ├── service/POSInvoiceService.java
+│   │   ├── model/POSTransaction.java
+│   │   ├── model/POSReceipt.java
+│   │   ├── model/StaffShift.java
+│   │   └── repository/POSRepository.java
+│   │
+│   ├── ondc/                             # ONDC Integration
+│   │   ├── controller/ONDCController.java
+│   │   ├── service/ONDCService.java
+│   │   ├── service/BecknProtocolService.java
+│   │   ├── service/ONDCCatalogSyncService.java
+│   │   ├── model/ONDCRegistration.java
+│   │   ├── model/ONDCOrder.java
+│   │   └── repository/ONDCRepository.java
+│   │
+│   ├── helpcenter/                       # Seller Help Center
+│   │   ├── controller/HelpCenterController.java
+│   │   ├── controller/TicketController.java
+│   │   ├── service/HelpCenterService.java
+│   │   ├── service/TicketService.java
+│   │   ├── model/HelpArticle.java
+│   │   ├── model/HelpCategory.java
+│   │   ├── model/HelpTicket.java
+│   │   └── repository/HelpCenterRepository.java
+│   │
 │   └── integration/                     # Third-party Integrations
 │       ├── razorpay/RazorpayClient.java
 │       ├── shiprocket/ShiprocketClient.java
@@ -333,6 +407,7 @@ vyapaarpe-backend/
 │       ├── cloudinary/CloudinaryClient.java
 │       ├── firebase/FirebaseClient.java
 │       ├── whatsapp/WhatsAppClient.java
+│       ├── ondc/ONDCBecknClient.java
 │       └── social/SocialCommerceClient.java
 │
 ├── src/main/resources/
@@ -355,7 +430,7 @@ vyapaarpe-backend/
 
 ## 2. Database Schema (PostgreSQL 16)
 
-### 2.1 Core Tables (95+ tables total)
+### 2.1 Core Tables (110+ tables total)
 
 #### Auth & Admin
 
@@ -470,6 +545,8 @@ CREATE TABLE stores (
     razorpay_key_id     VARCHAR(100),
     razorpay_key_secret VARCHAR(100), -- encrypted
     cod_enabled     BOOLEAN DEFAULT true,
+    payment_mode    VARCHAR(20) DEFAULT 'BOTH', -- ONLINE_ONLY, COD_ONLY, BOTH
+    shop_open       BOOLEAN DEFAULT true,
     -- Notifications
     whatsapp_enabled BOOLEAN DEFAULT false,
     email_enabled   BOOLEAN DEFAULT true,
@@ -537,6 +614,10 @@ CREATE TABLE products (
     status          VARCHAR(20) DEFAULT 'DRAFT', -- ACTIVE, DRAFT, ARCHIVED
     is_featured     BOOLEAN DEFAULT false,
     sort_order      INTEGER DEFAULT 0,
+    labels          JSONB DEFAULT '[]', -- ["NEW", "BESTSELLER", "TRENDING", "ORGANIC"]
+    scheduled_publish_at TIMESTAMP, -- future publish date/time
+    purchase_qty_limit INTEGER, -- max qty per customer per order
+    search_keywords TEXT, -- custom seller-defined search keywords
     avg_rating      DECIMAL(3,2) DEFAULT 0,
     review_count    INTEGER DEFAULT 0,
     version         INTEGER DEFAULT 0, -- optimistic locking
@@ -951,6 +1032,165 @@ CREATE TABLE print_templates (
     thermal_support BOOLEAN DEFAULT false,
     created_at      TIMESTAMP DEFAULT NOW()
 );
+
+-- QR Code Commerce
+CREATE TABLE qr_codes (
+    id              BIGSERIAL PRIMARY KEY,
+    store_id        BIGINT NOT NULL REFERENCES stores(id),
+    type            VARCHAR(20) NOT NULL, -- PRODUCT, STORE, UPI, TABLE
+    reference_id    BIGINT, -- product_id or null
+    qr_data         TEXT NOT NULL,
+    qr_image_url    VARCHAR(500),
+    scan_count      INTEGER DEFAULT 0,
+    is_active       BOOLEAN DEFAULT true,
+    created_at      TIMESTAMP DEFAULT NOW()
+);
+CREATE INDEX idx_qr_store ON qr_codes(store_id, type);
+
+CREATE TABLE qr_scan_logs (
+    id              BIGSERIAL PRIMARY KEY,
+    qr_code_id      BIGINT NOT NULL REFERENCES qr_codes(id),
+    ip_address      INET,
+    user_agent      TEXT,
+    location        VARCHAR(100),
+    converted       BOOLEAN DEFAULT false, -- scan led to purchase?
+    scanned_at      TIMESTAMP DEFAULT NOW()
+);
+
+-- Multi-Vendor Marketplace
+CREATE TABLE marketplace_vendors (
+    id              BIGSERIAL PRIMARY KEY,
+    store_id        BIGINT NOT NULL REFERENCES stores(id), -- marketplace store
+    vendor_name     VARCHAR(200) NOT NULL,
+    vendor_email    VARCHAR(255) NOT NULL,
+    vendor_phone    VARCHAR(15),
+    commission_pct  DECIMAL(5,2) NOT NULL DEFAULT 10,
+    status          VARCHAR(20) DEFAULT 'PENDING', -- PENDING, APPROVED, SUSPENDED
+    bank_details    JSONB,
+    approved_at     TIMESTAMP,
+    created_at      TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE vendor_payouts (
+    id              BIGSERIAL PRIMARY KEY,
+    vendor_id       BIGINT NOT NULL REFERENCES marketplace_vendors(id),
+    amount          DECIMAL(10,2) NOT NULL,
+    commission      DECIMAL(10,2) NOT NULL,
+    net_amount      DECIMAL(10,2) NOT NULL,
+    status          VARCHAR(20) DEFAULT 'PENDING', -- PENDING, PROCESSING, PAID, FAILED
+    utr_number      VARCHAR(50),
+    payout_date     DATE,
+    created_at      TIMESTAMP DEFAULT NOW()
+);
+
+-- POS & Offline Billing
+CREATE TABLE pos_transactions (
+    id              BIGSERIAL PRIMARY KEY,
+    store_id        BIGINT NOT NULL REFERENCES stores(id),
+    order_id        BIGINT REFERENCES orders(id),
+    customer_id     BIGINT REFERENCES customers(id),
+    staff_id        BIGINT REFERENCES staff_members(id),
+    channel         VARCHAR(10) NOT NULL DEFAULT 'OFFLINE', -- OFFLINE, ONLINE
+    payment_method  VARCHAR(20), -- CASH, UPI, CARD, MIXED
+    subtotal        DECIMAL(10,2) NOT NULL,
+    discount        DECIMAL(10,2) DEFAULT 0,
+    tax_amount      DECIMAL(10,2) DEFAULT 0,
+    total           DECIMAL(10,2) NOT NULL,
+    cash_received   DECIMAL(10,2),
+    change_returned DECIMAL(10,2),
+    synced          BOOLEAN DEFAULT true,
+    created_at      TIMESTAMP DEFAULT NOW()
+);
+CREATE INDEX idx_pos_store_date ON pos_transactions(store_id, created_at);
+
+CREATE TABLE pos_receipts (
+    id              BIGSERIAL PRIMARY KEY,
+    transaction_id  BIGINT NOT NULL REFERENCES pos_transactions(id),
+    receipt_number  VARCHAR(30) NOT NULL,
+    format          VARCHAR(10) DEFAULT 'THERMAL', -- THERMAL, A4
+    pdf_url         VARCHAR(500),
+    gst_breakup     JSONB,
+    created_at      TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE staff_shifts (
+    id              BIGSERIAL PRIMARY KEY,
+    store_id        BIGINT NOT NULL REFERENCES stores(id),
+    staff_id        BIGINT NOT NULL REFERENCES staff_members(id),
+    shift_date      DATE NOT NULL,
+    start_time      TIME NOT NULL,
+    end_time        TIME,
+    cash_opening    DECIMAL(10,2) DEFAULT 0,
+    cash_closing    DECIMAL(10,2),
+    notes           TEXT,
+    status          VARCHAR(20) DEFAULT 'ACTIVE' -- ACTIVE, COMPLETED, HANDOVER
+);
+
+-- ONDC Integration
+CREATE TABLE ondc_registrations (
+    id              BIGSERIAL PRIMARY KEY,
+    store_id        BIGINT NOT NULL REFERENCES stores(id),
+    subscriber_id   VARCHAR(255) UNIQUE,
+    network_type    VARCHAR(20) DEFAULT 'BPP', -- Beckn Provider Platform
+    domain          VARCHAR(50),
+    status          VARCHAR(20) DEFAULT 'PENDING', -- PENDING, ACTIVE, SUSPENDED
+    certificate     TEXT,
+    registered_at   TIMESTAMP,
+    created_at      TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE ondc_orders (
+    id              BIGSERIAL PRIMARY KEY,
+    store_id        BIGINT NOT NULL REFERENCES stores(id),
+    ondc_transaction_id VARCHAR(100) NOT NULL,
+    buyer_app       VARCHAR(100), -- Paytm, PhonePe, Google
+    order_id        BIGINT REFERENCES orders(id),
+    status          VARCHAR(20) NOT NULL,
+    settlement_amt  DECIMAL(10,2),
+    settlement_status VARCHAR(20),
+    ondc_payload    JSONB,
+    created_at      TIMESTAMP DEFAULT NOW(),
+    updated_at      TIMESTAMP DEFAULT NOW()
+);
+CREATE INDEX idx_ondc_store ON ondc_orders(store_id);
+
+-- Seller Help Center
+CREATE TABLE help_categories (
+    id              BIGSERIAL PRIMARY KEY,
+    name            VARCHAR(100) NOT NULL,
+    slug            VARCHAR(100) NOT NULL UNIQUE,
+    icon            VARCHAR(10),
+    sort_order      INTEGER DEFAULT 0
+);
+
+CREATE TABLE help_articles (
+    id              BIGSERIAL PRIMARY KEY,
+    category_id     BIGINT REFERENCES help_categories(id),
+    title           VARCHAR(200) NOT NULL,
+    slug            VARCHAR(200) NOT NULL UNIQUE,
+    content         TEXT NOT NULL,
+    video_url       VARCHAR(500),
+    is_faq          BOOLEAN DEFAULT false,
+    is_published    BOOLEAN DEFAULT true,
+    view_count      INTEGER DEFAULT 0,
+    helpful_count   INTEGER DEFAULT 0,
+    created_at      TIMESTAMP DEFAULT NOW(),
+    updated_at      TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE help_tickets (
+    id              BIGSERIAL PRIMARY KEY,
+    seller_id       BIGINT NOT NULL REFERENCES sellers(id),
+    subject         VARCHAR(200) NOT NULL,
+    description     TEXT NOT NULL,
+    category        VARCHAR(50),
+    priority        VARCHAR(10) DEFAULT 'NORMAL', -- LOW, NORMAL, HIGH, URGENT
+    status          VARCHAR(20) DEFAULT 'OPEN', -- OPEN, IN_PROGRESS, RESOLVED, CLOSED
+    assigned_to     BIGINT REFERENCES platform_admins(id),
+    resolved_at     TIMESTAMP,
+    created_at      TIMESTAMP DEFAULT NOW(),
+    updated_at      TIMESTAMP DEFAULT NOW()
+);
 ```
 
 
@@ -1023,6 +1263,63 @@ CREATE TABLE return_requests (
 #### Phase 12: Services, Gift Cards, Bundles, Flash Sales, Chat, Affiliates, Webhooks, Policies
 
 ```sql
+-- Communication Logs (Email, SMS, WhatsApp)
+CREATE TABLE communications_log (
+    id              BIGSERIAL PRIMARY KEY,
+    store_id        BIGINT NOT NULL REFERENCES stores(id),
+    customer_id     BIGINT REFERENCES customers(id),
+    channel         VARCHAR(20) NOT NULL, -- WHATSAPP, EMAIL, SMS
+    type            VARCHAR(50), -- ORDER_CONFIRM, ABANDONED_CART
+    status          VARCHAR(20), -- SENT, DELIVERED, FAILED
+    message_content TEXT,
+    created_at      TIMESTAMP DEFAULT NOW()
+);
+
+-- App Builder Config
+CREATE TABLE app_configurations (
+    id              BIGSERIAL PRIMARY KEY,
+    store_id        BIGINT NOT NULL REFERENCES stores(id) UNIQUE,
+    app_name        VARCHAR(100),
+    firebase_key    TEXT,
+    sha_hash        VARCHAR(255),
+    custom_domain   VARCHAR(200),
+    theme_json      JSONB,
+    created_at      TIMESTAMP DEFAULT NOW(),
+    updated_at      TIMESTAMP DEFAULT NOW()
+);
+
+-- Plugin Store Integrations
+CREATE TABLE store_plugins (
+    id              BIGSERIAL PRIMARY KEY,
+    store_id        BIGINT NOT NULL REFERENCES stores(id),
+    plugin_name     VARCHAR(100) NOT NULL,
+    config_json     JSONB,
+    is_active       BOOLEAN DEFAULT true,
+    installed_at    TIMESTAMP DEFAULT NOW()
+);
+
+-- Multi-Language (i18n)
+CREATE TABLE translations_store (
+    id              BIGSERIAL PRIMARY KEY,
+    store_id        BIGINT NOT NULL REFERENCES stores(id),
+    locale          VARCHAR(10) NOT NULL, -- en, hi, ta
+    translation_key VARCHAR(255) NOT NULL,
+    translation_val TEXT NOT NULL,
+    UNIQUE(store_id, locale, translation_key)
+);
+
+-- Compliance & Legal Policies
+CREATE TABLE store_policies (
+    id              BIGSERIAL PRIMARY KEY,
+    store_id        BIGINT NOT NULL REFERENCES stores(id) UNIQUE,
+    terms_of_service TEXT,
+    privacy_policy  TEXT,
+    refund_policy   TEXT,
+    shipping_policy TEXT,
+    created_at      TIMESTAMP DEFAULT NOW(),
+    updated_at      TIMESTAMP DEFAULT NOW()
+);
+
 -- Services & Bookings
 CREATE TABLE services (
     id              BIGSERIAL PRIMARY KEY,
@@ -1912,5 +2209,5 @@ Push to main → Lint → Unit Tests → Integration Tests (Testcontainers)
 
 *TRD v2.0 — VyapaarPe Backend Technical Requirements*  
 *Java 21 + Spring Boot 3.x + PostgreSQL 16 + Redis 7 + RabbitMQ + Elasticsearch 8*  
-*95+ DB Tables | 500+ API Endpoints | 120+ Edge Cases Cataloged*  
-*Last Updated: 01 March 2026*
+*110+ DB Tables | 600+ API Endpoints | 140+ Edge Cases Cataloged*  
+*Last Updated: 10 March 2026*

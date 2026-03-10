@@ -1,0 +1,198 @@
+.giftContainer {
+    padding: 120px 0 4rem 0;
+    min-height: calc(100vh - 300px);
+}
+
+.giftHeader {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.giftHeader h1 {
+    font-size: 3rem;
+    color: var(--text-main);
+    margin-bottom: 0.75rem;
+    font-family: 'Outfit', sans-serif;
+}
+
+.giftHeader p {
+    color: var(--text-muted);
+    font-size: 1.15rem;
+}
+
+.mainGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+    align-items: start;
+}
+
+/* Preview Card */
+.previewSection {
+    display: flex;
+    justify-content: center;
+    padding-top: 2rem;
+}
+
+.giftCardPreview {
+    width: 380px;
+    height: 230px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6, #a855f7);
+    border-radius: 16px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(99, 102, 241, 0.3);
+}
+
+.cardGlow {
+    position: absolute;
+    top: -50%;
+    right: -30%;
+    width: 200px;
+    height: 200px;
+    background: var(--bg-dark);
+    border-radius: 50%;
+}
+
+.cardLogo {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.cardAmount {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--text-main);
+    text-align: center;
+}
+
+.cardText {
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+.cardCode {
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    text-align: right;
+}
+
+/* Form */
+.formSection {
+    padding: 2rem;
+}
+
+.formSection h2 {
+    color: var(--text-main);
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+}
+
+.formGroup {
+    margin-bottom: 1.5rem;
+}
+
+.formGroup label {
+    display: block;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.amountGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.amountBtn {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 0.75rem;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.amountBtn:hover {
+    border-color: var(--primary);
+}
+
+.amountBtn.selected {
+    background: rgba(99, 102, 241, 0.15);
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.customInput,
+.input,
+.textarea {
+    width: 100%;
+    background: var(--bg-darker);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 0.75rem;
+    border-radius: 4px;
+    font-size: 0.95rem;
+}
+
+.textarea {
+    resize: vertical;
+}
+
+.deliveryOptions {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.radioOption {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+/* Balance Section */
+.balanceSection {
+    padding: 2rem;
+    text-align: center;
+}
+
+.balanceSection h3 {
+    color: var(--text-main);
+    margin-bottom: 1.25rem;
+    font-size: 1.3rem;
+}
+
+.balanceRow {
+    display: flex;
+    gap: 1rem;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .mainGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .giftCardPreview {
+        width: 100%;
+    }
+}

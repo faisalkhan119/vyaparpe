@@ -1,0 +1,36 @@
+import type { Metadata } from "next";
+import "./globals.css";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import SocialProofPopup from "@/components/SocialProofPopup";
+import AIChatbot from "@/components/AIChatbot";
+import ProfileCompletionModal from "@/components/ProfileCompletionModal";
+import { ThemeProvider } from "@/components/ThemeProvider";
+
+export const metadata: Metadata = {
+  title: "Vyaparpe Demo - Premium Storefront",
+  description: "VyapaarPe Customer Storefront - E-commerce built for speed and beauty.",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en">
+      <body>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <div className="app-container">
+            <Navbar />
+            {children}
+            <Footer />
+            <SocialProofPopup />
+            <AIChatbot />
+            <ProfileCompletionModal />
+          </div>
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}

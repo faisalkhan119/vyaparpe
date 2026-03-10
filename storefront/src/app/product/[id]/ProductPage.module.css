@@ -1,0 +1,314 @@
+.pdpContainer {
+    padding: 100px 0 4rem 0;
+    min-height: calc(100vh - 300px);
+}
+
+.breadcrumbs {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+}
+
+.breadcrumbs a {
+    color: var(--text-main);
+    transition: color 0.2s ease;
+}
+
+.breadcrumbs a:hover {
+    text-decoration: underline;
+    color: var(--primary);
+}
+
+.mainGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 4rem;
+}
+
+.infoColumn {
+    display: flex;
+    flex-direction: column;
+}
+
+.brandBadge {
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--primary);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.productTitle {
+    font-size: 2.5rem;
+    line-height: 1.2;
+    color: var(--text-main);
+    margin-bottom: 1rem;
+}
+
+.metaRow {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.stars {
+    color: var(--warning);
+    letter-spacing: 2px;
+}
+
+.ratingText {
+    color: var(--text-main);
+    font-size: 0.95rem;
+}
+
+.stockBadge {
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.priceContainer {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.currentPrice {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.originalPrice {
+    font-size: 1.25rem;
+    color: var(--text-muted);
+    text-decoration: line-through;
+}
+
+.discountBadge {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--success);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+}
+
+.shortDescription {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.divider {
+    border: 0;
+    height: 1px;
+    background: var(--glass-border);
+    margin-bottom: 2rem;
+}
+
+.trustBadges {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px dashed var(--glass-border);
+}
+
+.trustBadge {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.95rem;
+    color: var(--text-main);
+    background: var(--bg-card);
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+}
+
+.trustBadge .icon {
+    font-size: 1.25rem;
+}
+
+@media (max-width: 900px) {
+    .mainGrid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .productTitle {
+        font-size: 2rem;
+    }
+
+    .currentPrice {
+        font-size: 2rem;
+    }
+
+    .trustBadges {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Pincode Checker */
+.pincodeCheck {
+    margin-bottom: 1.5rem;
+}
+
+.pincodeCheck label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+}
+
+.pincodeRow {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.pincodeInput {
+    flex: 1;
+    background: var(--bg-dark);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 0.6rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.95rem;
+}
+
+.pincodeHint {
+    color: var(--success);
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+}
+
+/* Related / Bought Together */
+.relatedSection {
+    margin: 3rem 0;
+    padding: 2.5rem 0;
+    border-top: 1px solid var(--border-color);
+}
+
+.relatedSection h2 {
+    color: var(--text-main);
+    font-size: 1.75rem;
+    margin-bottom: 2rem;
+}
+
+.bundleRow {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.bundleItem {
+    text-align: center;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+    min-width: 160px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s;
+}
+
+.bundleItem:hover {
+    border-color: var(--primary);
+}
+
+.bundleEmoji {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.bundleItem p {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    margin-bottom: 0.25rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.bundleItem span {
+    color: var(--text-main);
+    font-weight: 700;
+}
+
+.plusSign {
+    font-size: 1.5rem;
+    color: var(--text-muted);
+    font-weight: 700;
+}
+
+.relatedGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem;
+}
+
+.relatedCard {
+    padding: 1rem;
+    text-align: center;
+    transition: transform 0.2s, border-color 0.2s;
+    text-decoration: none;
+    color: inherit;
+}
+
+.relatedCard:hover {
+    transform: translateY(-3px);
+    border-color: rgba(99, 102, 241, 0.3);
+}
+
+.relatedImg {
+    font-size: 3rem;
+    margin-bottom: 0.75rem;
+}
+
+.relatedBrand {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--primary);
+    font-weight: 700;
+}
+
+.relatedInfo h4 {
+    font-size: 0.9rem;
+    color: var(--text-main);
+    margin: 0.25rem 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.relatedPrice {
+    color: var(--text-main);
+    font-weight: 700;
+    font-size: 1rem;
+}

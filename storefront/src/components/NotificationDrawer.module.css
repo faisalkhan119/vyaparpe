@@ -1,0 +1,123 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: var(--bg-darker);
+    z-index: 98;
+}
+
+.drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 400px;
+    max-width: 90vw;
+    height: 100vh;
+    background: var(--bg-card);
+    border-left: 1px solid var(--border-color);
+    z-index: 99;
+    display: flex;
+    flex-direction: column;
+    animation: slideIn 0.25s ease;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+.drawerHeader {
+    display: flex;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.drawerHeader h3 {
+    color: var(--text-main);
+    margin: 0;
+    flex-grow: 1;
+    font-size: 1.3rem;
+}
+
+.markAll {
+    background: none;
+    border: none;
+    color: var(--primary);
+    font-size: 0.8rem;
+    cursor: pointer;
+    margin-right: 1rem;
+}
+
+.closeBtn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.notifList {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.notifItem {
+    display: flex;
+    gap: 0.75rem;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    transition: background 0.15s;
+    cursor: pointer;
+}
+
+.notifItem:hover {
+    background: var(--bg-darker);
+}
+
+.unread {
+    background: rgba(40, 116, 240, 0.05);
+    /* very light blue for unread base on new primary */
+}
+
+.notifDot {
+    width: 10px;
+    padding-top: 6px;
+    flex-shrink: 0;
+}
+
+.dot {
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--primary);
+}
+
+.notifContent {
+    flex-grow: 1;
+}
+
+.notifTitle {
+    color: var(--text-main);
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 0.3rem;
+}
+
+.notifMsg {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    line-height: 1.4;
+    margin-bottom: 0.35rem;
+}
+
+.notifTime {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    opacity: 0.7;
+}

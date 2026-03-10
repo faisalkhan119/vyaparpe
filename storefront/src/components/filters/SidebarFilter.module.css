@@ -1,0 +1,208 @@
+.filterSidebar {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    position: sticky;
+    top: 100px;
+    /* Below fixed header */
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+}
+
+.filterSidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.filterSidebar::-webkit-scrollbar-thumb {
+    background: var(--bg-dark);
+    border-radius: 10px;
+}
+
+.filterHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.filterHeader h2 {
+    font-size: 1.25rem;
+    color: var(--text-main);
+}
+
+.clearBtn {
+    background: none;
+    border: none;
+    color: var(--primary);
+    font-size: 0.875rem;
+    cursor: pointer;
+}
+
+.clearBtn:hover {
+    text-decoration: underline;
+}
+
+.filterSection {
+    margin-bottom: 2rem;
+}
+
+.filterSection h3 {
+    font-size: 1rem;
+    color: var(--text-main);
+    margin-bottom: 1rem;
+    font-family: 'Inter', sans-serif;
+}
+
+.filterList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.checkboxLabel {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.checkboxLabel input[type="checkbox"] {
+    appearance: none;
+    min-width: 18px;
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid var(--text-muted);
+    border-radius: 4px;
+    margin-right: 0.75rem;
+    position: relative;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.checkboxLabel input[type="checkbox"]:checked {
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+.checkboxLabel input[type="checkbox"]:checked::after {
+    content: '✓';
+    position: absolute;
+    color: var(--text-main);
+    font-size: 12px;
+    font-weight: bold;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.checkboxText {
+    color: var(--text-main);
+    flex-grow: 1;
+    font-size: 0.95rem;
+}
+
+.itemCount {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.stars {
+    color: var(--warning);
+    margin-right: 0.5rem;
+    letter-spacing: 2px;
+}
+
+.priceSlider {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.rangeInput {
+    width: 100%;
+    accent-color: var(--primary);
+}
+
+.priceValues {
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+}
+
+/* Radio buttons (same visual as checkboxes) */
+.checkboxLabel input[type="radio"] {
+    appearance: none;
+    min-width: 18px;
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid var(--text-muted);
+    border-radius: 50%;
+    margin-right: 0.75rem;
+    position: relative;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.checkboxLabel input[type="radio"]:checked {
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+.checkboxLabel input[type="radio"]:checked::after {
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: #fff;
+    border-radius: 50%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Active filter chips */
+.activeFilters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.filterChip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--primary);
+    color: #fff;
+    padding: 0.25rem 0.6rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.filterChip button {
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.75rem;
+    padding: 0;
+    opacity: 0.8;
+    transition: opacity 0.15s;
+}
+
+.filterChip button:hover {
+    opacity: 1;
+}

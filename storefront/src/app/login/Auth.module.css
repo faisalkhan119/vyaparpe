@@ -1,0 +1,264 @@
+.authContainer {
+    padding: 120px 0 4rem 0;
+    min-height: calc(100vh - 300px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-dark);
+}
+
+.authCard {
+    width: 100%;
+    max-width: 480px;
+    padding: 3rem;
+    animation: slideUpFade 0.4s ease-out;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+}
+
+.authHeader {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.authHeader h2 {
+    font-size: 2rem;
+    color: var(--text-main);
+    margin-bottom: 0.5rem;
+    font-family: 'Outfit', sans-serif;
+}
+
+.authHeader p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+.methodToggle {
+    display: flex;
+    background: var(--bg-darker);
+    border-radius: var(--radius-md);
+    padding: 0.25rem;
+    margin-bottom: 2rem;
+    border: 1px solid var(--border-color);
+}
+
+.toggleBtn {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    padding: 0.75rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.toggleBtn.active {
+    background: var(--bg-card);
+    color: var(--text-main);
+    box-shadow: var(--shadow-md);
+}
+
+.authForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.formRow {
+    display: flex;
+    gap: 1rem;
+}
+
+.formRow .formGroup {
+    flex: 1;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.formGroup label {
+    font-size: 0.9rem;
+    color: var(--text-main);
+    font-weight: 500;
+}
+
+.formGroup input {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 0.875rem 1rem;
+    border-radius: var(--radius-sm);
+    outline: none;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: border-color 0.2s, background-color 0.2s;
+}
+
+.formGroup input:focus {
+    border-color: var(--primary);
+    background: var(--bg-card);
+}
+
+.phoneInput {
+    display: flex;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    transition: border-color 0.2s;
+}
+
+.phoneInput:focus-within {
+    border-color: var(--primary);
+}
+
+.countryCode {
+    padding: 0.875rem 1rem;
+    background: var(--bg-dark);
+    color: var(--text-muted);
+    font-weight: 500;
+    border-right: 1px solid var(--border-color);
+}
+
+.phoneInput input {
+    flex-grow: 1;
+    border: none;
+    background: transparent;
+    border-radius: 0;
+}
+
+.phoneInput input:focus {
+    border-color: transparent;
+    background: transparent;
+}
+
+/* Social Login */
+.divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 1.5rem 0;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.divider span {
+    padding: 0 1rem;
+}
+
+.socialAuth {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+}
+
+.socialBtn {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 0.6rem;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 500;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    transition: all 0.2s;
+}
+
+.socialBtn:hover {
+    background: var(--bg-dark);
+}
+
+.forgotPassword {
+    text-align: right;
+    margin-top: -0.5rem;
+}
+
+.forgotPassword a {
+    color: var(--primary);
+    font-size: 0.85rem;
+    text-decoration: underline;
+}
+
+.otpHint {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-top: -0.5rem;
+}
+
+.submitBtn {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.05rem;
+    margin-top: 1rem;
+}
+
+.termsNote {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-align: center;
+    line-height: 1.5;
+    margin-top: 1rem;
+}
+
+.authFooter {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px dashed var(--glass-border);
+    text-align: center;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+}
+
+.authFooter a {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.authFooter a:hover {
+    text-decoration: underline;
+}
+
+@keyframes slideUpFade {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 600px) {
+    .authCard {
+        padding: 2rem 1.5rem;
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+        box-shadow: none;
+        background: transparent;
+    }
+
+    .formRow {
+        flex-direction: column;
+    }
+}

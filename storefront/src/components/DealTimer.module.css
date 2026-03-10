@@ -1,0 +1,84 @@
+.bannerContainer {
+    padding: 3rem 0;
+    position: relative;
+    z-index: 2;
+}
+
+.bannerContent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem 3rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-left: 4px solid var(--secondary);
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.flashBadge {
+    color: var(--secondary);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.875rem;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.dealInfo h3 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-main);
+}
+
+.dealInfo p {
+    color: var(--text-muted);
+}
+
+.timerBlock {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.timerUnit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--bg-darker);
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-md);
+    min-width: 70px;
+}
+
+.timeVal {
+    font-size: 2rem;
+    font-weight: 700;
+    font-family: 'Outfit', sans-serif;
+    line-height: 1;
+    color: var(--text-main);
+    text-shadow: 0 2px 10px rgba(16, 185, 129, 0.4);
+}
+
+.timeLabel {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+    letter-spacing: 0.1em;
+}
+
+.timeColon {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    animation: pulse-glow 2s infinite;
+}
+
+@media (max-width: 900px) {
+    .bannerContent {
+        flex-direction: column;
+        text-align: center;
+        padding: 2rem;
+    }
+}

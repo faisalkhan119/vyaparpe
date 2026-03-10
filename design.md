@@ -2,8 +2,8 @@
 
 > **Inspired by:** Dukaan (mydukaan.io) + Modern SaaS Best Practices  
 > **Design System Name:** VyapaarDS  
-> **Version:** 1.0  
-> **Date:** 01 March 2026
+> **Version:** 2.0  
+> **Date:** 10 March 2026
 
 ---
 
@@ -743,6 +743,202 @@ body {
 └─────────────────────────────────────────────────┘
 ```
 
+### 12.9 QR Code Commerce (Seller Dashboard)
+
+```
+┌─────────────────────────────────────────────────┐
+│  📱 QR Code Commerce                            │
+├─────────────────────────────────────────────────┤
+│                                                  │
+│  ┌──────────┐ ┌──────────┐ ┌──────────┐         │
+│  │   342    │ │   12.5%  │ │   ₹14.2K │         │
+│  │ Total    │ │ Conv     │ │ Revenue  │         │
+│  │ Scans    │ │ Rate     │ │ via QR   │         │
+│  └──────────┘ └──────────┘ └──────────┘         │
+│                                                  │
+│  Generate QR Code:                               │
+│  ○ 📦 Product QR  ○ 🏪 Store QR                │
+│  ○ 💳 UPI Payment  ○ 🪑 Table/Location          │
+│                                                  │
+│  Select Product:  [Almonds 250g ▼]               │
+│                                                  │
+│  ┌──────────────────────┐                        │
+│  │   ┌──────────────┐   │  Actions:              │
+│  │   │ ▓▓▓▓▓▓▓▓▓▓▓ │   │  [📥 Download PNG]    │
+│  │   │ ▓  QR CODE  ▓ │   │  [🖨️ Print]           │
+│  │   │ ▓▓▓▓▓▓▓▓▓▓▓ │   │  [📋 Copy Link]       │
+│  │   └──────────────┘   │  [📤 Share WhatsApp]   │
+│  └──────────────────────┘                        │
+│                                                  │
+│  [Generate Bulk QR for All Products]             │
+│                                                  │
+│  📊 Scan Analytics (by location, time, product)  │
+│  ┌─────────────────────────────────────────┐     │
+│  │  ▁▃▅▇▅▃▅▇█▅▃▁▃▅▇█▅▃▅▇▅▃▁▃▅▇█▅        │     │
+│  └─────────────────────────────────────────┘     │
+└─────────────────────────────────────────────────┘
+```
+
+### 12.10 POS & Offline Billing
+
+```
+┌─────────────────────────────────────────────────┐
+│  🧾 POS — Quick Bill              [Staff: Amit] │
+├─────────────────────────────────────────────────┤
+│                                                  │
+│  🔍 Search or Scan Barcode: [____________] [📷] │
+│                                                  │
+│  ┌─────────────────────────────────────────┐     │
+│  │ ☐ │ Product         │ Qty │ Price │ Tot │     │
+│  │ ──│─────────────────│─────│───────│─────│     │
+│  │   │ Almonds 250g    │  2  │ ₹599  │₹1198│     │
+│  │   │ Cashews 500g    │  1  │ ₹899  │₹899 │     │
+│  │   │ Raisins 200g    │  3  │ ₹199  │₹597 │     │
+│  └─────────────────────────────────────────┘     │
+│                                                  │
+│  Subtotal:    ₹2,694  │  [+Discount]             │
+│  GST (5%):      ₹135  │                          │
+│  Total:       ₹2,829  │                          │
+│                                                  │
+│  Customer:  [+91 ________] (optional)            │
+│                                                  │
+│  Payment:  [💵 Cash] [📱 UPI] [💳 Card] [🔀 Mix]│
+│  Cash Received:  [₹3,000]  Change: ₹171         │
+│                                                  │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐       │
+│  │ 🖨️ Print │  │ 📱 WA    │  │ ✅ Done  │       │
+│  │ Receipt  │  │ Receipt  │  │          │       │
+│  └──────────┘  └──────────┘  └──────────┘       │
+│                                                  │
+│  ⚡ Inventory synced with online store ✅        │
+└─────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────┐
+│  📊 Omnichannel Reports          [Today ▼]      │
+├─────────────────────────────────────────────────┤
+│  ┌──────────┐ ┌──────────┐ ┌──────────┐         │
+│  │  ₹18.5K  │ │  ₹12.3K  │ │  ₹6.2K   │         │
+│  │  Total   │ │  Online  │ │  Offline │         │
+│  │  Revenue │ │  (67%)   │ │  (33%)   │         │
+│  └──────────┘ └──────────┘ └──────────┘         │
+│                                                  │
+│  Staff Performance:                              │
+│  │ Amit   │ ₹3,200 │ 14 bills │ ★★★★★ │         │
+│  │ Priya  │ ₹2,800 │ 12 bills │ ★★★★  │         │
+│  │ Rahul  │ ₹1,500 │  8 bills │ ★★★★  │         │
+└─────────────────────────────────────────────────┘
+```
+
+### 12.11 Marketplace Vendor Dashboard
+
+```
+┌─────────────────────────────────────────────────┐
+│  🏪 Marketplace — Vendor Management             │
+├─────────────────────────────────────────────────┤
+│                                                  │
+│  ┌──────────┐ ┌──────────┐ ┌──────────┐         │
+│  │    12    │ │     3    │ │   ₹1.2L  │         │
+│  │  Active  │ │ Pending  │ │  Total   │         │
+│  │ Vendors  │ │ Approval │ │ GMV      │         │
+│  └──────────┘ └──────────┘ └──────────┘         │
+│                                                  │
+│  Vendor Applications:                            │
+│  ┌─────────────────────────────────────────┐     │
+│  │ 🟡 Fresh Organics │ Food │ [Approve] [Reject] │
+│  │ 🟡 TechGadgets    │ Elec │ [Approve] [Reject] │
+│  │ 🟡 StyleWear      │ Fash │ [Approve] [Reject] │
+│  └─────────────────────────────────────────┘     │
+│                                                  │
+│  Commission Rules:                               │
+│  │ Default    │ 10%  │ [Edit]               │    │
+│  │ Food       │ 8%   │ [Edit]               │    │
+│  │ Electronics│ 12%  │ [Edit]               │    │
+│                                                  │
+│  Payouts Due:                                    │
+│  ┌─────────────────────────────────────────┐     │
+│  │ Fresh Organics  │ ₹12,500 │ [Pay Now]   │     │
+│  │ TechGadgets     │ ₹8,200  │ [Pay Now]   │     │
+│  └─────────────────────────────────────────┘     │
+└─────────────────────────────────────────────────┘
+```
+
+### 12.12 ONDC Integration (Seller Settings)
+
+```
+┌─────────────────────────────────────────────────┐
+│  🇮🇳 ONDC Integration               [Status: 🟢]│
+├─────────────────────────────────────────────────┤
+│                                                  │
+│  ┌─────────────────────────────────────────┐     │
+│  │ ✅ Registered on ONDC Network           │     │
+│  │ Subscriber ID: ondc.vyapaarpe.com/nutri │     │
+│  │ Domain: GROCERY                         │     │
+│  └─────────────────────────────────────────┘     │
+│                                                  │
+│  Catalog Sync:                                   │
+│  │ Products synced: 124/124 ✅               │   │
+│  │ Last sync: 2 minutes ago                 │    │
+│  │ [🔄 Force Sync]  [⚙️ Sync Settings]      │    │
+│                                                  │
+│  ONDC Orders:                                    │
+│  ┌─────────────────────────────────────────┐     │
+│  │ 📱 Paytm    │ #ONDC-4821 │ ₹1,299 │ New│     │
+│  │ 📱 PhonePe  │ #ONDC-4820 │ ₹899   │ Ship│    │
+│  │ 📱 Google   │ #ONDC-4819 │ ₹599   │ Done│    │
+│  └─────────────────────────────────────────┘     │
+│                                                  │
+│  Settlement:                                     │
+│  │ Pending: ₹3,200 (T+1 cycle)              │   │
+│  │ This month: ₹45,600                       │   │
+│                                                  │
+│  ⚠️ Pricing: ONDC prices = Store prices (sync) │
+│  □ Allow different pricing on ONDC               │
+└─────────────────────────────────────────────────┘
+```
+
+### 12.13 Seller Help Center
+
+```
+┌─────────────────────────────────────────────────┐
+│  ❓ Help Center              [🔍 Search help...] │
+├─────────────────────────────────────────────────┤
+│                                                  │
+│  Quick Links:                                    │
+│  ┌──────┐ ┌──────┐ ┌──────┐ ┌──────┐            │
+│  │🚀 Get│ │💳 Pay│ │🚚 Ship│ │📦 Prod│           │
+│  │Start │ │ments │ │ping  │ │ucts  │            │
+│  └──────┘ └──────┘ └──────┘ └──────┘            │
+│                                                  │
+│  📘 Popular Articles:                            │
+│  ┌─────────────────────────────────────────┐     │
+│  │ 📄 How to add your first product        │     │
+│  │ 📄 Setting up payment gateway           │     │
+│  │ 📄 Configuring delivery zones           │     │
+│  │ 📄 Understanding your dashboard         │     │
+│  │ 📄 Running your first coupon campaign   │     │
+│  └─────────────────────────────────────────┘     │
+│                                                  │
+│  🎥 Video Tutorials:                             │
+│  ┌──────┐ ┌──────┐ ┌──────┐                      │
+│  │▶️ Set│ │▶️ Add│ │▶️ Pro│                      │
+│  │Store │ │Prods │ │mote  │                      │
+│  │(5m)  │ │(3m)  │ │(4m)  │                      │
+│  └──────┘ └──────┘ └──────┘                      │
+│                                                  │
+│  🆕 What's New:                                  │
+│  │ 🟢 QR Code Commerce now available!       │    │
+│  │ 🟢 ONDC Integration launched             │    │
+│  │ 🟡 POS Module coming soon                │    │
+│                                                  │
+│  Still need help?                                │
+│  [📝 Raise Ticket]  [💬 Live Chat]               │
+│                                                  │
+│  My Tickets:                                     │
+│  │ #1234 │ Payment issue │ 🟡 In Progress │      │
+│  │ #1230 │ Shipping Q    │ 🟢 Resolved    │      │
+└─────────────────────────────────────────────────┘
+```
+
 ---
 
 ## 13. Updated Sidebar Navigation (Full Module List)
@@ -774,12 +970,17 @@ body {
 │  📧 Communication    │
 │  🤝 Affiliates       │
 │  📱 Social Commerce  │
+│  📱 QR Commerce      │
 │  ──────────────────── │
 │  🌐 Website Builder  │
 │  📝 Blog / CMS       │
 │  📱 App Builder      │
 │  🔌 Plugins          │
 │  🔑 Webhooks & API   │
+│  ──────────────────── │
+│  🧾 POS / Billing    │
+│  🏪 Marketplace      │
+│  🇮🇳 ONDC             │
 │  ──────────────────── │
 │  🤖 AI Assistant     │
 │  ⚙️ Settings         │
@@ -788,6 +989,7 @@ body {
 │  🏪 Multi-Store      │
 │  📦 Store Migration  │
 │  🖨️ Print & Labels   │
+│  ❓ Help Center       │
 └──────────────────────┘
 ```
 
@@ -1265,11 +1467,13 @@ body {
 | Order Detail | Status update dropdown, AWB entry, print label |
 | Quick Product Add | Camera + text field → AI generates product |
 | Daily Stats Widget | Home screen widget with revenue + orders |
+| POS Mode | Full-screen billing mode, barcode scanner, receipt print |
+| QR Scanner | Scan QR to quick-view product & inventory |
 
 ---
 
 *Design System v2.0 — VyapaarPe (Inspired by Dukaan)*  
 *Fonts: Inter + Noto Sans Devanagari | Icons: Emoji + Lucide*  
 *Themes: 7 pre-built | Dark Mode First | WCAG 2.1 AA Compliant*  
-*Wireframes: 24 total — All core modules + Phase 12 + Mobile App Patterns*  
-*Last Updated: 01 March 2026*
+*Wireframes: 29 total — All core modules + Phase 12 + New Modules + Mobile App Patterns*  
+*Last Updated: 10 March 2026*

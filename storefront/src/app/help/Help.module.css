@@ -1,0 +1,189 @@
+.helpContainer {
+    padding: 120px 0 4rem 0;
+    min-height: calc(100vh - 300px);
+}
+
+.helpHeader {
+    text-align: center;
+    margin-bottom: 4rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.helpHeader h1 {
+    font-size: 3rem;
+    color: var(--text-main);
+    margin-bottom: 1rem;
+    font-family: 'Outfit', sans-serif;
+}
+
+.helpHeader p {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    margin-bottom: 2.5rem;
+}
+
+.searchBar {
+    display: flex;
+    gap: 1rem;
+    background: var(--bg-darker);
+    padding: 0.5rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    transition: border-color 0.2s;
+}
+
+.searchBar:focus-within {
+    border-color: var(--primary);
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.2);
+}
+
+.searchBar input {
+    flex-grow: 1;
+    background: transparent;
+    border: none;
+    padding: 0 1rem;
+    color: var(--text-main);
+    font-size: 1.1rem;
+    outline: none;
+}
+
+.searchBar button {
+    border-radius: var(--radius-md);
+    padding: 0.75rem 2rem;
+}
+
+.faqSection {
+    max-width: 800px;
+    margin: 0 auto 4rem auto;
+}
+
+.sectionTitle {
+    font-size: 2rem;
+    color: var(--text-main);
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.accordionContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.accordionItem {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: all 0.2s;
+}
+
+.accordionItem:hover {
+    border-color: var(--border-color);
+}
+
+.accordionItem.active {
+    border-color: var(--primary);
+    background: var(--bg-card);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.accordionHeader {
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.accordionHeader h3 {
+    font-size: 1.1rem;
+    color: var(--text-main);
+    margin: 0;
+    font-weight: 500;
+}
+
+.chevron {
+    font-size: 1.5rem;
+    color: var(--text-muted);
+    transition: transform 0.2s;
+    line-height: 1;
+    width: 24px;
+    text-align: center;
+}
+
+.active .chevron {
+    color: var(--primary);
+}
+
+.active .accordionHeader h3 {
+    color: var(--primary);
+}
+
+.accordionContent {
+    padding: 0 1.5rem 1.5rem 1.5rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    font-size: 0.95rem;
+    animation: slideDown 0.3s ease-out;
+}
+
+.accordionContent p {
+    margin: 0;
+}
+
+.contactPrompt {
+    text-align: center;
+    background: var(--bg-dark);
+    border: 1px dashed var(--border-color);
+    padding: 3rem;
+    border-radius: var(--radius-lg);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.contactPrompt h3 {
+    font-size: 1.5rem;
+    color: var(--text-main);
+    margin-bottom: 0.5rem;
+}
+
+.contactPrompt p {
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 600px) {
+    .helpHeader h1 {
+        font-size: 2.5rem;
+    }
+
+    .searchBar {
+        flex-direction: column;
+        background: transparent;
+        border: none;
+        padding: 0;
+    }
+
+    .searchBar input {
+        background: var(--bg-darker);
+        border: 1px solid var(--border-color);
+        padding: 1rem;
+        border-radius: var(--radius-md);
+    }
+}

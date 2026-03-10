@@ -1,0 +1,156 @@
+.pdpContainer {
+    padding: 100px 0 4rem 0;
+    min-height: calc(100vh - 300px);
+}
+
+.breadcrumbs {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+}
+
+.breadcrumbs a {
+    color: var(--text-main);
+}
+
+.breadcrumbs a:hover {
+    text-decoration: underline;
+    color: var(--primary);
+}
+
+.mainGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 4rem;
+}
+
+.infoColumn {
+    display: flex;
+    flex-direction: column;
+}
+
+.brandBadge {
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--primary);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.productTitle {
+    font-size: 2.5rem;
+    line-height: 1.2;
+    color: var(--text-main);
+    margin-bottom: 1rem;
+}
+
+.metaRow {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.stars {
+    color: var(--warning);
+    letter-spacing: 2px;
+}
+
+.ratingText {
+    color: var(--text-main);
+    font-size: 0.95rem;
+}
+
+.stockBadge {
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.priceContainer {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.currentPrice {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.originalPrice {
+    font-size: 1.25rem;
+    color: var(--text-muted);
+    text-decoration: line-through;
+}
+
+.discountBadge {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--success);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+}
+
+.shortDescription {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.divider {
+    border: 0;
+    height: 1px;
+    background: var(--glass-border);
+    margin-bottom: 2rem;
+}
+
+.trustBadges {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px dashed var(--glass-border);
+}
+
+.trustBadge {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.95rem;
+    color: var(--text-main);
+}
+
+@media (max-width: 900px) {
+    .mainGrid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .productTitle {
+        font-size: 2rem;
+    }
+
+    .currentPrice {
+        font-size: 2rem;
+    }
+
+    .trustBadges {
+        grid-template-columns: 1fr;
+    }
+}

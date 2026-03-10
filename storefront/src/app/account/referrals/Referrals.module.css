@@ -1,0 +1,123 @@
+.shareCard {
+    text-align: center;
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+.shareIcon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.shareCard h3 {
+    color: var(--text-main);
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.codeBox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--primary);
+    letter-spacing: 3px;
+    background: rgba(99, 102, 241, 0.1);
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-sm);
+    border: 2px dashed rgba(99, 102, 241, 0.3);
+}
+
+.shareButtons {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.shareBtn {
+    border: none;
+    color: var(--text-main);
+    padding: 0.6rem 1.2rem;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: opacity 0.2s;
+}
+
+.shareBtn:hover {
+    opacity: 0.85;
+}
+
+/* Stats */
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+.statCard {
+    background: var(--bg-darker);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.statValue {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text-main);
+}
+
+.statLabel {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+}
+
+/* History */
+.historySection {
+    background: var(--bg-darker);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+}
+
+.historyRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.historyRow:last-child {
+    border-bottom: none;
+}
+
+.statusBadge {
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.completed {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--success);
+}
+
+.pending {
+    background: rgba(245, 158, 11, 0.1);
+    color: #f59e0b;
+}

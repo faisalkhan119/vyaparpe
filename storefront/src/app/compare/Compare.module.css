@@ -1,0 +1,188 @@
+.container {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    min-height: calc(100vh - 300px);
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: linear-gradient(to right, var(--text-color), var(--primary-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+}
+
+.compareWrapper {
+    overflow-x: auto;
+    background: var(--bg-dark);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1rem;
+    backdrop-filter: blur(10px);
+}
+
+.compareTable {
+    display: flex;
+    flex-direction: column;
+    min-width: 800px;
+}
+
+.row {
+    display: flex;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.row:last-child {
+    border-bottom: none;
+}
+
+.cell {
+    flex: 1;
+    padding: 1.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.featureCell {
+    flex: 0 0 200px;
+    font-weight: 600;
+    color: var(--text-muted);
+    border-right: 1px solid var(--border-color);
+    justify-content: center;
+}
+
+.productCell {
+    position: relative;
+    align-items: center;
+    text-align: center;
+    border-right: 1px solid var(--border-color);
+}
+
+.productCell:last-child {
+    border-right: none;
+}
+
+.removeBtn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 0, 0, 0.1);
+    color: var(--danger);
+    border: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    transition: all 0.2s ease;
+}
+
+.removeBtn:hover {
+    background: var(--danger);
+    color: var(--text-main);
+}
+
+.productImageMock {
+    width: 100px;
+    height: 100px;
+    background: var(--bg-card);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.productName {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: color 0.2s;
+}
+
+.productName:hover {
+    color: var(--primary-color);
+}
+
+.productPrice {
+    color: var(--primary-color);
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.addToCartBtn {
+    width: 100%;
+}
+
+.addMoreCell {
+    cursor: pointer;
+    background: var(--bg-dark);
+    transition: background 0.2s;
+}
+
+.addMoreCell:hover {
+    background: var(--bg-card);
+}
+
+.addMoreCircle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px dashed var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+}
+
+.sectionTitleRow {
+    padding: 1rem;
+    background: var(--bg-dark);
+    font-weight: 700;
+    color: var(--primary-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.valueCell {
+    flex: 1;
+    padding: 1rem;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid var(--border-color);
+}
+
+.emptyCell {
+    flex: 1;
+}
+
+@media (max-width: 992px) {
+    .compareWrapper {
+        margin: 0 -1rem;
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+    }
+}

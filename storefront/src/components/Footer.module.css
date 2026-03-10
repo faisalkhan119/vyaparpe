@@ -1,0 +1,153 @@
+.footer {
+    background: var(--bg-darker);
+    border-top: 1px solid var(--border-color);
+    padding: 5rem 0 2rem 0;
+    margin-top: auto;
+}
+
+.footerGrid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.5fr;
+    gap: 4rem;
+    margin-bottom: 4rem;
+}
+
+.brandSection {
+    max-width: 350px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.logoImg {
+    border-radius: 6px;
+    object-fit: contain;
+    width: 180px;
+    height: auto;
+}
+
+.brandDesc {
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.socialLinks {
+    display: flex;
+    gap: 1rem;
+}
+
+.socialLinks a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    transition: var(--transition);
+    font-size: 1.25rem;
+}
+
+.socialLinks a:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+    transform: translateY(-3px);
+    color: var(--text-main);
+    /* Still white here since background is primary blue */
+}
+
+.linkGroup h4,
+.newsletterSection h4 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.125rem;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+}
+
+.linkGroup ul {
+    list-style: none;
+}
+
+.linkGroup li {
+    margin-bottom: 0.75rem;
+}
+
+.linkGroup a {
+    color: var(--text-muted);
+}
+
+.linkGroup a:hover {
+    color: var(--text-main);
+    text-decoration: underline;
+}
+
+.newsletterSection p {
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+}
+
+.newsletterForm {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.newsletterForm input {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
+    color: var(--text-main);
+    outline: none;
+}
+
+.newsletterForm input:focus {
+    border-color: var(--primary);
+}
+
+.footerBottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-muted);
+    font-size: 0.875rem;
+}
+
+.legalLinks {
+    display: flex;
+    gap: 2rem;
+}
+
+.legalLinks a:hover {
+    color: var(--text-main);
+}
+
+@media (max-width: 1024px) {
+    .footerGrid {
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .footerGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .newsletterForm {
+        flex-direction: column;
+    }
+
+    .footerBottom {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+}

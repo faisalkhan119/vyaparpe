@@ -1,0 +1,189 @@
+.successContainer {
+    padding: 140px 0 6rem 0;
+    min-height: calc(100vh - 300px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at center, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+}
+
+.contentWrapper {
+    display: flex;
+    justify-content: center;
+    max-width: 600px;
+}
+
+.successCard {
+    width: 100%;
+    padding: 4rem 3rem;
+    text-align: center;
+    animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    position: relative;
+    overflow: hidden;
+}
+
+.iconWrapper {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 2rem auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.checkmarkIcon {
+    width: 80px;
+    height: 80px;
+    background: var(--success);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: var(--text-main);
+    font-weight: bold;
+    box-shadow: 0 0 30px rgba(16, 185, 129, 0.4);
+    z-index: 2;
+    animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.2s both;
+}
+
+.confetti {
+    position: absolute;
+    font-size: 4rem;
+    top: -20px;
+    z-index: 1;
+    animation: float 3s ease-in-out infinite, fadeIn 1s ease 0.5s both;
+}
+
+.successTitle {
+    font-size: 2.5rem;
+    color: var(--text-main);
+    margin-bottom: 1rem;
+    font-family: 'Outfit', sans-serif;
+}
+
+.successMessage {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+}
+
+.orderDetailsBox {
+    background: var(--bg-darker);
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    margin-bottom: 2rem;
+    text-align: left;
+}
+
+.detailRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px dashed var(--glass-border);
+}
+
+.detailRow:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.detailLabel {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+.detailValue {
+    color: var(--text-main);
+    font-weight: 600;
+    font-size: 1.05rem;
+}
+
+.statusBadge {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--success);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.emailNotice {
+    font-size: 0.95rem;
+    color: var(--text-main);
+    margin-bottom: 2.5rem;
+}
+
+.emailNotice strong {
+    color: var(--text-main);
+}
+
+.actionButtons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.actionButtons a {
+    flex: 1;
+    padding: 1rem;
+    font-size: 1.05rem;
+    justify-content: center;
+}
+
+@keyframes slideUpFade {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes popIn {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-10px) rotate(5deg);
+    }
+
+    100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+}
+
+@media (max-width: 600px) {
+    .successCard {
+        padding: 3rem 1.5rem;
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+    }
+
+    .actionButtons {
+        flex-direction: column;
+    }
+}

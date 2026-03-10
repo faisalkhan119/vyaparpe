@@ -1,0 +1,171 @@
+.promoContainer {
+    margin: 4rem 1rem;
+}
+
+.promoHeader {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.promoHeader h2 {
+    font-size: 1.8rem;
+    color: var(--text-main);
+    font-family: 'Outfit', sans-serif;
+}
+
+.promoGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.promoCard {
+    text-decoration: none;
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    /* Reduced padding from 2.5rem 2rem to prevent text cutoff */
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 220px;
+    /* Increased min-height to allow vertical expansion */
+}
+
+.promoCard:hover {
+    transform: translateY(-8px);
+}
+
+.promoContent {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.promoBadge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+}
+
+.promoCard h3 {
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    /* Dynamic font responsive scaling */
+    font-family: 'Outfit', sans-serif;
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+    line-height: 1.1;
+    word-wrap: break-word;
+}
+
+.promoCard p {
+    font-size: 1.1rem;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+/* BIG BILLION DAYS STYLE */
+.bbdBanner {
+    background: linear-gradient(135deg, #2b1055, #6323a6);
+    color: #ffd700;
+    box-shadow: 0 10px 30px rgba(99, 35, 166, 0.2);
+}
+
+.bbdBanner:hover {
+    box-shadow: 0 15px 40px rgba(99, 35, 166, 0.4);
+}
+
+.bbdBanner h3 {
+    color: white;
+}
+
+/* EID SPECIAL STYLE */
+.eidBanner {
+    background: linear-gradient(135deg, #004d40, #00251a);
+    color: #ffd700;
+    box-shadow: 0 10px 30px rgba(0, 77, 64, 0.2);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.eidBanner:hover {
+    box-shadow: 0 15px 40px rgba(0, 77, 64, 0.4);
+    border-color: rgba(255, 215, 0, 0.5);
+}
+
+.eidBanner h3 {
+    color: white;
+}
+
+/* --- DECORATIVE POSTER ELEMENTS --- */
+.decoIcon {
+    position: absolute;
+    z-index: 1;
+    pointer-events: none;
+    user-select: none;
+    font-size: 2rem;
+    transition: transform 0.3s;
+}
+
+.promoCard:hover .decoIcon {
+    transform: scale(1.1);
+}
+
+/* BBD Decorations */
+.bbdBanner .confetti1 {
+    top: -10px;
+    left: 10%;
+    font-size: 3.5rem;
+    transform: rotate(15deg);
+    opacity: 0.4;
+}
+
+.bbdBanner .confetti2 {
+    bottom: -10px;
+    right: 10%;
+    font-size: 3rem;
+    transform: rotate(-20deg);
+    opacity: 0.6;
+}
+
+.bbdBanner .confetti3 {
+    top: 40%;
+    left: -10px;
+    font-size: 2.5rem;
+    transform: rotate(45deg);
+    opacity: 0.3;
+}
+
+/* Eid Decorations */
+.eidBanner .lantern1 {
+    top: -10px;
+    right: 5%;
+    font-size: 3.5rem;
+    opacity: 0.5;
+}
+
+.eidBanner .moon {
+    top: 20%;
+    left: -20px;
+    font-size: 5rem;
+    opacity: 0.2;
+    transform: rotate(-15deg);
+}
+
+.eidBanner .star {
+    bottom: 15%;
+    left: 40%;
+    font-size: 1.8rem;
+    opacity: 0.4;
+}

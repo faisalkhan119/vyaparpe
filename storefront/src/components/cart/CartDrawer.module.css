@@ -1,0 +1,294 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    animation: fadeIn 0.3s ease;
+}
+
+.drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: 450px;
+    background: var(--bg-main) !important;
+    border-left: 1px solid var(--glass-border);
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.header h2 {
+    font-size: 1.25rem;
+    color: var(--text-main);
+    margin: 0;
+}
+
+.closeBtn {
+    background: var(--bg-darker);
+    border: 1px solid var(--border-color);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.closeBtn:hover {
+    background: var(--danger);
+    transform: rotate(90deg);
+}
+
+.shippingBar {
+    padding: 1.25rem 1.5rem;
+    background: var(--bg-dark);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.shippingBar p {
+    font-size: 0.875rem;
+    color: var(--text-main);
+    margin-bottom: 0.75rem;
+    text-align: center;
+    font-weight: 500;
+}
+
+.progressBarBg {
+    height: 6px;
+    background: var(--bg-dark);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progressBarFill {
+    height: 100%;
+    transition: width 0.5s ease-in-out, background-color 0.3s ease;
+}
+
+.itemList {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    scrollbar-width: thin;
+}
+
+.cartItem {
+    display: flex;
+    gap: 1rem;
+}
+
+.itemImage {
+    width: 80px;
+    height: 80px;
+    background: var(--bg-darker);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+.itemDetails {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.itemHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.itemHeader h4 {
+    font-size: 0.95rem;
+    color: var(--text-main);
+    margin: 0 0 0.25rem 0;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.removeBtn {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+    padding: 0;
+}
+
+.removeBtn:hover {
+    opacity: 1;
+}
+
+.itemVariant {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+}
+
+.itemBottomRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+}
+
+.qtyControls {
+    display: flex;
+    align-items: center;
+    background: var(--bg-darker);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
+
+.qtyControls button {
+    background: transparent;
+    border: none;
+    color: var(--text-main);
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.qtyControls button:hover {
+    background: var(--bg-dark);
+}
+
+.qtyControls span {
+    width: 24px;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--text-main);
+}
+
+.itemPrice {
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.footer {
+    padding: 1.5rem;
+    background: var(--bg-card);
+    border-top: 1px solid var(--border-color);
+}
+
+.subtotalRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+    color: var(--text-main);
+}
+
+.subtotalValue {
+    font-weight: 800;
+    font-size: 1.25rem;
+}
+
+.taxesNote {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    text-align: right;
+}
+
+.actionButtons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.actionButtons a {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+}
+
+.emptyState {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+}
+
+.emptyIcon {
+    font-size: 4rem;
+    opacity: 0.5;
+    margin-bottom: 1rem;
+}
+
+.emptyState h3 {
+    color: var(--text-main);
+    margin-bottom: 0.5rem;
+}
+
+.emptyState p {
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+@media (max-width: 480px) {
+    .drawer {
+        width: 100%;
+        max-width: none;
+    }
+}
