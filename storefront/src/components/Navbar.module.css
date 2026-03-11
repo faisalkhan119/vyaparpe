@@ -313,17 +313,82 @@
 @media (max-width: 768px) {
 
     .navLinks,
+    .utilsGroup,
     .searchCommand kbd {
-        display: none;
+        display: none !important;
+    }
+
+    .navbar {
+        height: 60px; /* Thinner header */
+    }
+
+    .logoImg {
+        width: 100px; /* Smaller logo */
+        height: auto;
+    }
+
+    .searchCommand {
+        min-width: 150px; /* Make it look like an input box but smaller */
+        flex-grow: 1;
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid var(--border-color);
+        padding: 0.4rem 0.8rem;
+        border-radius: 20px;
+        margin: 0 0.5rem;
+    }
+
+    .searchCommand span {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+    }
+
+    .bellBtn {
+        font-size: 1.1rem;
+        padding: 0.2rem;
+        margin-left: 0;
+        margin-right: 0.5rem;
     }
 
     .searchModal {
-        width: 90%;
+        width: 95%;
+        max-height: 90vh; /* Prevent vertical overflow */
+        margin: 0 auto;
+    }
+
+    .searchInputWrapper {
+        padding: 1rem;
+        gap: 0.5rem;
+    }
+
+    .searchInput {
+        font-size: 1rem; /* Smaller font to fit typing */
+        width: 100%; /* Ensure it doesn't push bounds */
     }
 
     .searchResults {
         grid-template-columns: 1fr;
         gap: 1.5rem;
+        padding: 1rem;
+    }
+
+    .mobileHide {
+        display: none !important;
+    }
+}
+
+/* --- EXTRA NARROW SCREENS (Like iPhone SE / 12 Pro) --- */
+@media (max-width: 400px) {
+    .container {
+        padding: 0 0.75rem; /* Less padding to fit header items */
+    }
+    
+    .logoImg {
+        width: 85px; /* Even smaller logo to make room for search bar */
+    }
+    
+    .searchCommand {
+        min-width: 100px;
+        padding: 0.3rem 0.5rem;
     }
 }
 

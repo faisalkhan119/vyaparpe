@@ -236,3 +236,14 @@
         bottom: 90px;
     }
 }
+
+/* Offset for Bottom Nav on mobile */
+@media (max-width: 768px) {
+    .chatFab {
+        bottom: 95px; /* Safely clear bottom nav */
+    }
+    
+    .chatWindow {
+        bottom: 170px; /* Above fab and bottom nav */
+    }
+}

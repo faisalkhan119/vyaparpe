@@ -1,6 +1,6 @@
 .popup {
     position: fixed;
-    bottom: 20px;
+    bottom: 40px; /* Increased from 20px to prevent viewport cutoff */
     left: 20px;
     background: var(--bg-card);
     border: 1px solid var(--border-color);
@@ -55,4 +55,13 @@
     cursor: pointer;
     font-size: 0.8rem;
     align-self: flex-start;
+}
+
+/* Offset for Bottom Nav on mobile */
+@media (max-width: 768px) {
+    .popup {
+        bottom: 95px; /* Safely clear bottom nav */
+        left: 10px; /* Slight adjustment for smaller screens */
+        max-width: calc(100vw - 110px); /* Leave room for fab button on right */
+    }
 }

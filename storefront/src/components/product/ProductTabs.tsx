@@ -6,7 +6,7 @@ export default function ProductTabs() {
     const [activeTab, setActiveTab] = useState('description');
 
     return (
-        <div className={styles.tabsContainer}>
+        <div className={styles.tabsContainer} id="reviews">
             <div className={styles.tabHeaders}>
                 <button
                     className={`${styles.tabBtn} ${activeTab === 'description' ? styles.active : ''}`}

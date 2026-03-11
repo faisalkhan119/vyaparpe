@@ -12,8 +12,16 @@ const purchases = [
 export default function SocialProofPopup() {
     const [visible, setVisible] = useState(false);
     const [index, setIndex] = useState(0);
+    const [isDismissed, setIsDismissed] = useState(false);
 
     useEffect(() => {
+        // Check if user has already dismissed it in this session
+        const dismissed = sessionStorage.getItem('socialProofDismissed') === 'true';
+        if (dismissed) {
+            setIsDismissed(true);
+            return;
+        }
+
         const showInterval = setInterval(() => {
             setVisible(true);
             setIndex((prev) => (prev + 1) % purchases.length);
@@ -32,6 +40,14 @@ export default function SocialProofPopup() {
         };
     }, []);
 
+    const handleClose = () => {
+        setVisible(false);
+        setIsDismissed(true);
+        sessionStorage.setItem('socialProofDismissed', 'true');
+    };
+
+    if (isDismissed) return null;
+
     const purchase = purchases[index];
 
     return (
@@ -42,7 +58,7 @@ export default function SocialProofPopup() {
                 <div className={styles.product}>{purchase.product}</div>
                 <span className={styles.time}>{purchase.time}</span>
             </div>
-            <button className={styles.close} onClick={() => setVisible(false)}>✕</button>
+            <button className={styles.close} onClick={handleClose}>✕</button>
         </div>
     );
 }

@@ -4,6 +4,12 @@
     gap: 1.5rem;
 }
 
+.variantsWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
 .actionGroup {
     display: flex;
     flex-direction: column;
@@ -23,23 +29,40 @@
     margin-left: 0.5rem;
 }
 
-.colorOptions {
+.variantOptions {
     display: flex;
     gap: 1rem;
+    flex-wrap: wrap;
 }
 
-.colorBtn {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 2px solid transparent;
+.variantBtn {
+    width: 45px;
+    height: 45px;
+    border-radius: var(--radius-sm);
+    border: 2px solid var(--border-color);
+    background: var(--bg-card);
     cursor: pointer;
     transition: all 0.2s;
     padding: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.colorBtn.active {
-    box-shadow: 0 0 0 2px var(--bg-main), 0 0 0 4px var(--primary);
+.variantBtn img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.variantBtn:hover {
+    border-color: var(--text-muted);
+}
+
+.variantBtn.active {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 1px var(--primary);
 }
 
 .qtySelector {
@@ -120,8 +143,8 @@
     box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
 }
 
-@media (max-width: 600px) {
+/* @media (max-width: 600px) {
     .actionsWrapper {
-        /* Potential Sticky Mobile Actions could go here */
+        
     }
-}
+} */

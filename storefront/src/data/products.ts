@@ -10,280 +10,514 @@ export interface Product {
     reviewsCount: number;
     description: string;
     inStock: boolean;
-    image: string;
+    image: string; // Keep as primary image string
+    images?: string[]; // Add array for gallery support
+    video?: string; // Product commercial or showcase video
+    highlights?: string[]; // Bullet points for the "Key Highlights" section
     badge?: string;
 }
 
 export const products: Product[] = [
     {
         id: 'sony-wh1000xm5',
-        title: 'Sony WH-1000XM5 Wireless Headphones',
+        title: 'Sony WH-1000XM5 Wireless Noise Cancelling Headphones',
         brand: 'Sony',
         category: 'Electronics',
         price: 24990,
         originalPrice: 29990,
         rating: 4.8,
         reviewsCount: 1245,
-        description: 'Industry-leading noise cancellation with two processors. 30-hour battery life, touch controls, speak-to-chat technology.',
+        description: 'Industry-leading noise cancellation with two processors controlling eight microphones. Magnificent sound, engineered to perfection with the new Integrated Processor V1.',
         inStock: true,
-        image: '🎧',
+        image: 'https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?auto=format&fit=crop&q=80&w=800',
+            'https://images.unsplash.com/photo-1484704849700-f032a568e944?auto=format&fit=crop&q=80&w=800',
+            'https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&q=80&w=800'
+        ],
+        video: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+        highlights: [
+            'Industry-Leading Active Noise Cancellation',
+            'Ultra-comfortable, lightweight design with soft fit leather',
+            'Up to 30 hours of battery life with quick charging',
+            'Multipoint connection allows paired styling with two Bluetooth devices',
+            'Crystal clear hands-free calling with precise voice pickup'
+        ],
         badge: 'Bestseller',
     },
     {
         id: 'samsung-s24-ultra',
-        title: 'Samsung Galaxy S24 Ultra 256GB',
+        title: 'Samsung Galaxy S24 Ultra 5G AI Smartphone (256GB, Titanium Black)',
         brand: 'Samsung',
         category: 'Electronics',
         price: 129999,
         originalPrice: 139999,
         rating: 4.7,
         reviewsCount: 892,
-        description: 'Galaxy AI built-in. 200MP camera, titanium frame, S Pen included. The ultimate smartphone experience.',
+        description: 'Welcome to the era of mobile AI. With Galaxy S24 Ultra in your hands, you can unleash whole new levels of creativity, productivity and possibility.',
         inStock: true,
-        image: '📱',
+        image: 'https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?auto=format&fit=crop&q=80&w=800',
+            'https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&q=80&w=800',
+            'https://images.unsplash.com/photo-1649859398021-afbfa39e8cdf?auto=format&fit=crop&q=80&w=800'
+        ],
+        video: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+        highlights: [
+            'Built-in Galaxy AI for Live Translate and Note Assist',
+            'All-new tough Titanium exterior frame',
+            '200MP Main Camera with ProVisual AI Engine',
+            'Built-in S Pen writes across the flat display',
+            'Snapdragon 8 Gen 3 for Galaxy processor'
+        ]
     },
     {
         id: 'nike-air-max-90',
-        title: 'Nike Air Max 90 Running Shoes',
+        title: 'Nike Air Max 90 Premium Running Shoes',
         brand: 'Nike',
         category: 'Fashion',
         price: 12995,
         originalPrice: 14995,
         rating: 4.5,
         reviewsCount: 567,
-        description: 'Classic comfort meets modern style. Visible Max Air unit in the heel and waffle outsole for traction.',
+        description: 'Lace up and feel the legacy. Produced at the intersection of art, music and culture, this champion running shoe helped define the 90s.',
         inStock: true,
-        image: '👟',
+        image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=800',
+            'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?auto=format&fit=crop&q=80&w=800',
+            'https://images.unsplash.com/photo-1605340537586-ba6a7ffa4366?auto=format&fit=crop&q=80&w=800'
+        ],
+        video: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',
+        highlights: [
+            'Originally designed for performance running',
+            'Max Air unit in the heel adds unbelievable cushioning',
+            'Low-profile design elegantly frames the ankle',
+            'Rubber Waffle outsole adds heritage look and durability',
+            'Stitched overlays add retro 90s styling'
+        ],
         badge: 'New',
     },
     {
         id: 'kindle-paperwhite',
-        title: 'Kindle Paperwhite (16GB) 6.8" Display',
+        title: 'All-new Kindle Paperwhite (16 GB) – Now with a 6.8" display',
         brand: 'Amazon',
         category: 'Electronics',
         price: 13999,
         originalPrice: 15999,
         rating: 4.6,
         reviewsCount: 2103,
-        description: 'Adjustable warm light, waterproof, 6.8" display, 10 weeks of battery. Your perfect reading companion.',
+        description: 'Get lost in a book. Now with a 6.8” display and thinner borders, adjustable warm light, up to 10 weeks of battery life.',
         inStock: false,
-        image: '📚',
+        image: 'https://images.unsplash.com/photo-1592496001020-d31bd831410d?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1592496001020-d31bd831410d?auto=format&fit=crop&q=80&w=800',
+            'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=800'
+        ],
+        video: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+        highlights: [
+            'All-new 6.8” display with thinner borders',
+            'Reads like real paper, even in bright sunlight',
+            'Store thousands of titles within 16GB memory',
+            'A single charge via USB-C lasts weeks, not hours',
+            'Waterproof (IPX8) so you can read in the bath'
+        ]
     },
     {
         id: 'organic-toor-dal',
-        title: 'Organic Toor Dal Premium (1kg)',
+        title: 'FarmFresh Organic Premium Unpolished Toor Dal (1kg Pack)',
         brand: 'FarmFresh',
         category: 'Groceries',
         price: 189,
         originalPrice: 249,
         rating: 4.4,
         reviewsCount: 324,
-        description: 'Unpolished, chemical-free toor dal sourced directly from organic farms. Rich in protein and fiber.',
+        description: 'Authentic taste with zero polish. Carefully sourced from certified organic farms across India to ensure maximum nutrient retention.',
         inStock: true,
-        image: '🫘',
+        image: 'https://images.unsplash.com/photo-1585996843431-2f3b97b0aae9?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1585996843431-2f3b97b0aae9?auto=format&fit=crop&q=80&w=800',
+            'https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&q=80&w=800'
+        ],
+        highlights: [
+            '100% Certified Organic and Unpolished',
+            'Rich source of natural Protein and Dietary Fiber',
+            'Zero artificial polishing using water, oil or leather',
+            'Subject to stringent 5-step quality checks',
+            'Vacuum sealed to maintain absolute freshness'
+        ],
         badge: 'Organic',
     },
     {
         id: 'boat-airdopes-141',
-        title: 'boAt Airdopes 141 Wireless Earbuds',
+        title: 'boAt Airdopes 141 True Wireless Earbuds',
         brand: 'boAt',
         category: 'Electronics',
         price: 999,
         originalPrice: 2990,
         rating: 4.1,
         reviewsCount: 15672,
-        description: '42H playtime, ENx™ tech, BEAST mode for gaming, IPX4 water resistance. Best-selling earbuds in India.',
+        description: 'Immerse yourself into your favorite audio for hours on end. Equipped with 8mm drivers, a crystal-clear mic, and ultra-low latency specifically tuned for gaming and entertainment.',
         inStock: true,
-        image: '🎵',
+        image: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&q=80&w=800',
+            'https://images.unsplash.com/photo-1608156639585-b3a032ef9689?auto=format&fit=crop&q=80&w=800'
+        ],
+        video: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+        highlights: [
+            'Massive 42H total playtime with the charging case',
+            'ENx™ technology suppresses environmental noise during calls',
+            'BEAST™ mode features 80ms low latency for gaming',
+            'ASAP Charge: 5 mins charge = 75 mins playtime',
+            'IPX4 water and sweat resistance'
+        ],
         badge: '67% OFF',
     },
     {
         id: 'prestige-mixer',
-        title: 'Prestige Iris 750W Mixer Grinder',
+        title: 'Prestige Iris 750 Watt Mixer Grinder with 3 Stainless Steel Jars',
         brand: 'Prestige',
         category: 'Home & Kitchen',
         price: 2499,
         originalPrice: 4999,
         rating: 4.3,
         reviewsCount: 890,
-        description: '3 stainless steel jars, 750W motor, 3 speed control with incher. Perfect for Indian cooking.',
+        description: 'Your perfect kitchen companion. The powerful 750W motor tackles the toughest ingredients with ease, while the versatile jars cover your grinding, mixing, and juicing needs.',
         inStock: true,
-        image: '🍳',
+        image: 'https://images.unsplash.com/photo-1585515320110-39fb67858cfa?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1585515320110-39fb67858cfa?auto=format&fit=crop&q=80&w=800',
+            'https://images.unsplash.com/photo-1616421008682-1d5427b0b728?auto=format&fit=crop&q=80&w=800'
+        ],
+        highlights: [
+            'Heavy-duty 750 Watt pure copper motor',
+            '3 Premium Stainless Steel Jars + 1 Juicer Jar',
+            '4 Super-efficient multi-purpose stainless steel blades',
+            'Overload protection switch cuts off power during overheating',
+            '2 Years comprehensive manufacturer warranty'
+        ],
         badge: '50% OFF',
     },
     {
         id: 'levis-511-jeans',
-        title: "Levi's 511 Slim Fit Men's Jeans",
+        title: "Levi's Men's 511 Slim Fit Stretchable Jeans",
         brand: "Levi's",
         category: 'Fashion',
         price: 1799,
         originalPrice: 3599,
         rating: 4.4,
         reviewsCount: 445,
-        description: 'Classic slim fit with stretch fabric. Sits below waist, slim through hip and thigh. Timeless style.',
+        description: 'A modern slim with room to move. Added stretch for all-day comfort. The 511™ Slim Fit Jeans are a classic since right now.',
         inStock: true,
-        image: '👖',
+        image: 'https://images.unsplash.com/photo-1542272604-78fe0840c3cb?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1542272604-78fe0840c3cb?auto=format&fit=crop&q=80&w=800',
+            'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&q=80&w=800'
+        ],
+        highlights: [
+            'Classic Slim Fit — Sits precisely below the natural waist',
+            'Woven with advanced stretch technology for durability',
+            'Slim through the hip and thigh with a narrow leg',
+            'Iconic leather patch at back waist',
+            'Pre-shrunk cotton blend maintains size after washing'
+        ],
         badge: 'Sale',
     },
     {
         id: 'macbook-air-m3',
-        title: 'MacBook Air M3 15" 16GB/512GB',
+        title: 'Apple MacBook Air 15-inch with M3 chip (16GB RAM, 512GB SSD)',
         brand: 'Apple',
         category: 'Electronics',
         price: 149900,
         originalPrice: 159900,
         rating: 4.9,
         reviewsCount: 312,
-        description: 'Supercharged by M3. 18-hour battery life, Liquid Retina display, fanless design. The ultimate laptop.',
+        description: 'Supercharged by M3. The MacBook Air breezes through work and play — and the M3 chip brings even greater capabilities to the world’s most popular laptop.',
         inStock: true,
-        image: '💻',
+        image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&q=80&w=800',
+            'https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&q=80&w=800'
+        ],
+        video: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4',
+        highlights: [
+            '8-core CPU and 10-core GPU built on 3nm architecture',
+            'Massive 15.3-inch Liquid Retina display with 500 nits brightness',
+            'Incredible 18-hour battery life with MagSafe 3 charging',
+            'Fanless, totally silent aluminum unibody design',
+            '1080p FaceTime HD camera with studio-quality 3-mic array'
+        ]
     },
     {
         id: 'dyson-v12',
-        title: 'Dyson V12 Detect Slim Vacuum',
+        title: 'Dyson V12 Detect Slim Absolute Extra Vacuum Cleaner',
         brand: 'Dyson',
         category: 'Home & Kitchen',
         price: 42900,
         originalPrice: 52900,
         rating: 4.6,
         reviewsCount: 178,
-        description: 'Laser detects dust you can\'t see. Piezo sensor auto-adjusts suction power. 60 min runtime.',
+        description: 'Dyson’s lightest intelligent cordless vacuum. A precisely-angled laser makes invisible dust visible on hard floors, so you don’t miss anything.',
         inStock: true,
-        image: '🧹',
+        image: 'https://images.unsplash.com/photo-1558317374-067fb5f30001?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1558317374-067fb5f30001?auto=format&fit=crop&q=80&w=800',
+            'https://images.unsplash.com/photo-1582218084650-dd8ddcfeb29b?auto=format&fit=crop&q=80&w=800'
+        ],
+        highlights: [
+            'Illuminated cleaner head reveals hidden dust',
+            'Piezo sensor automatically sizes and counts dust particles',
+            'Reacts automatically by increasing suction on heavily soiled floors',
+            'LCD screen shows what’s been sucked up in real-time',
+            'Up to 60 minutes of fade-free suction'
+        ]
     },
     {
         id: 'the-north-face-jacket',
-        title: 'The North Face Thermoball Eco Jacket',
+        title: 'The North Face Men\'s Thermoball Eco Insulated Jacket',
         brand: 'The North Face',
         category: 'Fashion',
         price: 8999,
         originalPrice: 12999,
         rating: 4.7,
         reviewsCount: 267,
-        description: 'Lightweight, packable warmth with recycled insulation. Heat retention even when wet.',
+        description: 'Lightweight, packable warmth meets sustainable design. The ThermoBall™ Eco Jacket features a new quilting pattern and 100% post-consumer recycled insulation for outstanding warmth.',
         inStock: true,
-        image: '🧥',
+        image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&q=80&w=800',
+            'https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&q=80&w=800'
+        ],
+        highlights: [
+            '100% post-consumer recycled polyester insulation',
+            'Stows conveniently in its own chest pocket',
+            'ThermoBall™ technology retains warmth even when wet',
+            'Concealed, secure-zip hand pockets',
+            'Classic fit with internal elastic-bound cuffs'
+        ]
     },
     {
         id: 'a2-cow-milk',
-        title: 'A2 Cow Milk Fresh (500ml)',
+        title: 'Farm Fresh A2 Desi Cow Milk (500ml Glass Bottle)',
         brand: 'MilkBasket',
         category: 'Groceries',
         price: 35,
         originalPrice: 45,
         rating: 4.3,
         reviewsCount: 1890,
-        description: 'Farm-fresh A2 cow milk with no preservatives. Delivered fresh to your doorstep daily.',
+        description: '100% pure, natural, and unprocessed A2 milk collected from open-grazing indigenous Gir cows. Delivered fresh to your doorstep within hours of milking.',
         inStock: true,
-        image: '🥛',
+        image: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&q=80&w=800',
+            'https://images.unsplash.com/photo-1563636619-e9143da7973b?auto=format&fit=crop&q=80&w=800'
+        ],
+        highlights: [
+            'Sourced exclusively from free-range Gir cows',
+            'Zero preservatives, hormones, or antibiotics',
+            'Rich in essential A2 beta-casein protein',
+            'Delivered in eco-friendly glass bottles to preserve taste',
+            'Untouched by human hands from milking to packaging'
+        ]
     },
     {
         id: 'lakme-foundation',
-        title: 'Lakme 9 to 5 Primer + Matte Foundation',
+        title: 'Lakme 9 to 5 Primer + Matte Perfect Cover Foundation (25ml)',
         brand: 'Lakme',
         category: 'Beauty',
         price: 575,
         originalPrice: 750,
         rating: 4.2,
         reviewsCount: 3420,
-        description: 'Long-lasting matte finish with built-in primer. SPF 20 protection. Available in 12 shades.',
+        description: 'Your secret to a flawless, camera-ready finish. This built-in primer foundation glides on smoothly, conceals fine lines, and delivers a natural matte finish that lasts up to 16 hours.',
         inStock: true,
-        image: '💄',
+        image: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&q=80&w=800',
+            'https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&q=80&w=800'
+        ],
+        highlights: [
+            '2-in-1 formula with built-in primer for seamless blending',
+            'Provides medium to high buildable coverage',
+            'SPF 20 protects skin from harmful UV rays',
+            'Available in 16 shades tailored for Indian skin tones',
+            'Sweat-proof and non-patchy formula'
+        ],
         badge: '23% OFF',
     },
     {
         id: 'maybelline-mascara',
-        title: 'Maybelline Lash Sensational Mascara',
+        title: 'Maybelline New York Lash Sensational Waterproof Mascara',
         brand: 'Maybelline',
         category: 'Beauty',
         price: 449,
         originalPrice: 599,
         rating: 4.4,
         reviewsCount: 5670,
-        description: 'Fanning brush with 10 layers of bristles to capture every lash. Waterproof formula.',
+        description: 'Discover the icon. Our exclusive fanning brush with ten layers of bristles captures lashes from root to tip for a full-fan effect. Ophthalmologist tested.',
         inStock: true,
-        image: '👁️',
+        image: 'https://images.unsplash.com/photo-1596704017254-9b121068fb31?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1596704017254-9b121068fb31?auto=format&fit=crop&q=80&w=800',
+            'https://images.unsplash.com/photo-1625093742435-6fa192b6fb10?auto=format&fit=crop&q=80&w=800'
+        ],
+        highlights: [
+            'Exclusive fanning brush with 10 layers of bristles',
+            'Liquid ink formula builds elegantly without clumping',
+            '100% Waterproof and smudge-proof all day',
+            'Safe for contact lens wearers',
+            'Easily removed with oil-based makeup remover'
+        ]
     },
     {
         id: 'yonex-racket',
-        title: 'Yonex Nanoflare 700 Badminton Racket',
+        title: 'Yonex Nanoflare 700 Graphite Professional Badminton Racket',
         brand: 'Yonex',
         category: 'Sports',
         price: 8990,
         originalPrice: 11990,
         rating: 4.6,
         reviewsCount: 421,
-        description: 'Graphite frame with Sonic Flare System. Head light balance for rapid swing speed.',
+        description: 'Engineered for speed. The NANOFLARE 700 is a head-light racket built with unique technology and construction that helps players not only play nimbly but also achieve increased shuttle acceleration.',
         inStock: true,
-        image: '🏸',
+        image: 'https://images.unsplash.com/photo-1622279457486-640c4cb716f1?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1622279457486-640c4cb716f1?auto=format&fit=crop&q=80&w=800',
+            'https://images.unsplash.com/photo-1626245229235-5154ee42fa96?auto=format&fit=crop&q=80&w=800'
+        ],
+        video: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
+        highlights: [
+            'Sonic Flare System provides unmatched power and stability',
+            'High-modulus graphite frame with Super HMG',
+            'Aero Frame design decreases air resistance for faster swings',
+            'Built-in T-Joint creates a durable and high-strength frame',
+            'Made in Japan for tournament-grade quality'
+        ],
         badge: '25% OFF',
     },
     {
         id: 'nivia-football',
-        title: 'Nivia Storm Football Size 5',
+        title: 'Nivia Storm Machine Stitched Size 5 Football',
         brand: 'Nivia',
         category: 'Sports',
         price: 699,
         originalPrice: 999,
         rating: 4.3,
         reviewsCount: 1567,
-        description: 'Machine stitched PVC football with nylon winding. Suitable for turf and hard ground.',
+        description: 'Dominate the field with the Nivia Storm. Constructed with premium PVC and machine-stitched for shape retention, it delivers excellent flight and predictability.',
         inStock: true,
-        image: '⚽',
+        image: 'https://images.unsplash.com/photo-1614632537190-23e4146777bd?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1614632537190-23e4146777bd?auto=format&fit=crop&q=80&w=800',
+            'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&q=80&w=800'
+        ],
+        highlights: [
+            'Official Size 5 dimensions for standard match play',
+            '32-panel constructed with machine stitching',
+            'High-quality PVC exterior suitable for hard ground and turf',
+            'Rubber bladder ensures superior air retention',
+            'High visibility graphics for tracking in all weather conditions'
+        ]
     },
     {
         id: 'atomic-habits',
-        title: 'Atomic Habits by James Clear',
+        title: 'Atomic Habits: Tiny Changes, Remarkable Results by James Clear',
         brand: 'Penguin',
         category: 'Books',
         price: 399,
         originalPrice: 799,
         rating: 4.8,
         reviewsCount: 12450,
-        description: 'An easy and proven way to build good habits and break bad ones. #1 New York Times bestseller.',
+        description: 'No matter your goals, Atomic Habits offers a proven framework for improving—every day. James Clear reveals practical strategies to form good habits, break bad ones, and master tiny behaviors.',
         inStock: true,
-        image: '📖',
+        image: 'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=800',
+            'https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&q=80&w=800'
+        ],
+        highlights: [
+            'Over 15 Million Copies Sold Worldwide',
+            '#1 New York Times Bestseller',
+            'Learn the 4 Laws of Behavior Change',
+            'Includes practical strategies and worksheets',
+            'Paperback edition printed on premium acid-free paper'
+        ],
         badge: 'Bestseller',
     },
     {
         id: 'rich-dad-poor-dad',
-        title: 'Rich Dad Poor Dad by Robert Kiyosaki',
+        title: 'Rich Dad Poor Dad: What the Rich Teach Their Kids About Money',
         brand: 'Plata Publishing',
         category: 'Books',
         price: 299,
         originalPrice: 599,
         rating: 4.7,
         reviewsCount: 8900,
-        description: 'What the rich teach their kids about money that the poor and middle class do not!',
+        description: 'The #1 Personal Finance book of all time. Robert Kiyosaki challenges the myth that you need to earn a high income to be rich and explains the difference between working for money and having your money work for you.',
         inStock: true,
-        image: '📚',
+        image: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&q=80&w=800',
+            'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=800'
+        ],
+        highlights: [
+            '25th Anniversary Edition with updated economic outlooks',
+            'Explodes the myth that your house is an asset',
+            'Defines once and for all what an asset and a liability are',
+            'Shows parents why they cant rely on the school system',
+            'Translated into dozens of languages globally'
+        ]
     },
     {
         id: 'lego-city-set',
-        title: 'LEGO City Police Station Building Set',
+        title: 'LEGO City Police Station Building Kit (668 Pieces)',
         brand: 'LEGO',
         category: 'Toys',
         price: 4999,
         originalPrice: 6999,
         rating: 4.7,
         reviewsCount: 678,
-        description: '668 pieces. Includes 5 minifigures, police helicopter, and dog figure. Ages 6+.',
+        description: 'Action-packed fun awaits with this multi-level LEGO City Police Station. Featuring a jailbreak explosion function, a police helicopter, a pursuit car, and a custom police dog.',
         inStock: true,
-        image: '🧱',
+        image: 'https://images.unsplash.com/photo-1585366119957-e9730b6d0f60?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1585366119957-e9730b6d0f60?auto=format&fit=crop&q=80&w=800',
+            'https://images.unsplash.com/photo-1560961911-ba7ef651a56c?auto=format&fit=crop&q=80&w=800'
+        ],
+        highlights: [
+            'Includes 668 pieces for hours of creative building',
+            'Comes with 5 minifigures including 3 LEGO City TV characters',
+            'Features an explodiing jail cell wall and light-brick searchlight',
+            'Includes a police helicopter and criminal getaway truck',
+            'Perfect gift for children aged 6 and up'
+        ],
         badge: '29% OFF',
     },
     {
         id: 'hot-wheels-track',
-        title: 'Hot Wheels Ultimate Garage Track Set',
+        title: 'Hot Wheels Ultimate Garage Tower Track Set',
         brand: 'Hot Wheels',
         category: 'Toys',
         price: 3499,
         originalPrice: 4999,
         rating: 4.5,
         reviewsCount: 945,
-        description: 'Multi-level garage with track, car wash, and gas station. Stores 36+ cars. Ages 5-9.',
+        description: 'Inspire hours of imaginative play with an enormous Hot Wheels garage — a vertical tower with parking (easy storage) for more than 35 cars! Features a looping track, a shark obstacle, and multiple action zones.',
         inStock: true,
-        image: '🏎️',
+        image: 'https://images.unsplash.com/photo-1581235720704-06d3acfcb36f?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1581235720704-06d3acfcb36f?auto=format&fit=crop&q=80&w=800',
+            'https://images.unsplash.com/photo-1610408540847-a89f9d7756f7?auto=format&fit=crop&q=80&w=800'
+        ],
+        video: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/VolkswagenGTIReview.mp4',
+        highlights: [
+            'Enormous multi-level garage stores up to 35+ die-cast cars',
+            'Features a mechanical two-car elevator',
+            'Includes a thrilling downhill side-by-side racing track',
+            'Connects seamlessly to other Hot Wheels track sets',
+            'Action zones include a car wash and tuning shop'
+        ]
     },
 ];
 

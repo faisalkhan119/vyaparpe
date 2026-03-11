@@ -91,7 +91,10 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                                 <div key={product.id} className={`glass-panel ${styles.productCard}`}>
                                     <Link href={`/product/${product.id}`} style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', height: '100%' }}>
                                         <div className={styles.productImagePlaceholder}>
-                                            <div className={styles.productEmoji}>{product.image}</div>
+                                            <div className={styles.productEmoji}>
+                                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                <img src={product.image} alt={product.title} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                                            </div>
                                             {product.badge && <span className={styles.badgeSale}>{product.badge}</span>}
                                         </div>
                                         <div className={styles.productInfo}>

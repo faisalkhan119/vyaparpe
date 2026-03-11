@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styles from './CategoryPills.module.css';
 
 const categories = [
@@ -17,33 +17,76 @@ const categories = [
 
 export default function CategoryPills() {
     const [isScrolledDown, setIsScrolledDown] = useState(false);
-    const [lastScrollY, setLastScrollY] = useState(0);
+    const isScrolledDownRef = useRef(false);
+    const lastScrollY = useRef(0);
+    const isTransitioning = useRef(false);
+    const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
+        lastScrollY.current = window.scrollY;
+
         const handleScroll = () => {
             const currentScrollY = window.scrollY;
-            const scrollDifference = currentScrollY - lastScrollY;
 
-            // Apply hysteresis: only change state if scroll amount is significant (>20px)
-            if (Math.abs(scrollDifference) > 20) {
-                if (scrollDifference > 0 && currentScrollY > 50) {
-                    setIsScrolledDown(true); // Scrolling down significantly - compress!
-                } else if (scrollDifference < 0) {
-                    setIsScrolledDown(false); // Scrolling up significantly - expand!
+            // Always expand at the very top, forcibly
+            if (currentScrollY <= 10) {
+                if (isScrolledDownRef.current) {
+                    setIsScrolledDown(false);
+                    isScrolledDownRef.current = false;
+                    
+                    isTransitioning.current = true;
+                    if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
+                    scrollTimeout.current = setTimeout(() => {
+                        lastScrollY.current = window.scrollY;
+                        isTransitioning.current = false;
+                    }, 350);
+                } else if (!isTransitioning.current) {
+                    lastScrollY.current = currentScrollY;
                 }
-                setLastScrollY(currentScrollY);
+                return;
             }
 
-            // Always expand at the very top, regardless of threshold
-            if (currentScrollY < 10) {
+            // Ignored during layout shift transitions to stop vibration loops
+            if (isTransitioning.current) return;
+
+            const delta = currentScrollY - lastScrollY.current;
+
+            // Using 5px sensitivity for "instant" feel, without triggering on micro-jitters
+            if (delta > 5 && !isScrolledDownRef.current) {
+                // Scrolled down -> Shrink
+                setIsScrolledDown(true);
+                isScrolledDownRef.current = true;
+                
+                isTransitioning.current = true;
+                if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
+                scrollTimeout.current = setTimeout(() => {
+                    lastScrollY.current = window.scrollY; // Reset anchor to post-shift position
+                    isTransitioning.current = false;
+                }, 350);
+                
+            } else if (delta < -5 && isScrolledDownRef.current) {
+                // Scrolled up -> Expand
                 setIsScrolledDown(false);
-                setLastScrollY(currentScrollY);
+                isScrolledDownRef.current = false;
+                
+                isTransitioning.current = true;
+                if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
+                scrollTimeout.current = setTimeout(() => {
+                    lastScrollY.current = window.scrollY;
+                    isTransitioning.current = false;
+                }, 350);
+                
+            } else if (!isTransitioning.current) {
+                // If scrolling in the 'same' direction as current state, keep the anchor updated
+                if ((delta > 0 && isScrolledDownRef.current) || (delta < 0 && !isScrolledDownRef.current)) {
+                    lastScrollY.current = currentScrollY;
+                }
             }
         };
 
         window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
-    }, [lastScrollY]);
+    }, []);
 
     return (
         <div className={`${styles.categoryContainer} ${isScrolledDown ? styles.scrolled : ''}`}>

@@ -21,14 +21,29 @@
 
 .mainGrid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
+    grid-template-columns: 1.2fr 1fr; /* 55% / 45% split for better text fit */
+    gap: 3rem; /* Reduced gap to fit 1440px wide safely */
     margin-bottom: 4rem;
 }
 
 .infoColumn {
     display: flex;
     flex-direction: column;
+    position: sticky;
+    top: 100px; /* Offset below header */
+    height: fit-content;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+    padding-right: 1rem; /* Prevent scrollbar from touching content */
+}
+
+/* Custom scrollbar for info column */
+.infoColumn::-webkit-scrollbar {
+    width: 6px;
+}
+.infoColumn::-webkit-scrollbar-thumb {
+    background: rgba(124, 58, 237, 0.2);
+    border-radius: 4px;
 }
 
 .brandBadge {
@@ -148,7 +163,7 @@
 @media (max-width: 900px) {
     .mainGrid {
         grid-template-columns: 1fr;
-        gap: 2rem;
+        gap: 2rem; /* Restore standard gap */
     }
 }
 

@@ -1,79 +1,288 @@
 .galleryWrapper {
     display: flex;
     gap: 1.5rem;
-    position: sticky;
-    top: 100px;
 }
 
-.thumbnails {
-    display: flex;
-    flex-direction: column;
+/* NEW: Flipkart-Style Desktop Grid Layout */
+.desktopGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 1rem;
-}
-
-.thumbnailBtn {
-    width: 80px;
-    height: 80px;
-    border-radius: var(--radius-md);
-    border: 2px solid transparent;
-    background: var(--bg-card);
-    cursor: pointer;
-    transition: all 0.2s;
-    padding: 0;
-    overflow: hidden;
-}
-
-.thumbnailBtn:hover {
-    border-color: var(--border-color);
-}
-
-.thumbnailBtn.active {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.3);
-}
-
-.thumbPlaceholder {
     width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-muted);
 }
 
-.mainImageContainer {
-    flex-grow: 1;
-    aspect-ratio: 1 / 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.gridItem {
+    width: 100%;
+    aspect-ratio: 1 / 1.2;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
     overflow: hidden;
-}
-
-.mainImagePlaceholder {
-    text-align: center;
-    transition: transform 0.3s ease;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: zoom-in;
 }
 
-.mainImageContainer:hover .mainImagePlaceholder {
-    transform: scale(1.1);
+.gridItem img, .gridItem video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
-@media (max-width: 600px) {
+.gridItem.videoItem::before {
+    content: "▶";
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    background: rgba(0,0,0,0.5);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.gridHighlights {
+    padding: 2rem;
+    background: var(--bg-dark);
+}
+
+.gridHighlights h3 {
+    margin-bottom: 1rem;
+    color: var(--text-main);
+}
+
+.gridHighlights ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.gridHighlights li {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.gridHighlights li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--success);
+    font-weight: bold;
+}
+
+.swipeContainer {
+    display: none; /* Desktop hidden */
+}
+
+@media (max-width: 768px) {
     .galleryWrapper {
-        flex-direction: column-reverse;
+        flex-direction: column;
+        /* Remove full-bleed logic here so we don't mess up parent relative stacking */
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 1rem;
     }
 
-    .thumbnails {
-        flex-direction: row;
+    /* Stable Wrapper for Overlays + Scroll Container */
+    .mobileGalleryWrapper {
+        position: relative;
+        width: 100%;
+        padding-bottom: 2rem; /* Provide safe space for indicators at the bottom */
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Hide desktop layout */
+    .desktopGrid {
+        display: none !important; /* Force hide to prevent flex shifting */
+    }
+
+    /* Show Mobile Swipe Gallery */
+    .swipeContainer {
+        display: flex;
         overflow-x: auto;
-        padding-bottom: 0.5rem;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none; /* Firefox */
+        width: 100%;
+    }
+    
+    .swipeContainer::-webkit-scrollbar {
+        display: none; /* Safari/Chrome */
     }
 
-    .thumbnailBtn {
-        min-width: 70px;
-        height: 70px;
+    .swipeItem {
+        flex: 0 0 100%; /* Show exact 1 box per swipe */
+        scroll-snap-align: center;
+        scroll-snap-stop: always;
+        min-height: 400px; /* Allow varying heights, adapt to max */
+        background: var(--bg-card);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+
+    /* Media content fitting */
+    .swipeItem img, .swipeItem video {
+        width: 100%;
+        height: 100%;
+        object-fit: contain; /* Don't crop, letterbox if needed */
+        max-height: 500px;
+    }
+
+    .swipeItemPlaceholder {
+        font-size: 5rem;
+        opacity: 0.5;
+    }
+
+    /* Highlights Slide styling */
+    .highlightsSlide {
+        padding: 2rem;
+        text-align: left;
+        align-items: flex-start;
+        background: var(--bg-darker);
+    }
+    
+    .highlightsSlide h3 {
+        margin-bottom: 1rem;
+        color: var(--text-main);
+    }
+
+    .highlightsSlide ul {
+        list-style: none; /* remove default bullets */
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .highlightsSlide li {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+        position: relative;
+        padding-left: 1.5rem;
+    }
+    
+    .highlightsSlide li::before {
+        content: '✓';
+        position: absolute;
+        left: 0;
+        color: var(--success);
+        font-weight: bold;
+    }
+
+    /* Mobile Overlays */
+    .imageOverlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 2rem; /* Above indicators */
+        pointer-events: none; /* Let swipes pass through */
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        z-index: 10;
+        transition: opacity 0.3s ease;
+        /* Subtle gradient to protect white icons on light images */
+        background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, transparent 20%, transparent 80%, rgba(0,0,0,0.05) 100%);
+    }
+
+    .imageOverlay.hidden {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .topActions {
+        display: flex;
+        justify-content: flex-end;
+        pointer-events: auto;
+    }
+
+    .bottomActions {
+        display: flex;
+        justify-content: flex-start;
+        pointer-events: auto;
+    }
+
+    .actionBtn {
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid var(--border-color);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        font-size: 1.2rem;
+    }
+
+    .ratingBadge {
+        background: rgba(255, 255, 255, 0.95);
+        border: 1px solid var(--border-color);
+        padding: 0.25rem 0.5rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        cursor: pointer;
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .ratingBadge:hover {
+        background: var(--bg-card);
+    }
+
+    .ratingBadge span.count {
+        color: var(--text-muted);
+        font-weight: 500;
+        margin-left: 0.25rem;
+    }
+
+    /* Progress Indicators (Dots) */
+    .indicatorContainer {
+        position: absolute;
+        bottom: 0.5rem;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+        z-index: 10;
+        pointer-events: none; /* Avoid blocking clicks */
+    }
+
+    .indicatorDot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--text-muted);
+        opacity: 0.3;
+        transition: all 0.3s ease;
+    }
+
+    .indicatorDot.active {
+        opacity: 1;
+        background: var(--primary);
+        transform: scale(1.1);
     }
 }

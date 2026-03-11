@@ -35,7 +35,10 @@ export default function Home() {
               <Link href={`/product/${product.id}`} key={product.id} className={`glass-panel ${styles.productCard}`}>
                 {product.badge && <span className={styles.badge}>{product.badge}</span>}
                 <div className={styles.productImagePlaceholder}>
-                  <div className={styles.imageIcon}>{product.image}</div>
+                  <div className={styles.imageIcon}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={product.image} alt={product.title} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                  </div>
                 </div>
                 <div className={styles.productInfo}>
                   <span className={styles.productCategory}>{product.category}</span>
@@ -71,7 +74,10 @@ export default function Home() {
             {trending.map((product, index) => (
               <Link href={`/product/${product.id}`} key={product.id} className={`glass-panel ${styles.trendingCard}`}>
                 <div className={styles.trendRank}>#{index + 1}</div>
-                <div className={styles.trendImage}>{product.image}</div>
+                <div className={styles.trendImage}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={product.image} alt={product.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                </div>
                 <div className={styles.trendInfo}>
                   <h4>{product.title}</h4>
                   <div className={styles.trendMeta}>
@@ -93,7 +99,10 @@ export default function Home() {
           <div className={styles.recentGrid}>
             {recentlyViewed.map((product) => (
               <Link href={`/product/${product.id}`} key={product.id} className={`glass-panel ${styles.recentCard}`}>
-                <div className={styles.recentImage}>{product.image}</div>
+                <div className={styles.recentImage}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={product.image} alt={product.title} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'var(--radius-md)' }} />
+                </div>
                 <div className={styles.recentInfo}>
                   <span className={styles.productCategory}>{product.brand}</span>
                   <h4>{product.title}</h4>

@@ -79,10 +79,10 @@ export default function Navbar() {
                             🔔
                             <span className={styles.bellDot}></span>
                         </button>
-                        <button className="btn btn-primary" onClick={() => setIsCartOpen(true)}>🛒 Cart (2)</button>
+                        <button className={`btn btn-primary ${styles.mobileHide}`} onClick={() => setIsCartOpen(true)}>🛒 Cart (2)</button>
 
                         {/* User Profile Dropdown */}
-                        <div className={styles.profileWrapper} ref={profileRef}>
+                        <div className={`${styles.profileWrapper} ${styles.mobileHide}`} ref={profileRef}>
                             <button
                                 className={styles.profileBtn}
                                 onClick={() => setIsProfileOpen(!isProfileOpen)}

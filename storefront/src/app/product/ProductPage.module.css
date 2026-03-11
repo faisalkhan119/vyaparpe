@@ -136,8 +136,43 @@
 
 @media (max-width: 900px) {
     .mainGrid {
-        grid-template-columns: 1fr;
+        display: flex; /* Switch from grid to flex for fine-grained ordering */
+        flex-direction: column;
         gap: 2rem;
+    }
+
+    /* Flatten infoColumn so its children can be ordered with galleryColumn */
+    .infoColumn {
+        display: contents;
+    }
+
+    .galleryColumn {
+        order: 1; /* Images first */
+    }
+
+    .orderVariantsGroup {
+        order: 2; /* Variants right after images */
+        margin-top: -1rem; /* tighten gap */
+    }
+
+    .orderTitleGroup {
+        order: 3; /* Title after variants */
+    }
+
+    .orderPriceGroup {
+        order: 4;
+    }
+
+    .orderDeliveryGroup {
+        order: 5;
+    }
+
+    .orderActionsGroup {
+        order: 6;
+    }
+
+    .orderTrustGroup {
+        order: 7;
     }
 }
 
