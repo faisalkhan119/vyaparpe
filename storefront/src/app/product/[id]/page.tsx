@@ -45,9 +45,90 @@ export default async function ProductDetailsPage({
 
     // MOCK: Adjust price and image based on variant
     const product = { ...baseProduct };
-    if (activeVariant) {
-        product.image = activeVariant.thumb; // Update main image based on variant
+    let derivedPrice = product.price;
+    let derivedOriginalPrice = product.originalPrice;
+    let selectedOptions: Record<string, string | string[]> = {};
+    let variantLabels: string[] = [];
+
+    // Process Modern Variant Groups
+    if (product.variantGroups) {
+        product.variantGroups.forEach(group => {
+            const rawParamUrl = resolvedSearchParams[group.id] as string;
+            
+            // 0. Enforce dependsOn visibility logic
+            if (group.dependsOn && group.dependsOn.length > 0) {
+                const isMet = group.dependsOn.some(dep => resolvedSearchParams[dep.groupId] === dep.optionId);
+                if (!isMet) return; // Skip processing hidden variants
+            }
+
+            if (group.type === 'text') {
+                if (rawParamUrl) {
+                    selectedOptions.customText = rawParamUrl;
+                    variantLabels.push(`${group.name}: ${rawParamUrl}`);
+                }
+            } else if (group.type === 'file') {
+                if (rawParamUrl) {
+                    selectedOptions.uploadedFileUrl = rawParamUrl;
+                    variantLabels.push(`File: ${rawParamUrl}`);
+                }
+            } else if (group.type === 'date') {
+                if (rawParamUrl) {
+                    const [d, t] = rawParamUrl.split('|');
+                    if (d) selectedOptions.selectedDate = d;
+                    if (t) selectedOptions.selectedTime = t;
+                    variantLabels.push(`${group.name}: ${d}${t ? ` @ ${t}` : ''}`);
+                }
+            } else if (group.type === 'colorpicker') {
+                if (rawParamUrl) {
+                    selectedOptions.customColorHex = rawParamUrl;
+                    variantLabels.push(`Color: ${rawParamUrl}`);
+                    const option = group.options[0];
+                    if (option && option.priceModifier) {
+                        // For custom colors, the first option might hold the premium fee
+                        derivedPrice += option.priceModifier;
+                        derivedOriginalPrice += option.priceModifier;
+                    }
+                }
+            } else if (group.type === 'multiselect') {
+                if (rawParamUrl) {
+                    // rawParamUrl looks like "choc:2,van:4"
+                    const items = rawParamUrl.split(',');
+                    selectedOptions.multiselectItems = items;
+                    // Try to generate human readable labels for the array
+                    const niceLabels = items.map(combo => {
+                        const [id, count] = combo.split(':');
+                        const opt = group.options.find(o => o.id === id);
+                        return opt ? `${count}x ${opt.label}` : `${count}x ${id}`;
+                    });
+                    variantLabels.push(`Flavors: ${niceLabels.join(', ')}`);
+                }
+            } else {
+                // Find selected option
+                const activeOption = group.options.find(o => o.id === rawParamUrl) || (group.type !== 'checkbox' ? group.options[0] : null);
+                
+                if (activeOption) {
+                    if (activeOption.priceModifier) {
+                        derivedPrice += activeOption.priceModifier;
+                        derivedOriginalPrice += activeOption.priceModifier;
+                    }
+                    if (group.type === 'subscription') {
+                        selectedOptions.subscriptionInterval = activeOption.id;
+                    }
+                    if (group.type === 'image' && activeOption.thumb) {
+                        product.image = activeOption.thumb;
+                    }
+                    variantLabels.push(`${group.name}: ${activeOption.label}`);
+                }
+            }
+        });
+    } else if (activeVariant) {
+        // Fallback for legacy variants
+        product.image = activeVariant.thumb; 
+        variantLabels.push(activeVariant.name);
     }
+    
+    product.price = derivedPrice;
+    product.originalPrice = derivedOriginalPrice;
 
     // get related products (same category, exclude current)
     const related = products.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4);
@@ -119,7 +200,10 @@ export default async function ProductDetailsPage({
 
                         <div className={styles.orderVariantsGroup}>
                             {/* NEW: Variants pulled out and placed logically near actions */}
-                            <ProductVariants variants={productVariants} />
+                            <ProductVariants 
+                                legacyVariants={productVariants} 
+                                variantGroups={(product as any).variantGroups} 
+                            />
                             <hr className={styles.divider} style={{ marginTop: '1.5rem', marginBottom: '1.5rem' }} />
                         </div>
 
@@ -130,7 +214,8 @@ export default async function ProductDetailsPage({
                                 price={product.price}
                                 image={product.image}
                                 inStock={product.inStock}
-                                variant={activeVariant?.id}
+                                variantLabels={variantLabels}
+                                selectedOptions={selectedOptions}
                             />
                         </div>
 
@@ -146,41 +231,48 @@ export default async function ProductDetailsPage({
                 </div>
 
                 {/* Product Information Tabs (Specs, Reviews, etc) */}
-                <ProductTabs />
+                <ProductTabs product={{
+                    title: product.title,
+                    description: product.description,
+                    rating: product.rating,
+                    reviewsCount: product.reviewsCount,
+                    brand: product.brand,
+                    category: product.category
+                }} />
 
                 {/* Product Questions & Answers */}
-                <ProductQA />
+                <ProductQA productName={product.title} />
 
                 {/* Frequently Bought Together */}
                 <section className={styles.relatedSection}>
                     <h2>Frequently Bought Together</h2>
                     <div className={styles.bundleRow}>
-                        <div className={styles.bundleItem}>
-                            <div className={styles.bundleEmoji}>
-                                {/* eslint-disable-next-line @next/next/no-img-element */}
-                                <img src={product.image} alt={product.title} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-                            </div>
-                            <p>{product.title}</p>
-                            <span>₹{product.price.toLocaleString()}</span>
-                        </div>
-                        <span className={styles.plusSign}>+</span>
-                        {related.slice(0, 2).map(r => (
-                            <div key={r.id}>
-                                <Link href={`/product/${r.id}`} className={styles.bundleItem}>
-                                    <div className={styles.bundleEmoji}>
+                        {[product, ...related.slice(0, 2)].flatMap((item, index, arr) => {
+                            const node = (
+                                <Link key={item.id} href={`/product/${item.id}`} className={styles.bundleItem}>
+                                    <div className={styles.bundleImage}>
                                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                                        <img src={r.image} alt={r.title} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                                        <img src={item.image} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                                     </div>
-                                    <p>{r.title}</p>
-                                    <span>₹{r.price.toLocaleString()}</span>
+                                    <p>{item.title}</p>
+                                    <span>₹{item.price.toLocaleString()}</span>
                                 </Link>
-                                <span className={styles.plusSign}>+</span>
+                            );
+                            if (index < arr.length - 1) {
+                                return [node, <span key={`plus-${item.id}`} className={styles.plusSign}>+</span>];
+                            }
+                            return [node];
+                        })}
+                        <div className={styles.bundleTotal}>
+                            <div className={styles.bundleTotalText}>Total Price:</div>
+                            <div className={styles.bundleTotalPrice}>
+                                ₹{(product.price + related.slice(0, 2).reduce((s, r) => s + r.price, 0)).toLocaleString()}
                             </div>
-                        ))}
+                            <button className="btn btn-primary" style={{ marginTop: '0.5rem', width: '100%' }}>
+                                Add All {1 + Math.min(2, related.length)} to Cart
+                            </button>
+                        </div>
                     </div>
-                    <button className="btn btn-primary" style={{ marginTop: '1.5rem' }}>
-                        Buy All 3 — ₹{(product.price + related.slice(0, 2).reduce((s, r) => s + r.price, 0)).toLocaleString()} (Save 10%)
-                    </button>
                 </section>
 
                 {/* Related Products */}

@@ -11,27 +11,26 @@ interface QA {
     upvotes: number;
 }
 
-const mockQAs: QA[] = [
-    {
-        id: 'q1',
-        question: 'Does this come with international warranty?',
-        answer: 'Yes, it includes a 1-year global manufacturer warranty valid worldwide.',
-        date: '2 months ago',
-        author: 'Rahul Sharma',
-        upvotes: 14
-    },
-    {
-        id: 'q2',
-        question: 'What is the exact return window?',
-        answer: 'You can return the product no-questions-asked within 7 days of delivery.',
-        date: '1 week ago',
-        author: 'Vyaparpe Support',
-        upvotes: 45
-    }
-];
-
-export default function ProductQA() {
-    const [qas, setQas] = useState<QA[]>(mockQAs);
+export default function ProductQA({ productName }: { productName?: string }) {
+    const defaultName = productName || 'this product';
+    const [qas, setQas] = useState<QA[]>([
+        {
+            id: 'q1',
+            question: `Does ${defaultName} come with international warranty?`,
+            answer: 'Yes, it includes a 1-year global manufacturer warranty valid worldwide.',
+            date: '2 months ago',
+            author: 'Rahul Sharma',
+            upvotes: 14
+        },
+        {
+            id: 'q2',
+            question: `What is the exact return window for ${defaultName}?`,
+            answer: 'You can return the product no-questions-asked within 7 days of delivery.',
+            date: '1 week ago',
+            author: 'Vyaparpe Support',
+            upvotes: 45
+        }
+    ]);
     const [newQuestion, setNewQuestion] = useState('');
 
     const handleAsk = (e: React.FormEvent) => {

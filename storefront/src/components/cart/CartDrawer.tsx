@@ -49,7 +49,11 @@ export default function CartDrawer({ isOpen, onClose }: { isOpen: boolean, onClo
                                             <h4>{item.name}</h4>
                                             <button className={styles.removeBtn} onClick={() => removeFromCart(item.id)}>🗑️</button>
                                         </div>
-                                        {item.variant && <p className={styles.itemVariant}>Variant: {item.variant}</p>}
+                                        {item.variantLabels?.map((label, i) => (
+                                            <div key={i} className="text-muted mt-1" style={{ fontSize: '0.85rem' }}>
+                                                {label}
+                                            </div>
+                                        ))}
                                         <div className={styles.itemBottomRow}>
                                             <div className={styles.qtyControls}>
                                                 <button onClick={() => updateQuantity(item.id, -1)}>−</button>

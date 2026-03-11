@@ -9,7 +9,8 @@ export interface CartItem {
     price: number;
     image: string;
     quantity: number;
-    variant?: string;
+    variantLabels?: string[]; // E.g. ["Color: Black", "Storage: 1TB"]
+    selectedOptions?: Record<string, string | string[] | undefined>; // Clean mapping of options
 }
 
 interface CartContextType {
@@ -50,10 +51,15 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
     const addToCart = useCallback((item: Omit<CartItem, 'id' | 'quantity'>) => {
         setCartItems(prev => {
-            const existing = prev.find(ci => ci.productId === item.productId && ci.variant === item.variant);
+            const existing = prev.find(ci => 
+                ci.productId === item.productId && 
+                JSON.stringify(ci.selectedOptions || {}) === JSON.stringify(item.selectedOptions || {})
+            );
+            
             if (existing) {
                 return prev.map(ci =>
-                    ci.productId === item.productId && ci.variant === item.variant
+                    ci.productId === item.productId && 
+                    JSON.stringify(ci.selectedOptions || {}) === JSON.stringify(item.selectedOptions || {})
                         ? { ...ci, quantity: ci.quantity + 1 }
                         : ci
                 );

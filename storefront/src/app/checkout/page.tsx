@@ -319,7 +319,11 @@ export default function CheckoutPage() {
                                         </div>
                                         <div className={styles.miniItemInfo}>
                                             <h4>{item.name.length > 25 ? item.name.slice(0, 25) + '...' : item.name}</h4>
-                                            {item.variant && <span>{item.variant}</span>}
+                                            {item.variantLabels?.map((label, i) => (
+                                                <div key={i} className="text-muted mt-1" style={{ fontSize: '0.85rem' }}>
+                                                    {label}
+                                                </div>
+                                            ))}
                                         </div>
                                         <div className={styles.miniPrice}>₹{(item.price * item.quantity).toLocaleString()}</div>
                                     </div>

@@ -231,52 +231,115 @@
 .bundleRow {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    flex-wrap: wrap;
+    gap: 1.5rem;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+    scrollbar-width: thin;
+}
+
+.bundleRow::-webkit-scrollbar {
+    height: 6px;
+}
+
+.bundleRow::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 10px;
 }
 
 .bundleItem {
+    flex: 0 0 160px;
     text-align: center;
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
-    padding: 1.25rem;
-    min-width: 160px;
+    padding: 1rem;
     text-decoration: none;
     color: inherit;
-    transition: border-color 0.2s;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .bundleItem:hover {
     border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
-.bundleEmoji {
-    font-size: 2.5rem;
-    display: block;
-    margin-bottom: 0.5rem;
+.bundleImage {
+    height: 120px;
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    background: var(--bg-dark);
+    border-radius: var(--radius-sm);
+    padding: 0.5rem;
 }
 
 .bundleItem p {
     color: var(--text-muted);
-    font-size: 0.8rem;
-    margin-bottom: 0.25rem;
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    flex-grow: 1;
 }
 
 .bundleItem span {
     color: var(--text-main);
     font-weight: 700;
+    font-size: 1.1rem;
 }
 
 .plusSign {
     font-size: 1.5rem;
     color: var(--text-muted);
+    font-weight: 400;
+    flex-shrink: 0;
+}
+
+.bundleTotal {
+    flex: 0 0 220px;
+    padding: 1.5rem;
+    background: var(--bg-dark);
+    border-radius: var(--radius-md);
+    border: 1px dashed var(--border-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.bundleTotalText {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 0.25rem;
+}
+
+.bundleTotalPrice {
+    font-size: 1.5rem;
     font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .bundleRow {
+        gap: 1rem;
+    }
+    
+    .bundleTotal {
+        flex: 0 0 100%;
+        margin-top: 1rem;
+    }
 }
 
 .relatedGrid {

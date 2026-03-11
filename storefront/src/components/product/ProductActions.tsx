@@ -10,10 +10,11 @@ interface ProductActionsProps {
     price: number;
     image: string;
     inStock: boolean;
-    variant?: string;
+    variantLabels?: string[];
+    selectedOptions?: Record<string, string | string[] | undefined>;
 }
 
-export default function ProductActions({ productId, name, price, image, inStock, variant }: ProductActionsProps) {
+export default function ProductActions({ productId, name, price, image, inStock, variantLabels, selectedOptions }: ProductActionsProps) {
     const { addToCart } = useCart();
     const router = useRouter();
     const [cartAdded, setCartAdded] = useState(false);
@@ -21,14 +22,14 @@ export default function ProductActions({ productId, name, price, image, inStock,
 
     const handleAddToCart = () => {
         if (!inStock) return;
-        addToCart({ productId, name, price, image, variant });
+        addToCart({ productId, name, price, image, variantLabels, selectedOptions });
         setCartAdded(true);
         setTimeout(() => setCartAdded(false), 2500);
     };
 
     const handleBuyNow = () => {
         if (!inStock) return;
-        addToCart({ productId, name, price, image, variant });
+        addToCart({ productId, name, price, image, variantLabels, selectedOptions });
         router.push('/checkout');
     };
 
@@ -45,7 +46,7 @@ export default function ProductActions({ productId, name, price, image, inStock,
                     disabled={!inStock || cartAdded}
                 >
                     <span className="icon">🛒</span>
-                    {!inStock ? 'Out of Stock' : cartAdded ? '✓ Added to Cart!' : 'Add to Cart'}
+                    {!inStock ? 'Out of Stock' : cartAdded ? '✓ Added!' : selectedOptions?.subscriptionInterval ? 'Subscribe Now' : 'Add to Cart'}
                 </button>
                 <button
                     className={`btn btn-outline ${styles.iconBtn}`}
@@ -62,7 +63,7 @@ export default function ProductActions({ productId, name, price, image, inStock,
                 onClick={handleBuyNow}
                 disabled={!inStock}
             >
-                {inStock ? 'Buy it Now' : 'Out of Stock'}
+                {inStock ? (selectedOptions?.subscriptionInterval ? 'Subscribe & Checkout' : 'Buy it Now') : 'Out of Stock'}
             </button>
         </div>
     );

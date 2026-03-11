@@ -114,6 +114,13 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                                                 <span className={styles.ratingBadge}>{product.rating} ★</span>
                                                 <span className={styles.reviewCount}>({product.reviewsCount.toLocaleString()} reviews)</span>
                                             </div>
+                                            {product.highlights && product.highlights.length > 0 && (
+                                                <ul className={styles.cardHighlights}>
+                                                    {product.highlights.slice(0, 3).map((highlight, idx) => (
+                                                        <li key={idx}>{highlight}</li>
+                                                    ))}
+                                                </ul>
+                                            )}
                                         </div>
                                     </Link>
                                     <div style={{ padding: '0 1rem 1rem 1rem', marginTop: 'auto' }}>

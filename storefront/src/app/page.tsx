@@ -54,6 +54,13 @@ export default function Home() {
                       </div>
                       <div className={styles.productRating}>★ {product.rating}</div>
                     </div>
+                    {product.highlights && product.highlights.length > 0 && (
+                      <ul className={styles.cardHighlights}>
+                        {product.highlights.slice(0, 3).map((highlight, idx) => (
+                          <li key={idx}>{highlight}</li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
                 </Link>
                 <div className={styles.cardAction} style={{ padding: '0 1.25rem 1.25rem 1.25rem' }}>

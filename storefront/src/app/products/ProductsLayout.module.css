@@ -118,6 +118,9 @@
     height: 100%;
     object-fit: cover;
     display: block;
+    /* Failsafe against broken image alt-text breaking layout */
+    color: transparent;
+    font-size: 0;
 }
 
 .badgeSale {
@@ -197,6 +200,33 @@
     font-size: 0.875rem;
     color: var(--text-muted);
 }
+
+.cardHighlights {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem 0;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.cardHighlights li {
+    margin-bottom: 0.35rem;
+    position: relative;
+    padding-left: 0.85rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.cardHighlights li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--text-muted);
+}
+
 
 .pagination {
     display: flex;

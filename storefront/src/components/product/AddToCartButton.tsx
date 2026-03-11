@@ -9,7 +9,8 @@ interface AddToCartButtonProps {
     price: number;
     image: string;
     inStock: boolean;
-    variant?: string;
+    variantLabels?: string[];
+    selectedOptions?: Record<string, string | string[] | undefined>;
     className?: string;
     style?: React.CSSProperties;
 }
@@ -20,7 +21,8 @@ export default function AddToCartButton({
     price,
     image,
     inStock,
-    variant,
+    variantLabels,
+    selectedOptions,
     className,
     style
 }: AddToCartButtonProps) {
@@ -36,7 +38,7 @@ export default function AddToCartButton({
             return;
         }
 
-        addToCart({ productId, name, price, image, variant });
+        addToCart({ productId, name, price, image, variantLabels, selectedOptions });
         setAdded(true);
         setTimeout(() => setAdded(false), 2000);
     };

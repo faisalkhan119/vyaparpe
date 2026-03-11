@@ -2,7 +2,16 @@
 import { useState } from 'react';
 import styles from './ProductTabs.module.css';
 
-export default function ProductTabs() {
+interface ProductData {
+    title: string;
+    description: string;
+    rating: number;
+    reviewsCount: number;
+    category: string;
+    brand: string;
+}
+
+export default function ProductTabs({ product }: { product: ProductData }) {
     const [activeTab, setActiveTab] = useState('description');
 
     return (
@@ -31,13 +40,9 @@ export default function ProductTabs() {
             <div className={styles.tabContent}>
                 {activeTab === 'description' && (
                     <div className={styles.contentPane + " animate-fade-in"}>
-                        <h3>Industry-Leading Noise Cancellation</h3>
-                        <p>
-                            From airplane noise to people&apos;s voices, our WH-1000XM5 wireless headphones with multiple microphone noise cancelling keep out more high and mid frequency sounds than ever. And with Auto NC Optimizer, noise cancelling is automatically optimized based on your wearing conditions and environment.
-                        </p>
-                        <h3>Multi Noise Sensor technology</h3>
-                        <p>
-                            With four microphones on each earcup, this is our biggest ever step forward in noise cancelling. Ambient sound is captured even more accurately for a dramatic reduction in high frequency noise.
+                        <h3>{product.title}</h3>
+                        <p style={{ whiteSpace: 'pre-line', lineHeight: '1.6' }}>
+                            {product.description}
                         </p>
                     </div>
                 )}
@@ -47,28 +52,28 @@ export default function ProductTabs() {
                         <table className={styles.specsTable}>
                             <tbody>
                                 <tr>
-                                    <td>Headphone Type</td>
-                                    <td>Closed, dynamic</td>
+                                    <td>Brand</td>
+                                    <td>{product.brand}</td>
                                 </tr>
                                 <tr>
-                                    <td>Driver Unit</td>
-                                    <td>30mm</td>
+                                    <td>Category</td>
+                                    <td>{product.category}</td>
                                 </tr>
                                 <tr>
-                                    <td>Input(s)</td>
-                                    <td>Stereo Mini Jack</td>
+                                    <td>Condition</td>
+                                    <td>Brand New, Sealed</td>
                                 </tr>
                                 <tr>
-                                    <td>Bluetooth Version</td>
-                                    <td>Version 5.2</td>
+                                    <td>Warranty</td>
+                                    <td>1 Year Standard Manufacturer Warranty</td>
                                 </tr>
                                 <tr>
-                                    <td>Battery Charging Time</td>
-                                    <td>Approx. 3.5 hrs</td>
+                                    <td>Returns</td>
+                                    <td>7 Days Replacement Policy</td>
                                 </tr>
                                 <tr>
-                                    <td>Battery Life (Continuous Music Playback)</td>
-                                    <td>Max. 30 hrs (NC ON), Max. 40 hrs (NC OFF)</td>
+                                    <td>Origin</td>
+                                    <td>Imported / Made in India</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -78,9 +83,9 @@ export default function ProductTabs() {
                 {activeTab === 'reviews' && (
                     <div className={styles.contentPane + " animate-fade-in"}>
                         <div className={styles.reviewsSummary}>
-                            <div className={styles.ratingBig}>4.8</div>
+                            <div className={styles.ratingBig}>{product.rating}</div>
                             <div className={styles.starsRow}>★★★★★</div>
-                            <p>Based on 1,245 reviews</p>
+                            <p>Based on {product.reviewsCount.toLocaleString()} reviews</p>
                             <button className="btn btn-outline" style={{ marginTop: '1rem' }}>Write a Review</button>
                         </div>
 
@@ -93,9 +98,9 @@ export default function ProductTabs() {
                                     <span className={styles.reviewDate}>2 days ago</span>
                                 </div>
                                 <div className={styles.reviewStars}>★★★★★</div>
-                                <h4 className={styles.reviewTitle}>Best ANC on the market</h4>
+                                <h4 className={styles.reviewTitle}>Excellent Quality</h4>
                                 <p className={styles.reviewText}>
-                                    The noise cancellation is just unreal. Upgraded from XM3s and the difference in comfort and mic quality for calls is massive. Highly recommended for remote work.
+                                    I bought this recently and the quality is exactly as described. Very satisfied with the purchase and the delivery was prompt as well.
                                 </p>
                             </div>
 
@@ -107,9 +112,9 @@ export default function ProductTabs() {
                                     <span className={styles.reviewDate}>1 week ago</span>
                                 </div>
                                 <div className={styles.reviewStars}>★★★★☆</div>
-                                <h4 className={styles.reviewTitle}>Great sound, could be more compact</h4>
+                                <h4 className={styles.reviewTitle}>Good product, met expectations</h4>
                                 <p className={styles.reviewText}>
-                                    Sound quality is amazing. The only downside is they don&apos;t fold down as small as the previous generation, making the carrying case a bit bulky for travel.
+                                    Overall a solid purchase. It does exactly what it&apos;s supposed to do. Giving 4 stars because the packaging was slightly dented, but the item inside was perfectly safe!
                                 </p>
                             </div>
                         </div>

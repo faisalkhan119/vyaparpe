@@ -56,8 +56,11 @@ export default function CartPage() {
                                             </div>
                                             <div className={styles.itemDetails}>
                                                 <h4><Link href={`/product/${item.productId}`}>{item.name}</Link></h4>
-                                                {item.variant && <p className={styles.itemVariant}>Variant: {item.variant}</p>}
-                                                <button className={styles.removeBtn} onClick={() => removeFromCart(item.id)}>Remove</button>
+                                                {item.variantLabels?.map((label, i) => (
+                                                <div key={i} className="text-muted mt-1" style={{ fontSize: '0.85rem' }}>
+                                                    {label}
+                                                </div>
+                                            ))}    <button className={styles.removeBtn} onClick={() => removeFromCart(item.id)}>Remove</button>
                                             </div>
                                         </div>
 
