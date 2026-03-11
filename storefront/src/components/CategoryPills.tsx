@@ -4,15 +4,28 @@ import { useState, useEffect, useRef } from 'react';
 import styles from './CategoryPills.module.css';
 
 const categories = [
-    { id: 'home', name: 'Home', icon: '🏠', slug: '' }, // For You / Home
+    { id: 'home', name: 'All', icon: '🏠', slug: '' },
     { id: 'electronics', name: 'Electronics', icon: '💻', slug: 'Electronics' },
     { id: 'fashion', name: 'Fashion', icon: '👕', slug: 'Fashion' },
     { id: 'grocery', name: 'Groceries', icon: '🛒', slug: 'Groceries' },
-    { id: 'appliances', name: 'Appliances', icon: '🧺', slug: 'Home & Kitchen' },
+    { id: 'appliances', name: 'Home & Kitchen', icon: '🧺', slug: 'Home & Kitchen' },
     { id: 'beauty', name: 'Beauty', icon: '💄', slug: 'Beauty' },
     { id: 'sports', name: 'Sports', icon: '⚽', slug: 'Sports' },
     { id: 'books', name: 'Books', icon: '📚', slug: 'Books' },
     { id: 'toys', name: 'Toys', icon: '🎲', slug: 'Toys' },
+    { id: 'jewelry', name: 'Jewelry', icon: '💎', slug: 'Jewelry' },
+    { id: 'food', name: 'Food', icon: '🍕', slug: 'Food' },
+    { id: 'digital', name: 'Digital', icon: '💾', slug: 'Digital' },
+    { id: 'services', name: 'Services', icon: '🛠️', slug: 'Services' },
+    { id: 'gifts', name: 'Gifts', icon: '🎁', slug: 'Gifts' },
+    { id: 'automotive', name: 'Automotive', icon: '🚗', slug: 'Automotive' },
+    { id: 'health', name: 'Health', icon: '💊', slug: 'Health' },
+    { id: 'baby', name: 'Baby & Kids', icon: '👶', slug: 'Baby & Kids' },
+    { id: 'pets', name: 'Pet Supplies', icon: '🐾', slug: 'Pet Supplies' },
+    { id: 'stationery', name: 'Stationery', icon: '✏️', slug: 'Stationery' },
+    { id: 'fitness', name: 'Fitness', icon: '🏋️', slug: 'Fitness' },
+    { id: 'travel', name: 'Travel', icon: '✈️', slug: 'Travel' },
+    { id: 'furniture', name: 'Furniture', icon: '🛋️', slug: 'Furniture' },
 ];
 
 export default function CategoryPills() {

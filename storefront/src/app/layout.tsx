@@ -5,8 +5,11 @@ import Footer from "@/components/Footer";
 import SocialProofPopup from "@/components/SocialProofPopup";
 import AIChatbot from "@/components/AIChatbot";
 import ProfileCompletionModal from "@/components/ProfileCompletionModal";
+import AnnouncementBar from "@/components/AnnouncementBar";
+import WhatsAppButton from "@/components/WhatsAppButton";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import BottomNav from "@/components/BottomNav";
+import CookieConsent from "@/components/CookieConsent";
 import { CartProvider } from "@/context/CartContext";
 
 export const metadata: Metadata = {
@@ -25,6 +28,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <CartProvider>
           <div className="app-container">
+            <AnnouncementBar />
             <Navbar />
             <main className="main-content">
               {children}
@@ -33,7 +37,9 @@ export default function RootLayout({
             <BottomNav />
             <SocialProofPopup />
             <AIChatbot />
+            <WhatsAppButton />
             <ProfileCompletionModal />
+            <CookieConsent />
           </div>
           </CartProvider>
         </ThemeProvider>

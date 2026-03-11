@@ -1,0 +1,382 @@
+.bookingWidget {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 1.25rem;
+    margin-top: 1rem;
+}
+
+/* Step Progress */
+.stepProgress {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+.stepDot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    opacity: 0.35;
+    transition: all 0.3s;
+}
+.stepDot span {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+.stepCurrent {
+    opacity: 1;
+}
+.stepCurrent .dotCircle {
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 0 12px rgba(99,102,241, 0.5);
+}
+.stepDone {
+    opacity: 0.8;
+}
+.stepDone .dotCircle {
+    background: var(--success);
+    color: white;
+}
+.dotCircle {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    background: rgba(255,255,255,0.08);
+    color: var(--text-muted);
+    transition: all 0.3s;
+}
+
+.stepContent {
+    animation: fadeIn 0.25s ease;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Duration Badge */
+.durationBadge {
+    background: rgba(99,102,241,0.1);
+    border: 1px solid rgba(99,102,241,0.2);
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+/* Section Labels */
+.sectionLabel {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 0.6rem;
+    margin-top: 1rem;
+}
+.sectionLabel:first-child {
+    margin-top: 0;
+}
+
+/* Inclusions/Exclusions */
+.inclusionSection {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+}
+.inclusionList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+.inclusionList li {
+    font-size: 0.82rem;
+    padding: 0.25rem 0;
+    padding-left: 1.4rem;
+    position: relative;
+}
+.included::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--success);
+    font-weight: 700;
+}
+.excluded::before {
+    content: '✗';
+    position: absolute;
+    left: 0;
+    color: #ef4444;
+    font-weight: 700;
+}
+
+/* Add-ons */
+.addonsList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+.addonCard {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.65rem 0.75rem;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.addonCard:hover {
+    background: rgba(255,255,255,0.06);
+}
+.addonActive {
+    border-color: var(--primary);
+    background: rgba(99,102,241,0.08);
+}
+.addonIcon {
+    font-size: 1.3rem;
+    width: 32px;
+    text-align: center;
+}
+.addonInfo {
+    flex: 1;
+}
+.addonName {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+.addonPrice {
+    font-size: 0.75rem;
+    color: var(--success);
+    font-weight: 600;
+}
+.addonCheck {
+    font-size: 1.1rem;
+    color: var(--primary);
+}
+
+/* Calendar */
+.calendarHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+.calendarHeader button {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background 0.2s;
+}
+.calendarHeader button:hover {
+    background: rgba(255,255,255,0.12);
+}
+.calendarHeader button:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+.calendarHeader h4 {
+    font-size: 0.95rem;
+    color: var(--text-main);
+}
+.calendarGrid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 3px;
+    margin-bottom: 0.75rem;
+}
+.dayLabel {
+    text-align: center;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    padding: 0.25rem 0;
+}
+.dayCell {
+    text-align: center;
+    padding: 0.4rem;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: var(--text-main);
+}
+.dayCell:hover:not(.dayDisabled) {
+    background: rgba(99,102,241,0.15);
+}
+.dayDisabled {
+    opacity: 0.2;
+    cursor: not-allowed;
+}
+.daySelected {
+    background: var(--primary) !important;
+    color: white !important;
+    font-weight: 700;
+}
+.dayToday {
+    border: 1px solid var(--primary);
+}
+
+/* Time Slots */
+.slotsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.4rem;
+    margin-bottom: 0.75rem;
+}
+.slotBtn {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 0.5rem;
+    border-radius: 8px;
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.slotBtn:hover {
+    border-color: var(--primary);
+    background: rgba(99,102,241,0.08);
+}
+.slotActive {
+    background: var(--primary) !important;
+    color: white !important;
+    border-color: var(--primary) !important;
+    font-weight: 600;
+}
+
+/* Providers */
+.providersList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+.providerCard {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 0.75rem;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.providerCard:hover {
+    background: rgba(255,255,255,0.06);
+}
+.providerActive {
+    border-color: var(--primary);
+    background: rgba(99,102,241,0.08);
+}
+.providerAvatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.75rem;
+    color: white;
+    flex-shrink: 0;
+}
+.providerInfo {
+    flex: 1;
+}
+.providerName {
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--text-main);
+}
+.providerRating {
+    font-size: 0.75rem;
+    color: #f59e0b;
+}
+.providerCheck {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--success);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+/* Trust Section */
+.trustSection {
+    margin-top: 1rem;
+    background: rgba(16,185,129,0.05);
+    border: 1px solid rgba(16,185,129,0.15);
+    border-radius: 10px;
+    padding: 0.75rem;
+}
+.trustSection .sectionLabel {
+    margin-top: 0;
+}
+.trustGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.4rem;
+}
+.trustItem {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    padding: 0.3rem 0;
+}
+.trustItem span {
+    font-size: 0.9rem;
+}
+
+/* Booking Summary */
+.bookingSummary {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+.summaryRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+}
+.summaryRow strong {
+    color: var(--text-main);
+    text-align: right;
+    max-width: 60%;
+}

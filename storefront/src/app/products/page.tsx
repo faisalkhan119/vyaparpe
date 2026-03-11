@@ -8,7 +8,7 @@ import SortDropdownClient from './SortDropdownClient';
 import AddToCartButton from '@/components/product/AddToCartButton';
 
 interface ProductsPageProps {
-    searchParams: Promise<{ category?: string; brand?: string; maxPrice?: string; rating?: string; sort?: string }>;
+    searchParams: Promise<{ category?: string; brand?: string; maxPrice?: string; rating?: string; sort?: string; inStock?: string }>;
 }
 
 export default async function ProductsPage({ searchParams }: ProductsPageProps) {
@@ -18,6 +18,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
     const maxPrice = Number(params.maxPrice || '200000');
     const minRating = Number(params.rating || '0');
     const sort = params.sort || '';
+    const inStockOnly = params.inStock === 'true';
 
     let filtered = products;
     let pageTitle = 'All Products';
@@ -43,6 +44,10 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
         filtered = filtered.filter(p => p.rating >= minRating);
     }
 
+    if (inStockOnly) {
+        filtered = filtered.filter(p => p.inStock === true);
+    }
+
     // Sorting
     if (sort === 'price-asc') {
         filtered = [...filtered].sort((a, b) => a.price - b.price);
@@ -52,7 +57,15 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
         filtered = [...filtered].sort((a, b) => b.rating - a.rating);
     } else if (sort === 'reviews') {
         filtered = [...filtered].sort((a, b) => b.reviewsCount - a.reviewsCount);
+    } else if (sort === 'newest') {
+        filtered = [...filtered].sort((a, b) => {
+            // we don't have created_at in mock data, simulate by ID reverse
+            return parseInt(b.id) - parseInt(a.id);
+        });
     }
+
+    // Prepare popular products for zero results fallback
+    const popularProducts = [...products].sort((a, b) => b.reviewsCount - a.reviewsCount).slice(0, 4);
 
     return (
         <main className={styles.plpContainer}>
@@ -136,11 +149,42 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                                 </div>
                             ))
                         ) : (
-                            <div className={styles.emptyState}>
-                                <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>🔍</div>
-                                <h3>No products found</h3>
-                                <p>Try adjusting your filters or <Link href="/products" style={{ color: 'var(--primary)', fontWeight: 600 }}>view all products</Link></p>
-                            </div>
+                                        <div className={styles.emptyState}>
+                                            <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>🔍</div>
+                                            <h3>No exact matches found</h3>
+                                            <p style={{ color: 'var(--text-muted)' }}>Try adjusting your filters or checking your spelling.</p>
+                                            <button className="btn btn-primary" style={{ marginTop: '1rem', marginBottom: '3rem' }}>
+                                                <Link href="/products" style={{ color: 'white', textDecoration: 'none' }}>Clear All Filters</Link>
+                                            </button>
+
+                                            <div style={{ textAlign: 'left', width: '100%', marginTop: '2rem', borderTop: '1px solid var(--border-color)', paddingTop: '2rem' }}>
+                                                <h4 style={{ marginBottom: '1.5rem', fontSize: '1.2rem' }}>You might be interested in these popular products:</h4>
+                                                <div className={styles.productGrid}>
+                                                    {popularProducts.map((product) => (
+                                                        <div key={product.id} className={`glass-panel ${styles.productCard}`}>
+                                                            <Link href={`/product/${product.id}`} style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', height: '100%' }}>
+                                                                <div className={styles.productImagePlaceholder}>
+                                                                    <div className={styles.productEmoji}>
+                                                                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                                        <img src={product.image} alt={product.title} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                                                                    </div>
+                                                                </div>
+                                                                <div className={styles.productInfo}>
+                                                                    <span className={styles.productBrand}>{product.brand}</span>
+                                                                    <h3 className={styles.productTitle}>{product.title}</h3>
+                                                                    <div className={styles.priceRow}>
+                                                                        <span className={styles.currentPrice}>₹{product.price.toLocaleString()}</span>
+                                                                    </div>
+                                                                    <div className={styles.ratingRow}>
+                                                                        <span className={styles.ratingBadge}>{product.rating} ★</span>
+                                                                    </div>
+                                                                </div>
+                                                            </Link>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </div>
                         )}
                     </section>
                 </div>

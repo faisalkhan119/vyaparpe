@@ -14,6 +14,11 @@ export default function WishlistPage() {
         { id: 3, productId: 'kindle-paperwhite', name: 'Kindle Paperwhite (16GB)', price: 13999, oldPrice: 15999, image: 'https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?auto=format&fit=crop&q=80&w=800', inStock: false },
         { id: 4, productId: 'nike-air-max-90', name: 'Nike Air Max 90', price: 12995, oldPrice: 14995, image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=800', inStock: true },
     ]);
+    const [notifyItems, setNotifyItems] = useState<number[]>([]);
+
+    const toggleNotify = (id: number) => {
+        setNotifyItems(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]);
+    };
 
     const removeItem = (id: number) => {
         setItems(items.filter(i => i.id !== id));
@@ -27,9 +32,21 @@ export default function WishlistPage() {
 
     return (
         <div>
-            <div className={styles.pageHeader}>
-                <h2>My Wishlist</h2>
-                <span style={{ color: 'var(--text-muted)' }}>{items.length} items</span>
+            <div className={styles.pageHeader} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+                <div>
+                    <h2>My Wishlist</h2>
+                    <span style={{ color: 'var(--text-muted)' }}>{items.length} items</span>
+                </div>
+                <button 
+                    className="btn btn-outline" 
+                    onClick={() => {
+                        navigator.clipboard.writeText('https://vyaparpe.com/wishlist/v7x9p2q');
+                        alert('Wishlist link copied to clipboard!');
+                    }}
+                    style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem' }}
+                >
+                    📤 Share Wishlist
+                </button>
             </div>
 
             <div className={wlStyles.wishlistGrid}>
@@ -68,6 +85,16 @@ export default function WishlistPage() {
                                 🔔 Notify Me
                             </button>
                         )}
+                        
+                        <label className={wlStyles.priceDropToggle} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.75rem', fontSize: '0.8rem', color: 'var(--text-muted)', cursor: 'pointer' }}>
+                            <input 
+                                type="checkbox" 
+                                checked={notifyItems.includes(item.id)}
+                                onChange={() => toggleNotify(item.id)}
+                                style={{ width: '14px', height: '14px', accentColor: 'var(--primary)' }}
+                            />
+                            <span>Notify on price drop</span>
+                        </label>
                     </div>
                 ))}
             </div>

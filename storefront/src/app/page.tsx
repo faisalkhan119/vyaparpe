@@ -4,6 +4,7 @@ import HeroCarousel from './HeroCarousel';
 import CategoryPills from '@/components/CategoryPills';
 import DealTimer from '@/components/DealTimer';
 import PromoBanners from '@/components/PromoBanners';
+import RecentlyViewed from '@/components/RecentlyViewed';
 import { getFeaturedProducts, getTrendingProducts, getRecentlyViewed } from '@/data/products';
 import AddToCartButton from '@/components/product/AddToCartButton';
 
@@ -143,6 +144,9 @@ export default function Home() {
             ))}
           </div>
         </section>
+
+        {/* Recently Viewed */}
+        <RecentlyViewed />
 
         {/* Why Shop With Us */}
         <section className={styles.featuredSection}>

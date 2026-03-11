@@ -14,6 +14,7 @@ export default function AccountLayout({
         { name: 'Profile Overview', path: '/account', icon: '👤' },
         { name: 'My Orders', path: '/account/orders', icon: '📦' },
         { name: 'Subscriptions', path: '/account/subscriptions', icon: '🔄' },
+        { name: 'My Downloads', path: '/account/downloads', icon: '📥' },
         { name: 'Wishlist', path: '/account/wishlist', icon: '❤️' },
         { name: 'Saved Addresses', path: '/account/addresses', icon: '📍' },
         { name: 'Wallet & Loyalty', path: '/account/wallet', icon: '💳' },

@@ -4,7 +4,7 @@ import styles from './TrackOrder.module.css';
 
 export default function TrackOrderPage() {
     const [orderId, setOrderId] = useState('');
-    const [phone, setPhone] = useState('');
+    const [email, setEmail] = useState('');
     const [isTracking, setIsTracking] = useState(false);
     const [resultReady, setResultReady] = useState(false);
 
@@ -22,14 +22,14 @@ export default function TrackOrderPage() {
     const handleReset = () => {
         setResultReady(false);
         setOrderId('');
-        setPhone('');
+        setEmail('');
     };
 
     return (
         <main className={styles.container}>
             <div className={styles.header}>
                 <h1 className={styles.title}>Track Your Order</h1>
-                <p className={styles.subtitle}>Enter your Order ID and Phone Number to check current delivery status</p>
+                <p className={styles.subtitle}>Enter your Order ID and Email Address to check current delivery status</p>
             </div>
 
             <div className={styles.trackingCard}>
@@ -46,25 +46,20 @@ export default function TrackOrderPage() {
                             />
                         </div>
                         <div className={styles.inputGroup}>
-                            <label>Mobile Number</label>
-                            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                                <span style={{ padding: '0.9rem', background: 'var(--bg-body)', border: '1px solid var(--border-color)', borderRadius: '8px', color: 'var(--text-muted)' }}>+91</span>
-                                <input
-                                    type="tel"
-                                    placeholder="9876543210"
-                                    required
-                                    pattern="[0-9]{10}"
-                                    value={phone}
-                                    onChange={(e) => setPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
-                                    style={{ flex: 1 }}
-                                />
-                            </div>
+                            <label>Email Address</label>
+                            <input
+                                type="email"
+                                placeholder="e.g. aryan@example.com"
+                                required
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
                         </div>
 
                         <button
                             type="submit"
                             className={styles.submitBtn}
-                            disabled={isTracking || !orderId || phone.length < 10}
+                            disabled={isTracking || !orderId || !email.includes('@')}
                         >
                             {isTracking ? 'Searching...' : 'Track Order'}
                         </button>

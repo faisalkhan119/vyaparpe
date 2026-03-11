@@ -25,6 +25,7 @@ export default function SortDropdownClient({ currentSort }: { currentSort: strin
                 onChange={(e) => handleSort(e.target.value)}
             >
                 <option value="">Relevance</option>
+                <option value="newest">Newest First</option>
                 <option value="price-asc">Price: Low to High</option>
                 <option value="price-desc">Price: High to Low</option>
                 <option value="rating">Customer Rating</option>

@@ -12,6 +12,7 @@ export default function SidebarFilter() {
     const activeMaxPrice = Number(searchParams.get('maxPrice') || '200000');
     const activeRating = Number(searchParams.get('rating') || '0');
     const activeSort = searchParams.get('sort') || '';
+    const activeInStock = searchParams.get('inStock') === 'true';
 
     // Derive real categories and brands from product data
     const categoryMap = new Map<string, number>();
@@ -37,7 +38,7 @@ export default function SidebarFilter() {
         router.push('/products');
     };
 
-    const hasFilters = activeCategory || activeBrand || activeMaxPrice < 200000 || activeRating > 0;
+    const hasFilters = activeCategory || activeBrand || activeMaxPrice < 200000 || activeRating > 0 || activeInStock;
 
     return (
         <div className={styles.filterSidebar}>
@@ -67,6 +68,12 @@ export default function SidebarFilter() {
                         <span className={styles.filterChip}>
                             {activeRating}★ & up
                             <button onClick={() => updateParams('rating', '')}>✕</button>
+                        </span>
+                    )}
+                    {activeInStock && (
+                        <span className={styles.filterChip}>
+                            In Stock
+                            <button onClick={() => updateParams('inStock', '')}>✕</button>
                         </span>
                     )}
                 </div>
@@ -155,6 +162,23 @@ export default function SidebarFilter() {
                             </label>
                         </li>
                     ))}
+                </ul>
+            </div>
+
+            {/* Availability */}
+            <div className={styles.filterSection}>
+                <h3>Availability</h3>
+                <ul className={styles.filterList}>
+                    <li>
+                        <label className={styles.checkboxLabel}>
+                            <input
+                                type="checkbox"
+                                checked={activeInStock}
+                                onChange={(e) => updateParams('inStock', e.target.checked ? 'true' : '')}
+                            />
+                            <span className={styles.checkboxText}>In-stock only</span>
+                        </label>
+                    </li>
                 </ul>
             </div>
         </div>

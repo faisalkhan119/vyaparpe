@@ -5,6 +5,9 @@ import ProductActions from '../../../components/product/ProductActions';
 import ProductVariants from '../../../components/product/ProductVariants';
 import ProductTabs from '../../../components/product/ProductTabs';
 import ProductQA from '../../../components/product/ProductQA';
+import ServiceBooking from '../../../components/product/ServiceBooking';
+import ProductShare from '../../../components/product/ProductShare';
+import RecentlyViewedTracker from '@/app/product/[id]/RecentlyViewedTracker';
 import { getProductById, products } from '../../../data/products';
 
 export default async function ProductDetailsPage({ 
@@ -162,9 +165,17 @@ export default async function ProductDetailsPage({
                                     <span className={styles.ratingText}>{product.rating} ({product.reviewsCount.toLocaleString()} reviews)</span>
                                 </div>
                                 <div className={styles.stockBadge}>
-                                    {product.inStock ? <span className="text-success">● In Stock</span> : <span className="text-danger">● Out of Stock</span>}
+                                    {product.inStock ? (
+                                        product.stock && product.stock < 5 ? (
+                                            <span style={{ color: '#f97316', fontWeight: 600 }}>🔥 Only {product.stock} left in stock!</span>
+                                        ) : (
+                                            <span className="text-success">● In Stock</span>
+                                        )
+                                    ) : <span className="text-danger">● Out of Stock</span>}
                                 </div>
                             </div>
+                            
+                            <ProductShare productName={product.title} productPath={`/product/${product.id}`} />
                         </div>
 
 
@@ -185,46 +196,104 @@ export default async function ProductDetailsPage({
                             <p className={styles.shortDescription}>{product.description}</p>
                         </div>
 
+                        {product.type !== 'digital' && (
                         <div className={styles.orderDeliveryGroup}>
-                            {/* Pincode checker */}
-                            <div className={styles.pincodeCheck}>
-                                <label>Check Delivery</label>
-                                <div className={styles.pincodeRow}>
-                                    <input type="text" placeholder="Enter pincode e.g. 400001" className={styles.pincodeInput} />
-                                    <button className="btn btn-outline">Check</button>
+                            {product.type === 'service' ? (
+                                <div className={styles.pincodeCheck}>
+                                    <label>Service Availability</label>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--success)', fontWeight: 600, fontSize: '0.9rem', marginTop: '0.25rem' }}>
+                                        <span>✅</span> Available in your area — Mumbai
+                                    </div>
+                                    <p className={styles.pincodeHint}>📍 Our verified professionals serve 400+ pin codes</p>
                                 </div>
-                                <p className={styles.pincodeHint}>📍 Delivers to Mumbai in 2-3 days</p>
-                            </div>
+                            ) : (
+                                <div className={styles.pincodeCheck}>
+                                    <label>Check Delivery</label>
+                                    <div className={styles.pincodeRow}>
+                                        <input type="text" placeholder="Enter pincode e.g. 400001" className={styles.pincodeInput} />
+                                        <button className="btn btn-outline">Check</button>
+                                    </div>
+                                    <p className={styles.pincodeHint}>📍 Delivers to Mumbai in 2-3 days</p>
+                                </div>
+                            )}
                             <hr className={styles.divider} />
                         </div>
+                        )}
 
-                        <div className={styles.orderVariantsGroup}>
-                            {/* NEW: Variants pulled out and placed logically near actions */}
-                            <ProductVariants 
-                                legacyVariants={productVariants} 
-                                variantGroups={(product as any).variantGroups} 
-                            />
-                            <hr className={styles.divider} style={{ marginTop: '1.5rem', marginBottom: '1.5rem' }} />
-                        </div>
+                        {/* SERVICE PRODUCT: Show Booking Widget */}
+                        {product.type === 'service' && product.serviceConfig ? (
+                            <div className={styles.orderActionsGroup}>
+                                <ServiceBooking
+                                    serviceConfig={product.serviceConfig}
+                                    productName={product.title}
+                                    price={product.price}
+                                />
+                            </div>
+                        ) : (
+                            <>
+                                <div className={styles.orderVariantsGroup}>
+                                    <ProductVariants 
+                                        legacyVariants={productVariants} 
+                                        variantGroups={(product as any).variantGroups} 
+                                    />
+                                    <hr className={styles.divider} style={{ marginTop: '1.5rem', marginBottom: '1.5rem' }} />
+                                </div>
 
-                        <div className={styles.orderActionsGroup}>
-                            <ProductActions
-                                productId={product.id}
-                                name={product.title}
-                                price={product.price}
-                                image={product.image}
-                                inStock={product.inStock}
-                                variantLabels={variantLabels}
-                                selectedOptions={selectedOptions}
-                            />
-                        </div>
+                                {/* DIGITAL PRODUCT: Show download info */}
+                                {product.type === 'digital' && product.digitalConfig && (
+                                    <div style={{
+                                        background: 'rgba(99,102,241,0.08)', border: '1px solid rgba(99,102,241,0.25)',
+                                        borderRadius: '10px', padding: '1rem', marginBottom: '1rem',
+                                        display: 'flex', alignItems: 'center', gap: '0.75rem'
+                                    }}>
+                                        <span style={{ fontSize: '1.5rem' }}>📥</span>
+                                        <div>
+                                            <div style={{ fontWeight: 700, color: 'var(--text-main)', fontSize: '0.9rem' }}>Instant Digital Download</div>
+                                            <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+                                                {product.digitalConfig.fileType} · {product.digitalConfig.fileSize} · Available immediately after purchase
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+
+                                <div className={styles.orderActionsGroup}>
+                                    <ProductActions
+                                        productId={product.id}
+                                        name={product.title}
+                                        price={product.price}
+                                        image={product.image}
+                                        inStock={product.inStock}
+                                        variantLabels={variantLabels}
+                                        selectedOptions={selectedOptions}
+                                    />
+                                </div>
+                            </>
+                        )}
 
                         <div className={styles.orderTrustGroup}>
                             <div className={styles.trustBadges}>
-                                <div className={styles.trustBadge}><span className="icon">🚚</span> Free Delivery</div>
-                                <div className={styles.trustBadge}><span className="icon">🔄</span> 7 Days Return</div>
-                                <div className={styles.trustBadge}><span className="icon">🛡️</span> 1 Year Warranty</div>
-                                <div className={styles.trustBadge}><span className="icon">💳</span> Secure Payment</div>
+                                {product.type === 'service' ? (
+                                    <>
+                                        <div className={styles.trustBadge}><span className="icon">✅</span> Verified Experts</div>
+                                        <div className={styles.trustBadge}><span className="icon">🛡️</span> 30-Day Warranty</div>
+                                        <div className={styles.trustBadge}><span className="icon">💰</span> No Hidden Charges</div>
+                                        <div className={styles.trustBadge}><span className="icon">⭐</span> Top Rated</div>
+                                    </>
+                                ) : product.type === 'digital' ? (
+                                    <>
+                                        <div className={styles.trustBadge}><span className="icon">⚡</span> Instant Access</div>
+                                        <div className={styles.trustBadge}><span className="icon">🔄</span> Free Updates</div>
+                                        <div className={styles.trustBadge}><span className="icon">📧</span> Email Delivery</div>
+                                        <div className={styles.trustBadge}><span className="icon">💳</span> Secure Payment</div>
+                                    </>
+                                ) : (
+                                    <>
+                                        <div className={styles.trustBadge}><span className="icon">🚚</span> Free Delivery</div>
+                                        <div className={styles.trustBadge}><span className="icon">🔄</span> 7 Days Return</div>
+                                        <div className={styles.trustBadge}><span className="icon">🛡️</span> 1 Year Warranty</div>
+                                        <div className={styles.trustBadge}><span className="icon">💳</span> Secure Payment</div>
+                                    </>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -239,6 +308,32 @@ export default async function ProductDetailsPage({
                     brand: product.brand,
                     category: product.category
                 }} />
+
+                {/* Review Incentive CTA */}
+                <div style={{
+                    background: 'linear-gradient(135deg, rgba(251,191,36,0.08), rgba(245,158,11,0.08))',
+                    border: '1px solid rgba(251,191,36,0.2)',
+                    borderRadius: '12px',
+                    padding: '1rem 1.25rem',
+                    margin: '1.5rem auto',
+                    maxWidth: '960px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    gap: '1rem',
+                    flexWrap: 'wrap',
+                }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                        <span style={{ fontSize: '1.5rem' }}>⭐</span>
+                        <div>
+                            <div style={{ fontWeight: 700, fontSize: '0.9rem', color: 'var(--text-main)' }}>Purchased this product?</div>
+                            <div style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>Write a review &amp; earn <strong style={{ color: '#fbbf24' }}>50 Reward Points</strong></div>
+                        </div>
+                    </div>
+                    <button className="btn btn-outline" style={{ fontSize: '0.82rem', padding: '0.45rem 1rem', borderColor: 'rgba(251,191,36,0.4)', color: '#fbbf24' }}>
+                        ✍️ Write Review
+                    </button>
+                </div>
 
                 {/* Product Questions & Answers */}
                 <ProductQA productName={product.title} />
@@ -296,6 +391,9 @@ export default async function ProductDetailsPage({
                         </div>
                     </section>
                 )}
+
+                {/* Recently Viewed Tracker (client-side) */}
+                <RecentlyViewedTracker productId={product.id} />
 
             </div>
         </main>

@@ -7,6 +7,7 @@ export default function WalletPage() {
     const [showWithdraw, setShowWithdraw] = useState(false);
     const [balance, setBalance] = useState(4500);
     const [amount, setAmount] = useState('');
+    const [filter, setFilter] = useState<'all' | 'credit' | 'debit'>('all');
 
     const handleTopUp = () => {
         const val = parseInt(amount);
@@ -55,7 +56,15 @@ export default function WalletPage() {
                 </div>
             </div>
 
-            <h3 style={{ color: 'white', marginBottom: '1rem', marginTop: '2rem' }}>Transaction History</h3>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', marginTop: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
+                <h3 style={{ color: 'white', margin: 0 }}>Transaction History</h3>
+                <div style={{ display: 'flex', gap: '0.5rem', background: 'rgba(255,255,255,0.05)', padding: '0.25rem', borderRadius: '8px' }}>
+                    <button className="btn btn-link" style={{ padding: '0.4rem 0.8rem', fontSize: '0.85rem', color: filter === 'all' ? 'var(--primary)' : 'var(--text-muted)', background: filter === 'all' ? 'var(--bg-body)' : 'transparent', borderRadius: '6px' }} onClick={() => setFilter('all')}>All</button>
+                    <button className="btn btn-link" style={{ padding: '0.4rem 0.8rem', fontSize: '0.85rem', color: filter === 'credit' ? 'var(--primary)' : 'var(--text-muted)', background: filter === 'credit' ? 'var(--bg-body)' : 'transparent', borderRadius: '6px' }} onClick={() => setFilter('credit')}>Credit In</button>
+                    <button className="btn btn-link" style={{ padding: '0.4rem 0.8rem', fontSize: '0.85rem', color: filter === 'debit' ? 'var(--primary)' : 'var(--text-muted)', background: filter === 'debit' ? 'var(--bg-body)' : 'transparent', borderRadius: '6px' }} onClick={() => setFilter('debit')}>Debit Out</button>
+                </div>
+            </div>
+            
             <div className="glass-panel" style={{ overflowX: 'auto' }}>
                 <table className={styles.transactionsTable}>
                     <thead>
@@ -67,24 +76,30 @@ export default function WalletPage() {
                         </tr>
                     </thead>
                     <tbody>
+                        {(filter === 'all' || filter === 'credit') && (
                         <tr>
                             <td>Mar 05, 2026</td>
                             <td>Top Up via UPI</td>
                             <td><span style={{ color: 'var(--success)' }}>Success</span></td>
                             <td className={styles.txCredit}>+ ₹5,000.00</td>
                         </tr>
+                        )}
+                        {(filter === 'all' || filter === 'credit') && (
                         <tr>
                             <td>Feb 14, 2026</td>
                             <td>Order #ORD-77F12C Refund</td>
                             <td><span style={{ color: 'var(--success)' }}>Success</span></td>
                             <td className={styles.txCredit}>+ ₹4,500.00</td>
                         </tr>
+                        )}
+                        {(filter === 'all' || filter === 'debit') && (
                         <tr>
                             <td>Jan 05, 2026</td>
                             <td>Paid for Order #ORD-12X99D</td>
                             <td><span style={{ color: 'white' }}>Success</span></td>
                             <td className={styles.txDebit}>- ₹125,000.00</td>
                         </tr>
+                        )}
                     </tbody>
                 </table>
             </div>

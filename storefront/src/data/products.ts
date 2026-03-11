@@ -1,4 +1,27 @@
 // Shared mock product data for the Vyaparpe Demo Storefront
+export interface ServiceAddon {
+    id: string;
+    name: string;
+    price: number;
+    icon: string;
+}
+
+export interface ServiceConfig {
+    duration: string;
+    availableSlots: string[];
+    providers: { id: string; name: string; rating: number; jobsDone: number; image?: string }[];
+    addons?: ServiceAddon[];
+    inclusions?: string[];
+    exclusions?: string[];
+    convenienceFee?: number;
+}
+
+export interface DigitalConfig {
+    fileSize: string;
+    fileType: string;
+    downloadUrl: string;
+}
+
 export interface Product {
     id: string;
     title: string;
@@ -10,11 +33,15 @@ export interface Product {
     reviewsCount: number;
     description: string;
     inStock: boolean;
-    image: string; // Keep as primary image string
-    images?: string[]; // Add array for gallery support
-    video?: string; // Product commercial or showcase video
-    highlights?: string[]; // Bullet points for the "Key Highlights" section
+    stock?: number;
+    image: string;
+    images?: string[];
+    video?: string;
+    highlights?: string[];
     badge?: string;
+    type?: 'physical' | 'service' | 'digital';
+    serviceConfig?: ServiceConfig;
+    digitalConfig?: DigitalConfig;
     variantGroups?: import('../components/product/ProductVariants').VariantGroup[];
 }
 
@@ -30,6 +57,7 @@ export const products: Product[] = [
         reviewsCount: 1245,
         description: 'Industry-leading noise cancellation with two processors controlling eight microphones. Magnificent sound, engineered to perfection with the new Integrated Processor V1.',
         inStock: true,
+        stock: 3,
         image: 'https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?auto=format&fit=crop&q=80&w=800',
         images: [
             'https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?auto=format&fit=crop&q=80&w=800',
@@ -66,6 +94,7 @@ export const products: Product[] = [
         reviewsCount: 892,
         description: 'Welcome to the era of mobile AI. With Galaxy S24 Ultra in your hands, you can unleash whole new levels of creativity, productivity and possibility.',
         inStock: true,
+        stock: 12,
         image: 'https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?auto=format&fit=crop&q=80&w=800',
         images: [
             'https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?auto=format&fit=crop&q=80&w=800',
@@ -1022,6 +1051,176 @@ export const products: Product[] = [
                 ]
             }
         ]
+    },
+    // ── SERVICE PRODUCTS ──
+    {
+        id: 'ac-service-pro',
+        title: 'Professional Split AC Deep Cleaning & Gas Refill Service',
+        brand: 'UrbanClap Pro',
+        category: 'Services',
+        price: 1499,
+        originalPrice: 2499,
+        rating: 4.6,
+        reviewsCount: 3420,
+        description: 'Complete AC servicing including deep cleaning of indoor & outdoor unit, filter wash, gas pressure check with top-up, and anti-bacterial spray treatment. Certified technicians with genuine spare parts.',
+        inStock: true,
+        type: 'service',
+        image: 'https://images.unsplash.com/photo-1585771724684-38269d6639fd?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1585771724684-38269d6639fd?auto=format&fit=crop&q=80&w=800',
+            'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&q=80&w=800'
+        ],
+        highlights: [
+            'Deep cleaning of indoor & outdoor unit with foam jet',
+            'Gas pressure check and top-up included',
+            'Anti-bacterial spray treatment for fresh air',
+            '30-day service warranty on all work',
+            'Certified & background-verified technicians'
+        ],
+        badge: 'Top Rated',
+        serviceConfig: {
+            duration: '90 mins',
+            availableSlots: ['09:00 AM', '10:30 AM', '12:00 PM', '02:00 PM', '03:30 PM', '05:00 PM'],
+            providers: [
+                { id: 'tech-raj', name: 'Rajesh Kumar', rating: 4.8, jobsDone: 1240 },
+                { id: 'tech-sunil', name: 'Sunil Verma', rating: 4.6, jobsDone: 870 },
+                { id: 'tech-anil', name: 'Anil Sharma', rating: 4.9, jobsDone: 2100 }
+            ],
+            addons: [
+                { id: 'gas-topup', name: 'Gas Top-Up (R32/R410a)', price: 349, icon: '🧊' },
+                { id: 'stabilizer-check', name: 'Stabilizer Check & Repair', price: 199, icon: '🔌' },
+                { id: 'extra-unit', name: 'Additional AC Unit Cleaning', price: 999, icon: '➕' },
+                { id: 'drain-clean', name: 'Drain Line Deep Flush', price: 149, icon: '🚿' }
+            ],
+            inclusions: [
+                'Foam jet deep cleaning of indoor & outdoor unit',
+                'Filter removal, wash & dry',
+                'Gas pressure check (top-up extra)',
+                'Anti-bacterial spray treatment',
+                'Final cooling performance test'
+            ],
+            exclusions: [
+                'Spare parts replacement (charged extra)',
+                'PCB board / compressor repair',
+                'Outdoor unit scaffolding (above 2nd floor)'
+            ],
+            convenienceFee: 49
+        }
+    },
+    {
+        id: 'salon-at-home',
+        title: 'Premium Bridal Makeup & Hair Styling — Salon At Home',
+        brand: 'GlamSquad',
+        category: 'Services',
+        price: 5999,
+        originalPrice: 8999,
+        rating: 4.9,
+        reviewsCount: 876,
+        description: 'Get ready in the comfort of your home with our expert makeup artists. Includes HD/Airbrush bridal makeup, hair styling, draping assistance, and touch-up kit for the event.',
+        inStock: true,
+        type: 'service',
+        image: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&q=80&w=800',
+            'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&q=80&w=800'
+        ],
+        highlights: [
+            'Professional HD/Airbrush bridal makeup',
+            'Hair styling with accessories',
+            'Complimentary touch-up kit for the event',
+            'Pre-bridal trial session included',
+            'Top-rated certified makeup artists'
+        ],
+        badge: 'Premium',
+        serviceConfig: {
+            duration: '3 hours',
+            availableSlots: ['06:00 AM', '07:00 AM', '08:00 AM', '09:00 AM', '10:00 AM'],
+            providers: [
+                { id: 'artist-priya', name: 'Priya Kapoor', rating: 4.9, jobsDone: 560 },
+                { id: 'artist-neha', name: 'Neha Reddy', rating: 4.8, jobsDone: 380 }
+            ],
+            addons: [
+                { id: 'pre-trial', name: 'Pre-wedding Trial Session', price: 1499, icon: '🪞' },
+                { id: 'nail-art', name: 'Nail Art & Extensions', price: 799, icon: '💅' },
+                { id: 'mehndi', name: 'Arabic Mehndi (Both Hands)', price: 999, icon: '🤲' },
+                { id: 'touch-up-kit', name: 'Premium Touch-Up Kit', price: 599, icon: '💄' }
+            ],
+            inclusions: [
+                'HD/Airbrush bridal base makeup',
+                'Eye makeup with false lashes',
+                'Hair styling (any style) with pins',
+                'Draping assistance',
+                'Complimentary bindi & accessories'
+            ],
+            exclusions: [
+                'Hair extensions (charged extra)',
+                'Bridesmaids / family makeup',
+                'Jewellery & outfit not provided'
+            ],
+            convenienceFee: 99
+        }
+    },
+    // ── DIGITAL PRODUCTS ──
+    {
+        id: 'lightroom-presets',
+        title: 'Professional Lightroom Presets Pack — 50 Premium Filters',
+        brand: 'PixelCraft Studio',
+        category: 'Digital',
+        price: 499,
+        originalPrice: 1999,
+        rating: 4.7,
+        reviewsCount: 2156,
+        description: 'Transform your photos with 50 hand-crafted Lightroom presets. Includes moody tones, vibrant colors, cinematic looks, and wedding-ready filters. Compatible with Lightroom Mobile & Desktop.',
+        inStock: true,
+        type: 'digital',
+        image: 'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?auto=format&fit=crop&q=80&w=800',
+            'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&q=80&w=800'
+        ],
+        highlights: [
+            '50 hand-crafted presets for every mood',
+            'Works on Lightroom Mobile & Desktop',
+            'One-click application with adjustable intensity',
+            'Includes installation guide & video tutorial',
+            'Free updates for life'
+        ],
+        badge: '75% OFF',
+        digitalConfig: {
+            fileSize: '45 MB',
+            fileType: 'ZIP (XMP + DNG)',
+            downloadUrl: '#'
+        }
+    },
+    {
+        id: 'business-plan-template',
+        title: 'Startup Business Plan Template — Investor Ready (Excel + PPT)',
+        brand: 'BizDocs Pro',
+        category: 'Digital',
+        price: 799,
+        originalPrice: 2499,
+        rating: 4.5,
+        reviewsCount: 540,
+        description: 'A comprehensive, investor-ready business plan template with financial projections, market analysis, pitch deck, and operational framework. Used by 500+ funded startups.',
+        inStock: true,
+        type: 'digital',
+        image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=800'
+        ],
+        highlights: [
+            '5-year financial projection model (Excel)',
+            '30-slide investor pitch deck (PPT)',
+            'Market sizing & competitive analysis framework',
+            'Editable in Google Sheets & Slides',
+            'Includes SaaS, E-commerce & D2C variants'
+        ],
+        badge: 'Bestseller',
+        digitalConfig: {
+            fileSize: '12 MB',
+            fileType: 'ZIP (XLSX + PPTX)',
+            downloadUrl: '#'
+        }
     }
 ];
 
