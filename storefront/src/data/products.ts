@@ -109,7 +109,7 @@ export const products: Product[] = [
         reviewsCount: 2103,
         description: 'Get lost in a book. Now with a 6.8” display and thinner borders, adjustable warm light, up to 10 weeks of battery life.',
         inStock: false,
-        image: 'https://images.unsplash.com/photo-1592496001020-d31bd831410d?auto=format&fit=crop&q=80&w=800',
+        image: 'https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?auto=format&fit=crop&q=80&w=800',
         images: [
             'https://images.unsplash.com/photo-1592496001020-d31bd831410d?auto=format&fit=crop&q=80&w=800',
             'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=800'
@@ -134,7 +134,7 @@ export const products: Product[] = [
         reviewsCount: 324,
         description: 'Authentic taste with zero polish. Carefully sourced from certified organic farms across India to ensure maximum nutrient retention.',
         inStock: true,
-        image: 'https://images.unsplash.com/photo-1585996843431-2f3b97b0aae9?auto=format&fit=crop&q=80&w=800',
+        image: 'https://images.unsplash.com/photo-1533900298318-6b8da08a523e?auto=format&fit=crop&q=80&w=800',
         images: [
             'https://images.unsplash.com/photo-1585996843431-2f3b97b0aae9?auto=format&fit=crop&q=80&w=800',
             'https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&q=80&w=800'
@@ -185,7 +185,7 @@ export const products: Product[] = [
         reviewsCount: 890,
         description: 'Your perfect kitchen companion. The powerful 750W motor tackles the toughest ingredients with ease, while the versatile jars cover your grinding, mixing, and juicing needs.',
         inStock: true,
-        image: 'https://images.unsplash.com/photo-1585515320110-39fb67858cfa?auto=format&fit=crop&q=80&w=800',
+        image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3?auto=format&fit=crop&q=80&w=800',
         images: [
             'https://images.unsplash.com/photo-1585515320110-39fb67858cfa?auto=format&fit=crop&q=80&w=800',
             'https://images.unsplash.com/photo-1616421008682-1d5427b0b728?auto=format&fit=crop&q=80&w=800'
@@ -210,9 +210,9 @@ export const products: Product[] = [
         reviewsCount: 445,
         description: 'A modern slim with room to move. Added stretch for all-day comfort. The 511™ Slim Fit Jeans are a classic since right now.',
         inStock: true,
-        image: 'https://images.unsplash.com/photo-1542272604-78fe0840c3cb?auto=format&fit=crop&q=80&w=800',
+        image: 'https://images.unsplash.com/photo-1604176354204-9268737828e4?auto=format&fit=crop&q=80&w=800',
         images: [
-            'https://images.unsplash.com/photo-1542272604-78fe0840c3cb?auto=format&fit=crop&q=80&w=800',
+            'https://images.unsplash.com/photo-1604176354204-9268737828e4?auto=format&fit=crop&q=80&w=800',
             'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&q=80&w=800'
         ],
         highlights: [
@@ -308,7 +308,7 @@ export const products: Product[] = [
         reviewsCount: 1890,
         description: '100% pure, natural, and unprocessed A2 milk collected from open-grazing indigenous Gir cows. Delivered fresh to your doorstep within hours of milking.',
         inStock: true,
-        image: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&q=80&w=800',
+        image: 'https://images.unsplash.com/photo-1559825481-12a05cc00344?auto=format&fit=crop&q=80&w=800',
         images: [
             'https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&q=80&w=800',
             'https://images.unsplash.com/photo-1563636619-e9143da7973b?auto=format&fit=crop&q=80&w=800'
@@ -381,10 +381,10 @@ export const products: Product[] = [
         reviewsCount: 421,
         description: 'Engineered for speed. The NANOFLARE 700 is a head-light racket built with unique technology and construction that helps players not only play nimbly but also achieve increased shuttle acceleration.',
         inStock: true,
-        image: 'https://images.unsplash.com/photo-1622279457486-640c4cb716f1?auto=format&fit=crop&q=80&w=800',
+        image: 'https://images.unsplash.com/photo-1554068865-24cecd4e34b8?auto=format&fit=crop&q=80&w=800',
         images: [
-            'https://images.unsplash.com/photo-1622279457486-640c4cb716f1?auto=format&fit=crop&q=80&w=800',
-            'https://images.unsplash.com/photo-1626245229235-5154ee42fa96?auto=format&fit=crop&q=80&w=800'
+            'https://images.unsplash.com/photo-1554068865-24cecd4e34b8?auto=format&fit=crop&q=80&w=800',
+            'https://images.unsplash.com/photo-1599391398131-cd12dcb8e84c?auto=format&fit=crop&q=80&w=800'
         ],
         video: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
         highlights: [
@@ -407,7 +407,7 @@ export const products: Product[] = [
         reviewsCount: 1567,
         description: 'Dominate the field with the Nivia Storm. Constructed with premium PVC and machine-stitched for shape retention, it delivers excellent flight and predictability.',
         inStock: true,
-        image: 'https://images.unsplash.com/photo-1614632537190-23e4146777bd?auto=format&fit=crop&q=80&w=800',
+        image: 'https://images.unsplash.com/photo-1614632537423-1e6c2e7e0aab?auto=format&fit=crop&q=80&w=800',
         images: [
             'https://images.unsplash.com/photo-1614632537190-23e4146777bd?auto=format&fit=crop&q=80&w=800',
             'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&q=80&w=800'

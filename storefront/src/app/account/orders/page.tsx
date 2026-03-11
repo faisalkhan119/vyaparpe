@@ -8,42 +8,42 @@ export default function OrdersPage() {
             date: 'March 10, 2026',
             total: 32988,
             status: 'Processing',
-            items: ['🎧', '📸']
+            items: ['https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?auto=format&fit=crop&q=80&w=800', 'https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&q=80&w=800']
         },
         {
             id: 'ORD-99Z11A',
             date: 'March 08, 2026',
             total: 4500,
             status: 'Shipped',
-            items: ['👟']
+            items: ['https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=800']
         },
         {
             id: 'ORD-12X99D',
             date: 'March 05, 2026',
             total: 169900,
             status: 'Delivered',
-            items: ['💻']
+            items: ['https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&q=80&w=800']
         },
         {
             id: 'ORD-77F12C',
             date: 'February 14, 2026',
             total: 125000,
             status: 'Delivered',
-            items: ['📱']
+            items: ['https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?auto=format&fit=crop&q=80&w=800']
         },
         {
             id: 'ORD-55K22L',
             date: 'March 01, 2026',
             total: 2999,
             status: 'Canceled',
-            items: ['👕']
+            items: ['https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&q=80&w=800']
         },
         {
             id: 'ORD-33R44M',
             date: 'February 20, 2026',
             total: 8999,
             status: 'Returned',
-            items: ['⌚']
+            items: ['https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&q=80&w=800']
         }
     ];
 

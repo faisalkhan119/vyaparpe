@@ -5,6 +5,7 @@ import SidebarFilter from '@/components/filters/SidebarFilter';
 import { products } from '@/data/products';
 
 import SortDropdownClient from './SortDropdownClient';
+import AddToCartButton from '@/components/product/AddToCartButton';
 
 interface ProductsPageProps {
     searchParams: Promise<{ category?: string; brand?: string; maxPrice?: string; rating?: string; sort?: string }>;
@@ -116,9 +117,14 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                                         </div>
                                     </Link>
                                     <div style={{ padding: '0 1rem 1rem 1rem', marginTop: 'auto' }}>
-                                        <button className="btn btn-outline" style={{ width: '100%' }}>
-                                            {product.inStock ? 'Add to Cart' : 'Notify Me'}
-                                        </button>
+                                        <AddToCartButton
+                                            productId={product.id}
+                                            name={product.title}
+                                            price={product.price}
+                                            image={product.image}
+                                            inStock={product.inStock}
+                                            style={{ width: '100%' }}
+                                        />
                                     </div>
                                 </div>
                             ))

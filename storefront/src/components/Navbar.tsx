@@ -8,6 +8,7 @@ import CartDrawer from './cart/CartDrawer';
 import NotificationDrawer from './NotificationDrawer';
 import styles from './Navbar.module.css';
 import { products } from '@/data/products';
+import { useCart } from '@/context/CartContext';
 
 export default function Navbar() {
     const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -19,9 +20,20 @@ export default function Navbar() {
     const router = useRouter();
     const { theme, setTheme } = useTheme();
     const profileRef = useRef<HTMLDivElement>(null);
+    const { totalItems: cartCount } = useCart();
+    const [userName, setUserName] = useState('Guest User');
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
         setMounted(true);
+        try {
+            const auth = localStorage.getItem('userAuth');
+            if (auth) {
+                const parsed = JSON.parse(auth);
+                setUserName(parsed.name || parsed.email || 'User');
+                setIsLoggedIn(true);
+            }
+        } catch { /* ignore */ }
     }, []);
 
     // Close profile dropdown when clicking outside
@@ -71,6 +83,7 @@ export default function Navbar() {
                         <button
                             className={styles.searchCommand}
                             onClick={() => setIsSearchOpen(true)}
+                            suppressHydrationWarning={true}
                         >
                             <span>🔍 Search...</span>
                             <kbd>Ctrl+K</kbd>
@@ -79,7 +92,7 @@ export default function Navbar() {
                             🔔
                             <span className={styles.bellDot}></span>
                         </button>
-                        <button className={`btn btn-primary ${styles.mobileHide}`} onClick={() => setIsCartOpen(true)}>🛒 Cart (2)</button>
+                        <button className={`btn btn-primary ${styles.mobileHide}`} onClick={() => setIsCartOpen(true)}>🛒 Cart ({cartCount})</button>
 
                         {/* User Profile Dropdown */}
                         <div className={`${styles.profileWrapper} ${styles.mobileHide}`} ref={profileRef}>
@@ -96,10 +109,25 @@ export default function Navbar() {
                                     <div className={styles.profileHeader}>
                                         <div className={styles.profileAvatarLg}>👤</div>
                                         <div>
-                                            <div className={styles.profileName}>Guest User</div>
-                                            <Link href="/login" className={styles.profileLoginLink} onClick={() => setIsProfileOpen(false)}>
-                                                Login / Sign Up →
-                                            </Link>
+                                            <div className={styles.profileName}>{userName}</div>
+                                            {!isLoggedIn ? (
+                                                <Link href="/login" className={styles.profileLoginLink} onClick={() => setIsProfileOpen(false)}>
+                                                    Login / Sign Up →
+                                                </Link>
+                                            ) : (
+                                                <button
+                                                    className={styles.profileLoginLink}
+                                                    style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, color: 'var(--primary)' }}
+                                                    onClick={() => {
+                                                        localStorage.removeItem('userAuth');
+                                                        setUserName('Guest User');
+                                                        setIsLoggedIn(false);
+                                                        setIsProfileOpen(false);
+                                                    }}
+                                                >
+                                                    Logout →
+                                                </button>
+                                            )}
                                         </div>
                                     </div>
 
@@ -205,7 +233,13 @@ export default function Navbar() {
                                     {filteredProducts.length > 0 ? (
                                         filteredProducts.map(product => (
                                             <div key={product.id} className={styles.searchResultItem} onClick={() => handleSearchSelect(product.id)}>
-                                                <span className={styles.searchResultEmoji}>{product.image}</span>
+                                                <div className={styles.searchResultEmoji}>
+                                                    {product.image?.startsWith('http') || product.image?.startsWith('/') || product.image?.startsWith('data:') ? (
+                                                        <img src={product.image} alt={product.title} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '4px' }} />
+                                                    ) : (
+                                                        product.image
+                                                    )}
+                                                </div>
                                                 <div className={styles.searchResultInfo}>
                                                     <h5 className={styles.searchResultTitle}>{product.title}</h5>
                                                     <span className={styles.searchResultPrice}>₹{product.price.toLocaleString()}</span>

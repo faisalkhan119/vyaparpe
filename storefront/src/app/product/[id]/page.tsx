@@ -124,7 +124,14 @@ export default async function ProductDetailsPage({
                         </div>
 
                         <div className={styles.orderActionsGroup}>
-                            <ProductActions />
+                            <ProductActions
+                                productId={product.id}
+                                name={product.title}
+                                price={product.price}
+                                image={product.image}
+                                inStock={product.inStock}
+                                variant={activeVariant?.id}
+                            />
                         </div>
 
                         <div className={styles.orderTrustGroup}>

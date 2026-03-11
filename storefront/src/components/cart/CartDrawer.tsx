@@ -1,46 +1,13 @@
 'use client';
-import { useState } from 'react';
 import Link from 'next/link';
 import styles from './CartDrawer.module.css';
+import { useCart } from '@/context/CartContext';
 
 export default function CartDrawer({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) {
-    // Mock cart items
-    const [cartItems, setCartItems] = useState([
-        {
-            id: 'c1',
-            name: 'Sony WH-1000XM5 Wireless Headphones',
-            price: 29990,
-            quantity: 1,
-            image: '📸',
-            color: 'Midnight Black'
-        },
-        {
-            id: 'c2',
-            name: 'Premium Leather Headphone Stand',
-            price: 1499,
-            quantity: 2,
-            image: '📸',
-            color: 'Brown'
-        }
-    ]);
+    const { cartItems, removeFromCart, updateQuantity, subtotal } = useCart();
 
-    const subtotal = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
     const freeShippingThreshold = 50000;
     const progressPercent = Math.min((subtotal / freeShippingThreshold) * 100, 100);
-
-    const updateQuantity = (id: string, delta: number) => {
-        setCartItems(cartItems.map(item => {
-            if (item.id === id) {
-                const newQty = item.quantity + delta;
-                return { ...item, quantity: newQty > 0 ? newQty : 1 };
-            }
-            return item;
-        }));
-    };
-
-    const removeItem = (id: string) => {
-        setCartItems(cartItems.filter(item => item.id !== id));
-    };
 
     if (!isOpen) return null;
 
@@ -73,13 +40,16 @@ export default function CartDrawer({ isOpen, onClose }: { isOpen: boolean, onClo
                         <div className={styles.itemList}>
                             {cartItems.map(item => (
                                 <div key={item.id} className={styles.cartItem}>
-                                    <div className={styles.itemImage}>{item.image}</div>
+                                    <div className={styles.itemImage}>
+                                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                                        <img src={item.image} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '8px' }} />
+                                    </div>
                                     <div className={styles.itemDetails}>
                                         <div className={styles.itemHeader}>
                                             <h4>{item.name}</h4>
-                                            <button className={styles.removeBtn} onClick={() => removeItem(item.id)}>🗑️</button>
+                                            <button className={styles.removeBtn} onClick={() => removeFromCart(item.id)}>🗑️</button>
                                         </div>
-                                        <p className={styles.itemVariant}>Color: {item.color}</p>
+                                        {item.variant && <p className={styles.itemVariant}>Variant: {item.variant}</p>}
                                         <div className={styles.itemBottomRow}>
                                             <div className={styles.qtyControls}>
                                                 <button onClick={() => updateQuantity(item.id, -1)}>−</button>

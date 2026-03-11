@@ -1,3 +1,4 @@
+'use client';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './Footer.module.css';
@@ -15,9 +16,9 @@ export default function Footer() {
                             Empowering local businesses and premium sellers. Experience next-gen e-commerce built for speed, security, and scale.
                         </p>
                         <div className={styles.socialLinks}>
-                            <a href="#" aria-label="Twitter">𝕏</a>
-                            <a href="#" aria-label="Instagram">📸</a>
-                            <a href="#" aria-label="LinkedIn">💼</a>
+                            <a href="https://twitter.com/vyaparpe" target="_blank" rel="noopener noreferrer" aria-label="Twitter">𝕏</a>
+                            <a href="https://instagram.com/vyaparpe" target="_blank" rel="noopener noreferrer" aria-label="Instagram">📸</a>
+                            <a href="https://linkedin.com/company/vyaparpe" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">💼</a>
                         </div>
                     </div>
 
@@ -47,7 +48,7 @@ export default function Footer() {
                     <div className={styles.newsletterSection}>
                         <h4>Stay Updated</h4>
                         <p>Subscribe to our newsletter for exclusive offers and updates.</p>
-                        <form className={styles.newsletterForm}>
+                        <form className={styles.newsletterForm} onSubmit={(e) => { e.preventDefault(); alert('🎉 Subscribed! You will receive exclusive offers and updates.'); (e.target as HTMLFormElement).reset(); }}>
                             <input type="email" placeholder="Enter your email" required />
                             <button type="submit" className="btn btn-primary">Subscribe</button>
                         </form>

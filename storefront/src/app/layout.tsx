@@ -7,6 +7,7 @@ import AIChatbot from "@/components/AIChatbot";
 import ProfileCompletionModal from "@/components/ProfileCompletionModal";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import BottomNav from "@/components/BottomNav";
+import { CartProvider } from "@/context/CartContext";
 
 export const metadata: Metadata = {
   title: "Vyaparpe Demo - Premium Storefront",
@@ -22,6 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <CartProvider>
           <div className="app-container">
             <Navbar />
             <main className="main-content">
@@ -33,6 +35,7 @@ export default function RootLayout({
             <AIChatbot />
             <ProfileCompletionModal />
           </div>
+          </CartProvider>
         </ThemeProvider>
       </body>
     </html>

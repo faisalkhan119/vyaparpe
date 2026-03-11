@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import styles from './Checkout.module.css';
+import { useCart } from '@/context/CartContext';
 
 export default function CheckoutPage() {
     const [step, setStep] = useState(1);
@@ -9,6 +10,9 @@ export default function CheckoutPage() {
     const [shippingMethod, setShippingMethod] = useState('standard');
     const [deliverySlot, setDeliverySlot] = useState('any');
     const [paymentMethod, setPaymentMethod] = useState('upi');
+    const { cartItems, subtotal, clearCart } = useCart();
+    const shippingCost = shippingMethod === 'express' ? 500 : 0;
+    const orderTotal = subtotal + shippingCost;
 
     const goToNextStep = (e: React.FormEvent) => {
         e.preventDefault();
@@ -17,6 +21,7 @@ export default function CheckoutPage() {
 
     const handlePlaceOrder = (e: React.FormEvent) => {
         e.preventDefault();
+        clearCart();
         window.location.href = '/order-success';
     };
 
@@ -291,7 +296,7 @@ export default function CheckoutPage() {
 
                                     <div className={styles.stepActions}>
                                         <button type="button" className="btn btn-outline" onClick={() => setStep(2)}>Back</button>
-                                        <button type="submit" className={`btn btn-primary ${styles.placeOrderBtn}`}>Place Order (₹32,988)</button>
+                                        <button type="submit" className={`btn btn-primary ${styles.placeOrderBtn}`}>Place Order (₹{orderTotal.toLocaleString()})</button>
                                     </div>
                                 </form>
                             )}
@@ -305,36 +310,30 @@ export default function CheckoutPage() {
                             <h3>In Your Cart</h3>
 
                             <div className={styles.miniCartList}>
-                                <div className={styles.miniCartItem}>
-                                    <div className={styles.miniImageHolder}>
-                                        <span className={styles.qtyBadge}>1</span>
-                                        📸
+                                {cartItems.map(item => (
+                                    <div key={item.id} className={styles.miniCartItem}>
+                                        <div className={styles.miniImageHolder}>
+                                            <span className={styles.qtyBadge}>{item.quantity}</span>
+                                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                                            <img src={item.image} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '8px' }} />
+                                        </div>
+                                        <div className={styles.miniItemInfo}>
+                                            <h4>{item.name.length > 25 ? item.name.slice(0, 25) + '...' : item.name}</h4>
+                                            {item.variant && <span>{item.variant}</span>}
+                                        </div>
+                                        <div className={styles.miniPrice}>₹{(item.price * item.quantity).toLocaleString()}</div>
                                     </div>
-                                    <div className={styles.miniItemInfo}>
-                                        <h4>Sony WH-1000XM5</h4>
-                                        <span>Midnight Black</span>
-                                    </div>
-                                    <div className={styles.miniPrice}>₹29,990</div>
-                                </div>
-
-                                <div className={styles.miniCartItem}>
-                                    <div className={styles.miniImageHolder}>
-                                        <span className={styles.qtyBadge}>2</span>
-                                        📸
-                                    </div>
-                                    <div className={styles.miniItemInfo}>
-                                        <h4>Premium Leather Stand</h4>
-                                        <span>Brown</span>
-                                    </div>
-                                    <div className={styles.miniPrice}>₹2,998</div>
-                                </div>
+                                ))}
+                                {cartItems.length === 0 && (
+                                    <p style={{ textAlign: 'center', color: 'var(--text-muted)', padding: '2rem 0' }}>Your cart is empty</p>
+                                )}
                             </div>
 
                             <hr className={styles.divider} />
 
                             <div className={styles.summaryRow}>
                                 <span>Subtotal</span>
-                                <span>₹32,988</span>
+                                <span>₹{subtotal.toLocaleString()}</span>
                             </div>
                             <div className={styles.summaryRow}>
                                 <span>Shipping</span>
@@ -349,7 +348,7 @@ export default function CheckoutPage() {
 
                             <div className={styles.totalRow}>
                                 <span>Total</span>
-                                <span>₹{shippingMethod === 'express' ? '33,488' : '32,988'}</span>
+                                <span>₹{orderTotal.toLocaleString()}</span>
                             </div>
                         </div>
                     </div>

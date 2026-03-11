@@ -5,6 +5,7 @@ import CategoryPills from '@/components/CategoryPills';
 import DealTimer from '@/components/DealTimer';
 import PromoBanners from '@/components/PromoBanners';
 import { getFeaturedProducts, getTrendingProducts, getRecentlyViewed } from '@/data/products';
+import AddToCartButton from '@/components/product/AddToCartButton';
 
 export default function Home() {
   const featured = getFeaturedProducts();
@@ -32,33 +33,40 @@ export default function Home() {
 
           <div className={styles.productGrid}>
             {featured.map((product) => (
-              <Link href={`/product/${product.id}`} key={product.id} className={`glass-panel ${styles.productCard}`}>
-                {product.badge && <span className={styles.badge}>{product.badge}</span>}
-                <div className={styles.productImagePlaceholder}>
-                  <div className={styles.imageIcon}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={product.image} alt={product.title} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-                  </div>
-                </div>
-                <div className={styles.productInfo}>
-                  <span className={styles.productCategory}>{product.category}</span>
-                  <h3>{product.title}</h3>
-                  <div className={styles.productMeta}>
-                    <div className={styles.productPrice}>
-                      <span className={styles.currentPrice}>₹{product.price.toLocaleString()}</span>
-                      {product.originalPrice > product.price && (
-                        <span className={styles.originalPrice}>₹{product.originalPrice.toLocaleString()}</span>
-                      )}
+              <div key={product.id} className={`glass-panel ${styles.productCard}`}>
+                <Link href={`/product/${product.id}`} style={{ textDecoration: 'none', color: 'inherit', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                  {product.badge && <span className={styles.badge}>{product.badge}</span>}
+                  <div className={styles.productImagePlaceholder}>
+                    <div className={styles.imageIcon}>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={product.image} alt={product.title} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                     </div>
-                    <div className={styles.productRating}>★ {product.rating}</div>
                   </div>
-                  <div className={styles.cardAction}>
-                    <span className="btn btn-primary" style={{ width: '100%', textAlign: 'center', padding: '0.6rem' }}>
-                      {product.inStock ? 'Add to Cart' : 'Notify Me'}
-                    </span>
+                  <div className={styles.productInfo}>
+                    <span className={styles.productCategory}>{product.category}</span>
+                    <h3>{product.title}</h3>
+                    <div className={styles.productMeta}>
+                      <div className={styles.productPrice}>
+                        <span className={styles.currentPrice}>₹{product.price.toLocaleString()}</span>
+                        {product.originalPrice > product.price && (
+                          <span className={styles.originalPrice}>₹{product.originalPrice.toLocaleString()}</span>
+                        )}
+                      </div>
+                      <div className={styles.productRating}>★ {product.rating}</div>
+                    </div>
                   </div>
+                </Link>
+                <div className={styles.cardAction} style={{ padding: '0 1.25rem 1.25rem 1.25rem' }}>
+                  <AddToCartButton
+                    productId={product.id}
+                    name={product.title}
+                    price={product.price}
+                    image={product.image}
+                    inStock={product.inStock}
+                    style={{ width: '100%' }}
+                  />
                 </div>
-              </Link>
+              </div>
             ))}
           </div>
         </section>
@@ -98,17 +106,19 @@ export default function Home() {
 
           <div className={styles.recentGrid}>
             {recentlyViewed.map((product) => (
-              <Link href={`/product/${product.id}`} key={product.id} className={`glass-panel ${styles.recentCard}`}>
-                <div className={styles.recentImage}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={product.image} alt={product.title} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'var(--radius-md)' }} />
-                </div>
-                <div className={styles.recentInfo}>
-                  <span className={styles.productCategory}>{product.brand}</span>
-                  <h4>{product.title}</h4>
-                  <span className={styles.currentPrice}>₹{product.price.toLocaleString()}</span>
-                </div>
-              </Link>
+              <div key={product.id} className={`glass-panel ${styles.recentCard}`}>
+                <Link href={`/product/${product.id}`} style={{ textDecoration: 'none', color: 'inherit', display: 'flex', gap: '1rem', width: '100%' }}>
+                  <div className={styles.recentImage}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={product.image} alt={product.title} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'var(--radius-md)' }} />
+                  </div>
+                  <div className={styles.recentInfo}>
+                    <span className={styles.productCategory}>{product.brand}</span>
+                    <h4>{product.title}</h4>
+                    <span className={styles.currentPrice}>₹{product.price.toLocaleString()}</span>
+                  </div>
+                </Link>
+              </div>
             ))}
           </div>
         </section>

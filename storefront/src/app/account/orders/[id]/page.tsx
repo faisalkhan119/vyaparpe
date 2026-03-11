@@ -41,8 +41,8 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
             ],
             deliveredDate: null, // Not delivered yet
             items: [
-                { name: 'Sony WH-1000XM5 Headphones', qty: 1, price: 29990, image: '🎧' },
-                { name: 'Premium Leather Headphone Stand', qty: 1, price: 2998, image: '📸' },
+                { name: 'Sony WH-1000XM5 Headphones', qty: 1, price: 29990, image: 'https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?auto=format&fit=crop&q=80&w=800' },
+                { name: 'Premium Leather Headphone Stand', qty: 1, price: 2998, image: 'https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&q=80&w=800' },
             ],
             subtotal: 32988, shipping: 0, tax: 0, total: 32988,
             address: '123 Park Street, Apt 4B\nChembur East, Mumbai 400071'
@@ -64,7 +64,7 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
             ],
             deliveredDate: null,
             items: [
-                { name: 'Nike Air Max 270', qty: 1, price: 4500, image: '👟' },
+                { name: 'Nike Air Max 270', qty: 1, price: 4500, image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=800' },
             ],
             subtotal: 4500, shipping: 0, tax: 0, total: 4500,
             address: '56A StartUp Street, Kormangala\nBengaluru 560034'
@@ -85,7 +85,7 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
                 { step: 'Delivered', date: 'Mar 08, 02:45 PM', done: true },
             ],
             deliveredDate: '2026-03-08T14:45:00', // Within 7 days
-            items: [{ name: 'Apple MacBook Pro M3', qty: 1, price: 169900, image: '💻' }],
+            items: [{ name: 'Apple MacBook Pro M3', qty: 1, price: 169900, image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&q=80&w=800' }],
             subtotal: 169900, shipping: 0, tax: 0, total: 169900,
             address: '77 Residency Road, Sector 3\nSalt Lake City, Kolkata 700091'
         },
@@ -105,7 +105,7 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
                 { step: 'Delivered', date: 'Feb 16, 04:20 PM', done: true },
             ],
             deliveredDate: '2026-02-16T16:20:00', // Past 7 days
-            items: [{ name: 'Samsung Galaxy S24 Ultra', qty: 1, price: 125000, image: '📱' }],
+            items: [{ name: 'Samsung Galaxy S24 Ultra', qty: 1, price: 125000, image: 'https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?auto=format&fit=crop&q=80&w=800' }],
             subtotal: 125000, shipping: 0, tax: 0, total: 125000,
             address: '45 Tech Hub, Ring Road\nIndiranagar, Bengaluru 560038'
         },
@@ -122,7 +122,7 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
                 { step: 'Canceled', date: 'Mar 01, 01:00 PM', done: true },
             ],
             deliveredDate: null,
-            items: [{ name: 'Polo Ralph Lauren T-Shirt', qty: 1, price: 2999, image: '👕' }],
+            items: [{ name: 'Polo Ralph Lauren T-Shirt', qty: 1, price: 2999, image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&q=80&w=800' }],
             subtotal: 2999, shipping: 0, tax: 0, total: 2999,
             address: 'H-10, Green Park Extension\nNew Delhi 110016'
         },
@@ -141,7 +141,7 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
                 { step: 'Refund Initiated', date: 'Mar 02, 10:00 AM', done: true },
             ],
             deliveredDate: '2026-02-24T14:00:00',
-            items: [{ name: 'Titan Edge Watch', qty: 1, price: 8999, image: '⌚' }],
+            items: [{ name: 'Titan Edge Watch', qty: 1, price: 8999, image: 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&q=80&w=800' }],
             subtotal: 8999, shipping: 0, tax: 0, total: 8999,
             address: 'A-21, Jubilee Hills\nHyderabad 500033'
         }
