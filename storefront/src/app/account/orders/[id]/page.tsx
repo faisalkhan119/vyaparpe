@@ -251,7 +251,13 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
                 <h3>Items in this Order</h3>
                 {order.items.map((item: any, i: number) => (
                     <div key={i} className={styles.itemRow}>
-                        <div className={styles.itemThumb}>{item.image}</div>
+                        <div style={{ width: '50px', height: '50px', backgroundColor: '#e2e8f0', borderRadius: '6px', overflow: 'hidden', flexShrink: 0, border: '1px solid rgba(0,0,0,0.05)' }}>
+                            <img 
+                                src={item.image} 
+                                alt={item.name} 
+                                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} 
+                            />
+                        </div>
                         <div className={styles.itemDetails}>
                             <div className={styles.itemName}>{item.name}</div>
                             <div className={styles.itemMeta}>Qty: {item.qty} × ₹{item.price.toLocaleString('en-IN')}</div>

@@ -80,7 +80,13 @@ export default function OrdersPage() {
 
                         <div className={styles.orderItems}>
                             {order.items.map((img, idx) => (
-                                <div key={idx} className={styles.itemThumb}>{img}</div>
+                                <div key={idx} style={{ width: '60px', height: '60px', backgroundColor: '#e2e8f0', borderRadius: '4px', overflow: 'hidden', flexShrink: 0, border: '1px solid rgba(0,0,0,0.05)' }}>
+                                    <img 
+                                        src={img} 
+                                        alt={`Item ${idx + 1}`} 
+                                        style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} 
+                                    />
+                                </div>
                             ))}
                         </div>
 

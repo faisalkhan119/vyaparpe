@@ -1707,12 +1707,24 @@ export const products: Product[] = [
                     { id: '128gb', label: '128GB' },
                     { id: '256gb', label: '256GB' }
                 ]
+            },
+            {
+                id: 'color', name: 'Color', type: 'button',
+                options: [
+                    { id: 'phantom-black', label: 'Phantom Black', thumb: '#111111' },
+                    { id: 'glacier-white', label: 'Glacier White', thumb: '#f4f4f4' }
+                ]
             }
         ],
         skuMatrix: [
-            { id: 'sku-p1', attributes: { ram: '6gb', storage: '128gb' }, price: 59999, stock: 50, inStock: true },
-            { id: 'sku-p2', attributes: { ram: '8gb', storage: '128gb' }, price: 64999, stock: 30, inStock: true },
-            { id: 'sku-p3', attributes: { ram: '8gb', storage: '256gb' }, price: 69999, stock: 15, inStock: true }
+            { id: 'sku-p1', attributes: { ram: '6gb', storage: '128gb', color: 'phantom-black' }, price: 59999, stock: 25, inStock: true },
+            { id: 'sku-p2', attributes: { ram: '6gb', storage: '128gb', color: 'glacier-white' }, price: 59999, stock: 25, inStock: true },
+            
+            { id: 'sku-p3', attributes: { ram: '8gb', storage: '128gb', color: 'phantom-black' }, price: 64999, stock: 30, inStock: true },
+            { id: 'sku-p4', attributes: { ram: '8gb', storage: '128gb', color: 'glacier-white' }, price: 64999, stock: 0, inStock: false }, // Out of stock example
+            
+            { id: 'sku-p5', attributes: { ram: '8gb', storage: '256gb', color: 'phantom-black' }, price: 69999, stock: 15, inStock: true }
+            // 8GB / 256GB / Glacier White does not exist
         ]
     },
     {
@@ -1738,6 +1750,72 @@ export const products: Product[] = [
                 'Download and watch offline'
             ]
         }
+    },
+    {
+        id: 'extreme-pro-laptop',
+        title: 'ExtremePro Z-Series Laptop',
+        brand: 'TechPro',
+        category: 'Electronics',
+        price: 89999,
+        originalPrice: 99999,
+        rating: 4.8,
+        reviewsCount: 320,
+        description: 'A highly configurable laptop to test extreme matrix Edge Cases. Features 4 Colors, 3 Storages, and 2 RAMs.',
+        inStock: true,
+        image: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&q=80&w=800',
+        highlights: [
+            'Test 4 Colors',
+            'Test 3 Storages',
+            'Test 2 RAM options'
+        ],
+        variantGroups: [
+            {
+                id: 'ram', name: 'RAM Options', type: 'button',
+                options: [
+                    { id: '16gb', label: '16GB RAM' },
+                    { id: '32gb', label: '32GB RAM' }
+                ]
+            },
+            {
+                id: 'storage', name: 'Storage Capacity', type: 'button',
+                options: [
+                    { id: '512gb', label: '512GB' },
+                    { id: '1tb', label: '1TB' },
+                    { id: '2tb', label: '2TB' }
+                ]
+            },
+            {
+                id: 'color', name: 'Color', type: 'button',
+                options: [
+                    { id: 'silver', label: 'Silver', thumb: '#e2e8f0' },
+                    { id: 'space-gray', label: 'Space Gray', thumb: '#475569' },
+                    { id: 'midnight', label: 'Midnight', thumb: '#0f172a' },
+                    { id: 'starlight', label: 'Starlight', thumb: '#fef08a' }
+                ]
+            }
+        ],
+        skuMatrix: [
+             // 16 GB Configurations
+            { id: 'sku-e1', attributes: { ram: '16gb', storage: '512gb', color: 'silver' }, price: 89999, stock: 10, inStock: true },
+            { id: 'sku-e2', attributes: { ram: '16gb', storage: '512gb', color: 'space-gray' }, price: 89999, stock: 10, inStock: true },
+            { id: 'sku-e3', attributes: { ram: '16gb', storage: '512gb', color: 'midnight' }, price: 89999, stock: 0, inStock: false }, // OOS
+            { id: 'sku-e4', attributes: { ram: '16gb', storage: '512gb', color: 'starlight' }, price: 90999, stock: 5, inStock: true },
+            
+            { id: 'sku-e5', attributes: { ram: '16gb', storage: '1tb', color: 'silver' }, price: 99999, stock: 5, inStock: true },
+            { id: 'sku-e6', attributes: { ram: '16gb', storage: '1tb', color: 'space-gray' }, price: 99999, stock: 5, inStock: true },
+            { id: 'sku-e7', attributes: { ram: '16gb', storage: '1tb', color: 'midnight' }, price: 99999, stock: 5, inStock: true },
+            // Starlight does not exist in 1TB 16GB
+            
+            // 2TB does not exist at all in 16GB
+            
+            // 32 GB Configurations
+            { id: 'sku-e8', attributes: { ram: '32gb', storage: '1tb', color: 'space-gray' }, price: 119999, stock: 10, inStock: true },
+            { id: 'sku-e9', attributes: { ram: '32gb', storage: '1tb', color: 'midnight' }, price: 119999, stock: 2, inStock: true },
+            // silver and starlight don't exist in 32GB 1TB
+            
+            { id: 'sku-e10', attributes: { ram: '32gb', storage: '2tb', color: 'midnight' }, price: 139999, stock: 0, inStock: false }, // OOS
+            { id: 'sku-e11', attributes: { ram: '32gb', storage: '2tb', color: 'space-gray' }, price: 139999, stock: 1, inStock: true }
+        ]
     }
 ];
 

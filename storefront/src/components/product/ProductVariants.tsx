@@ -64,7 +64,13 @@ export default function ProductVariants({
         variantGroups.forEach(g => {
             if (g.id !== group.id) {
                 const sel = searchParams.get(g.id);
-                if (sel) currentSelections[g.id] = sel;
+                if (sel) {
+                    currentSelections[g.id] = sel;
+                } else if (g.options && g.options.length > 0) {
+                    // Default to the first option if the user hasn't selected anything yet
+                    // to match page.tsx's default selection behavior.
+                    currentSelections[g.id] = g.options[0].id;
+                }
             }
         });
 
@@ -72,7 +78,7 @@ export default function ProductVariants({
         // that has this option AND satisfies all currently selected options in other groups.
         group.options.forEach(opt => {
             const hasValidCombo = skuMatrix.some(sku => {
-                if (!sku.inStock || sku.stock === 0) return false;
+                // If it doesn't match the current option being evaluated, skip it
                 if (sku.attributes[group.id] !== opt.id) return false;
                 
                 // Check if all OTHER active selections match this SKU
