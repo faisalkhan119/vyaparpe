@@ -272,6 +272,12 @@
     }
 }
 
+.mobileGridToggleContainer {
+    display: none; /* hidden on desktop */
+}
+
+
+
 @media (max-width: 768px) {
     .mainLayout {
         grid-template-columns: 1fr;
@@ -279,9 +285,113 @@
 
     .sidebar {
         display: none;
-        /* In mobile, we should use an offcanvas modal */
+    }
+
+    .sortControls {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+        gap: 0.75rem;
+    }
+
+    .sortDropdownWrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+
+    .sortSelect {
+        flex-grow: 1;
+        margin-left: 0.5rem;
+    }
+
+    .mobileGridToggleContainer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    /* DEFAULT MOBILE: 2 Columns */
+    :global(.grid-2-cols) .productGrid,
+    .productGrid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+    }
+    
+    :global(.grid-2-cols) .productImagePlaceholder,
+    .productImagePlaceholder {
+        height: 130px; 
+        margin: 0.5rem;
+    }
+    
+    :global(.grid-2-cols) .productInfo,
+    .productInfo {
+        padding: 0 0.5rem;
+    }
+    
+    :global(.grid-2-cols) .productTitle,
+    .productTitle {
+        font-size: 0.85rem;
+        margin-bottom: 0.35rem;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+    }
+    
+    :global(.grid-2-cols) .currentPrice,
+    .currentPrice {
+        font-size: 1rem;
+    }
+    
+    :global(.grid-2-cols) .originalPrice,
+    .originalPrice {
+        font-size: 0.75rem;
+    }
+    
+    :global(.grid-2-cols) .cardHighlights,
+    .cardHighlights {
+        display: none; /* Hide to save space */
+    }
+
+    :global(.grid-2-cols) .ratingRow,
+    .ratingRow {
+        margin-bottom: 0.5rem;
+    }
+
+    /* 1 Column overrides (when toggled via MobileGridView) */
+    :global(.grid-1-col) .productGrid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    :global(.grid-1-col) .productImagePlaceholder {
+        height: 220px;
+        margin: 1rem;
+    }
+
+    :global(.grid-1-col) .productTitle {
+        font-size: 1rem;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+    }
+
+    :global(.grid-1-col) .currentPrice {
+        font-size: 1.25rem;
+    }
+    
+    :global(.grid-1-col) .originalPrice {
+        font-size: 0.9rem;
+    }
+
+    :global(.grid-1-col) .cardHighlights {
+        display: block;
     }
 }
+
+
 
 .emptyState {
     grid-column: 1 / -1;

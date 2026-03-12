@@ -6,7 +6,6 @@ import ProductVariants from '../../../components/product/ProductVariants';
 import ProductTabs from '../../../components/product/ProductTabs';
 import ProductQA from '../../../components/product/ProductQA';
 import ServiceBooking from '../../../components/product/ServiceBooking';
-import ProductShare from '../../../components/product/ProductShare';
 import RecentlyViewedTracker from '@/app/product/[id]/RecentlyViewedTracker';
 import { getProductById, products } from '../../../data/products';
 
@@ -174,8 +173,6 @@ export default async function ProductDetailsPage({
                                     ) : <span className="text-danger">● Out of Stock</span>}
                                 </div>
                             </div>
-                            
-                            <ProductShare productName={product.title} productPath={`/product/${product.id}`} />
                         </div>
 
 

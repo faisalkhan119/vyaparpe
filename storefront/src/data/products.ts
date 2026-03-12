@@ -46,7 +46,7 @@ export interface Product {
 }
 
 export const products: Product[] = [
-    {
+{
         id: 'sony-wh1000xm5',
         title: 'Sony WH-1000XM5 Wireless Noise Cancelling Headphones',
         brand: 'Sony',
@@ -83,7 +83,7 @@ export const products: Product[] = [
             }
         ]
     },
-    {
+{
         id: 'samsung-s24-ultra',
         title: 'Samsung Galaxy S24 Ultra 5G AI Smartphone (256GB, Titanium Black)',
         brand: 'Samsung',
@@ -128,7 +128,7 @@ export const products: Product[] = [
             }
         ]
     },
-    {
+{
         id: 'nike-air-max-90',
         title: 'Nike Air Max 90 Premium Running Shoes',
         brand: 'Nike',
@@ -175,7 +175,7 @@ export const products: Product[] = [
             }
         ]
     },
-    {
+{
         id: 'kindle-paperwhite',
         title: 'All-new Kindle Paperwhite (16 GB) – Now with a 6.8" display',
         brand: 'Amazon',
@@ -200,7 +200,7 @@ export const products: Product[] = [
             'Waterproof (IPX8) so you can read in the bath'
         ]
     },
-    {
+{
         id: 'organic-toor-dal',
         title: 'FarmFresh Organic Premium Unpolished Toor Dal (1kg Pack)',
         brand: 'FarmFresh',
@@ -237,7 +237,7 @@ export const products: Product[] = [
             }
         ]
     },
-    {
+{
         id: 'boat-airdopes-141',
         title: 'boAt Airdopes 141 True Wireless Earbuds',
         brand: 'boAt',
@@ -263,7 +263,7 @@ export const products: Product[] = [
         ],
         badge: '67% OFF',
     },
-    {
+{
         id: 'prestige-mixer',
         title: 'Prestige Iris 750 Watt Mixer Grinder with 3 Stainless Steel Jars',
         brand: 'Prestige',
@@ -289,7 +289,7 @@ export const products: Product[] = [
         ],
         badge: '50% OFF',
     },
-    {
+{
         id: 'levis-511-jeans',
         title: "Levi's Men's 511 Slim Fit Stretchable Jeans",
         brand: "Levi's",
@@ -342,7 +342,7 @@ export const products: Product[] = [
             }
         ]
     },
-    {
+{
         id: 'macbook-air-m3',
         title: 'Apple MacBook Air 15-inch with M3 chip (16GB RAM, 512GB SSD)',
         brand: 'Apple',
@@ -375,7 +375,7 @@ export const products: Product[] = [
             }
         ]
     },
-    {
+{
         id: 'dyson-v12',
         title: 'Dyson V12 Detect Slim Absolute Extra Vacuum Cleaner',
         brand: 'Dyson',
@@ -410,7 +410,7 @@ export const products: Product[] = [
             }
         ]
     },
-    {
+{
         id: 'the-north-face-jacket',
         title: 'The North Face Men\'s Thermoball Eco Insulated Jacket',
         brand: 'The North Face',
@@ -454,7 +454,7 @@ export const products: Product[] = [
             }
         ]
     },
-    {
+{
         id: 'a2-cow-milk',
         title: 'Farm Fresh A2 Desi Cow Milk (500ml Glass Bottle)',
         brand: 'MilkBasket',
@@ -489,7 +489,7 @@ export const products: Product[] = [
             }
         ]
     },
-    {
+{
         id: 'lakme-foundation',
         title: 'Lakme 9 to 5 Primer + Matte Perfect Cover Foundation (25ml)',
         brand: 'Lakme',
@@ -526,7 +526,7 @@ export const products: Product[] = [
             }
         ]
     },
-    {
+{
         id: 'maybelline-mascara',
         title: 'Maybelline New York Lash Sensational Waterproof Mascara',
         brand: 'Maybelline',
@@ -559,7 +559,7 @@ export const products: Product[] = [
             }
         ]
     },
-    {
+{
         id: 'yonex-racket',
         title: 'Yonex Nanoflare 700 Graphite Professional Badminton Racket',
         brand: 'Yonex',
@@ -585,7 +585,7 @@ export const products: Product[] = [
         ],
         badge: '25% OFF',
     },
-    {
+{
         id: 'nivia-football',
         title: 'Nivia Storm Machine Stitched Size 5 Football',
         brand: 'Nivia',
@@ -620,7 +620,7 @@ export const products: Product[] = [
             }
         ]
     },
-    {
+{
         id: 'atomic-habits',
         title: 'Atomic Habits: Tiny Changes, Remarkable Results by James Clear',
         brand: 'Penguin',
@@ -656,7 +656,7 @@ export const products: Product[] = [
             }
         ]
     },
-    {
+{
         id: 'rich-dad-poor-dad',
         title: 'Rich Dad Poor Dad: What the Rich Teach Their Kids About Money',
         brand: 'Plata Publishing',
@@ -691,7 +691,7 @@ export const products: Product[] = [
             }
         ]
     },
-    {
+{
         id: 'lego-city-set',
         title: 'LEGO City Police Station Building Kit (668 Pieces)',
         brand: 'LEGO',
@@ -717,7 +717,7 @@ export const products: Product[] = [
         badge: '29% OFF',
         video: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4'
     },
-    {
+{
         id: 'hot-wheels-track',
         title: 'Hot Wheels Ultimate Garage Tower Track Set',
         brand: 'Hot Wheels',
@@ -750,7 +750,7 @@ export const products: Product[] = [
             }
         ]
     },
-    {
+{
         id: 'gold-diamond-ring',
         title: '18K White Gold Diamond Engagement Ring (1 Carat)',
         brand: 'Aura',
@@ -790,7 +790,7 @@ export const products: Product[] = [
             }
         ]
     },
-    {
+{
         id: 'cloud-storage-pro',
         title: 'CloudSync Pro Storage Plan (2TB)',
         brand: 'CloudSync',
@@ -825,7 +825,7 @@ export const products: Product[] = [
             }
         ]
     },
-    {
+{
         id: 'custom-printed-mug',
         title: 'Personalized Photo Coffee Mug (320ml)',
         brand: 'GiftCrafters',
@@ -860,7 +860,7 @@ export const products: Product[] = [
             }
         ]
     },
-    {
+{
         id: 'fresh-birthday-cake',
         title: 'Premium Dutch Truffle Birthday Cake',
         brand: 'SweetBells Bakery',
@@ -909,7 +909,7 @@ export const products: Product[] = [
             }
         ]
     },
-    {
+{
         id: 'assorted-donut-box',
         title: 'Build-a-Box: Assorted Donuts (Pack of 6)',
         brand: 'Glaze & Co.',
@@ -955,7 +955,7 @@ export const products: Product[] = [
             }
         ]
     },
-    {
+{
         id: 'car-floor-mats',
         title: 'Premium 7D Custom Fit Car Floor Mats',
         brand: 'AutoShield',
@@ -1000,7 +1000,7 @@ export const products: Product[] = [
             }
         ]
     },
-    {
+{
         id: 'custom-pro-pc',
         title: 'TitanForm Custom Gaming Desktop (RTX 4070)',
         brand: 'TitanForm PC',
@@ -1052,8 +1052,7 @@ export const products: Product[] = [
             }
         ]
     },
-    // ── SERVICE PRODUCTS ──
-    {
+{
         id: 'ac-service-pro',
         title: 'Professional Split AC Deep Cleaning & Gas Refill Service',
         brand: 'UrbanClap Pro',
@@ -1106,144 +1105,26 @@ export const products: Product[] = [
             ],
             convenienceFee: 49
         }
-    },
-    {
-        id: 'salon-at-home',
-        title: 'Premium Bridal Makeup & Hair Styling — Salon At Home',
-        brand: 'GlamSquad',
-        category: 'Services',
-        price: 5999,
-        originalPrice: 8999,
-        rating: 4.9,
-        reviewsCount: 876,
-        description: 'Get ready in the comfort of your home with our expert makeup artists. Includes HD/Airbrush bridal makeup, hair styling, draping assistance, and touch-up kit for the event.',
-        inStock: true,
-        type: 'service',
-        image: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&q=80&w=800',
-        images: [
-            'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&q=80&w=800',
-            'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&q=80&w=800'
-        ],
-        highlights: [
-            'Professional HD/Airbrush bridal makeup',
-            'Hair styling with accessories',
-            'Complimentary touch-up kit for the event',
-            'Pre-bridal trial session included',
-            'Top-rated certified makeup artists'
-        ],
-        badge: 'Premium',
-        serviceConfig: {
-            duration: '3 hours',
-            availableSlots: ['06:00 AM', '07:00 AM', '08:00 AM', '09:00 AM', '10:00 AM'],
-            providers: [
-                { id: 'artist-priya', name: 'Priya Kapoor', rating: 4.9, jobsDone: 560 },
-                { id: 'artist-neha', name: 'Neha Reddy', rating: 4.8, jobsDone: 380 }
-            ],
-            addons: [
-                { id: 'pre-trial', name: 'Pre-wedding Trial Session', price: 1499, icon: '🪞' },
-                { id: 'nail-art', name: 'Nail Art & Extensions', price: 799, icon: '💅' },
-                { id: 'mehndi', name: 'Arabic Mehndi (Both Hands)', price: 999, icon: '🤲' },
-                { id: 'touch-up-kit', name: 'Premium Touch-Up Kit', price: 599, icon: '💄' }
-            ],
-            inclusions: [
-                'HD/Airbrush bridal base makeup',
-                'Eye makeup with false lashes',
-                'Hair styling (any style) with pins',
-                'Draping assistance',
-                'Complimentary bindi & accessories'
-            ],
-            exclusions: [
-                'Hair extensions (charged extra)',
-                'Bridesmaids / family makeup',
-                'Jewellery & outfit not provided'
-            ],
-            convenienceFee: 99
-        }
-    },
-    // ── DIGITAL PRODUCTS ──
-    {
-        id: 'lightroom-presets',
-        title: 'Professional Lightroom Presets Pack — 50 Premium Filters',
-        brand: 'PixelCraft Studio',
-        category: 'Digital',
-        price: 499,
-        originalPrice: 1999,
-        rating: 4.7,
-        reviewsCount: 2156,
-        description: 'Transform your photos with 50 hand-crafted Lightroom presets. Includes moody tones, vibrant colors, cinematic looks, and wedding-ready filters. Compatible with Lightroom Mobile & Desktop.',
-        inStock: true,
-        type: 'digital',
-        image: 'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?auto=format&fit=crop&q=80&w=800',
-        images: [
-            'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?auto=format&fit=crop&q=80&w=800',
-            'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&q=80&w=800'
-        ],
-        highlights: [
-            '50 hand-crafted presets for every mood',
-            'Works on Lightroom Mobile & Desktop',
-            'One-click application with adjustable intensity',
-            'Includes installation guide & video tutorial',
-            'Free updates for life'
-        ],
-        badge: '75% OFF',
-        digitalConfig: {
-            fileSize: '45 MB',
-            fileType: 'ZIP (XMP + DNG)',
-            downloadUrl: '#'
-        }
-    },
-    {
-        id: 'business-plan-template',
-        title: 'Startup Business Plan Template — Investor Ready (Excel + PPT)',
-        brand: 'BizDocs Pro',
-        category: 'Digital',
-        price: 799,
-        originalPrice: 2499,
-        rating: 4.5,
-        reviewsCount: 540,
-        description: 'A comprehensive, investor-ready business plan template with financial projections, market analysis, pitch deck, and operational framework. Used by 500+ funded startups.',
-        inStock: true,
-        type: 'digital',
-        image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=800',
-        images: [
-            'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=800'
-        ],
-        highlights: [
-            '5-year financial projection model (Excel)',
-            '30-slide investor pitch deck (PPT)',
-            'Market sizing & competitive analysis framework',
-            'Editable in Google Sheets & Slides',
-            'Includes SaaS, E-commerce & D2C variants'
-        ],
-        badge: 'Bestseller',
-        digitalConfig: {
-            fileSize: '12 MB',
-            fileType: 'ZIP (XLSX + PPTX)',
-            downloadUrl: '#'
-        }
     }
 ];
 
-export function getProductById(id: string): Product | undefined {
+// Helper functions
+export const getProductById = (id: string) => {
     return products.find(p => p.id === id);
-}
+};
 
-export function getProductsByCategory(category: string): Product[] {
-    return products.filter(p => p.category === category);
-}
+export const getFeaturedProducts = (category?: string) => {
+    const filtered = category && category !== 'all' 
+        ? products.filter(p => p.category.toLowerCase() === category.toLowerCase())
+        : products;
+    return filtered.slice(0, 8);
+};
 
-export function getProductsByBrand(brand: string): Product[] {
-    return products.filter(p => p.brand.toLowerCase() === brand.toLowerCase());
-}
-
-export function getFeaturedProducts(): Product[] {
-    return products.slice(0, 8);
-}
-
-export function getTrendingProducts(): Product[] {
-    return [...products].sort((a, b) => b.reviewsCount - a.reviewsCount).slice(0, 4);
-}
-
-export function getRecentlyViewed(): Product[] {
-    return [products[1], products[5], products[8], products[3]];
-}
+export const getTrendingProducts = (category?: string) => {
+    const filtered = category && category !== 'all'
+        ? products.filter(p => p.category.toLowerCase() === category.toLowerCase())
+        : products;
+    // For now, just return a different slice or re-shuffled products
+    return filtered.slice().reverse().slice(0, 6);
+};
+

@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import styles from './RecentlyViewed.module.css';
-import { getProductById, Product } from '@/data/products';
+import { getProductById, Product, getTrendingProducts } from '@/data/products';
 
 const STORAGE_KEY = 'vyaparpe_recently_viewed';
 const MAX_ITEMS = 8;
@@ -19,27 +19,42 @@ export function trackProductView(productId: string) {
     }
 }
 
-export default function RecentlyViewed() {
+export default function RecentlyViewed({ category = '' }: { category?: string }) {
     const [products, setProducts] = useState<Product[]>([]);
+    const [isFallback, setIsFallback] = useState(false);
 
     useEffect(() => {
         try {
             const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]') as string[];
-            const items = stored
+            let items = stored
                 .map(id => getProductById(id))
                 .filter((p): p is Product => !!p);
+                
+            if (category) {
+                items = items.filter(p => p.category.toLowerCase() === category.toLowerCase());
+            }
+
+            if (items.length === 0 && category) {
+                // Fallback to trending
+                const trending = getTrendingProducts();
+                items = trending.filter(p => p.category.toLowerCase() === category.toLowerCase()).slice(0, 8);
+                setIsFallback(true);
+            } else {
+                setIsFallback(false);
+            }
+
             setProducts(items);
         } catch {
             // ignore
         }
-    }, []);
+    }, [category]);
 
     if (products.length === 0) return null;
 
     return (
         <section className={styles.recentSection}>
             <div className={styles.sectionHeader}>
-                <h2>👁️ Recently Viewed</h2>
+                <h2>{isFallback ? `🔥 Popular in ${category}` : '👁️ Recently Viewed'}</h2>
             </div>
             <div className={styles.scrollContainer}>
                 {products.map(product => (

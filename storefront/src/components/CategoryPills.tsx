@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import styles from './CategoryPills.module.css';
 
 const categories = [
-    { id: 'home', name: 'All', icon: '🏠', slug: '' },
+    { id: 'home', name: 'For You', icon: '🏠', slug: '' },
     { id: 'electronics', name: 'Electronics', icon: '💻', slug: 'Electronics' },
     { id: 'fashion', name: 'Fashion', icon: '👕', slug: 'Fashion' },
     { id: 'grocery', name: 'Groceries', icon: '🛒', slug: 'Groceries' },
@@ -28,7 +28,7 @@ const categories = [
     { id: 'furniture', name: 'Furniture', icon: '🛋️', slug: 'Furniture' },
 ];
 
-export default function CategoryPills() {
+export default function CategoryPills({ activeCategory = '' }: { activeCategory?: string }) {
     const [isScrolledDown, setIsScrolledDown] = useState(false);
     const isScrolledDownRef = useRef(false);
     const lastScrollY = useRef(0);
@@ -108,8 +108,8 @@ export default function CategoryPills() {
                     {categories.map((cat, idx) => (
                         <Link
                             key={cat.id}
-                            href={cat.slug ? `/products?category=${encodeURIComponent(cat.slug)}` : '/products'}
-                            className={`${styles.pill} ${idx === 0 ? styles.active : ''}`}
+                            href={cat.slug ? `/?category=${encodeURIComponent(cat.slug)}` : '/'}
+                            className={`${styles.pill} ${activeCategory.toLowerCase() === cat.slug.toLowerCase() ? styles.active : ''}`}
                         >
                             <span className={styles.iconContainer}>
                                 <span className={styles.icon}>{cat.icon}</span>

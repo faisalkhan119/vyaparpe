@@ -226,4 +226,172 @@ a {
     padding-top: 60px; /* Offset for new thinner mobile navbar */
     padding-bottom: 75px; /* Offset for bottom fixed nav */
   }
+
+  /* --- Mobile Filter Drawer Base Classes --- */
+  .mobileFilterBackdrop,
+  .mobileFilterHeader,
+  .mobileFilterFooter,
+  .mobileFilterCloseBtn {
+      display: none;
+  }
+
+  /* When the body has .show-mobile-filters on mobile */
+  body.show-mobile-filters {
+      overflow: hidden; /* prevent background scrolling */
+      /* Note: overflow: hidden on body might need position: fixed in some mobile browsers, but usually works */
+  }
+
+  body.show-mobile-filters aside[class*="sidebar"],
+  body.show-mobile-filters .desktop-filter-sidebar {
+      display: block !important;
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 85% !important;
+      max-width: 360px;
+      background: var(--bg-card);
+      z-index: 99999 !important;
+      overflow-y: hidden; /* Hide scroll on outer layer, let the split panes scroll */
+      box-shadow: -5px 0 25px rgba(0,0,0,0.5);
+      padding: 0;
+      border: none;
+      max-height: 100vh;
+      display: flex !important;
+      flex-direction: column;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+  }
+
+  body.show-mobile-filters .mobileFilterBackdrop {
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: 99998 !important;
+  }
+
+  body.show-mobile-filters .mobileFilterHeader {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 1.25rem 1rem 1.25rem;
+      background: var(--bg-card);
+      position: sticky;
+      top: 0;
+      z-index: 20000;
+      border-bottom: 1px solid var(--border-color);
+  }
+  
+  body.show-mobile-filters .mobileFilterHeaderLeft {
+      display: flex;
+      align-items: center;
+  }
+
+  body.show-mobile-filters .mobileFilterBackBtn {
+      background: none;
+      border: none;
+      color: var(--text-main);
+      display: flex;
+      padding: 0.25rem;
+      cursor: pointer;
+      margin-right: 0.75rem;
+  }
+
+  body.show-mobile-filters .mobileFilterBackBtn svg {
+      width: 24px;
+      height: 24px;
+      min-width: 24px;
+      min-height: 24px;
+  }
+
+  body.show-mobile-filters .mobileFilterTitle {
+      font-size: 1.25rem;
+      margin: 0;
+      display: block !important; /* Force override any desktop generic headinghiders */
+  }
+
+  body.show-mobile-filters .mobileFilterClearBtn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      cursor: pointer;
+  }
+
+  body.show-mobile-filters .mobileFilterFooter {
+      display: block;
+      position: sticky;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--bg-card);
+      padding: 1rem;
+      border-top: 1px solid var(--border-color);
+      z-index: 10;
+      margin-top: auto; /* Push footer to bottom */
+  }
+
+  body.show-mobile-filters .mobileFilterFooterInner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+  }
+
+  body.show-mobile-filters .mobileFilterCountContainer {
+      display: flex;
+      flex-direction: column;
+  }
+
+  body.show-mobile-filters .mobileFilterCountDisplay {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--text-main);
+      line-height: 1.1;
+  }
+
+  body.show-mobile-filters .mobileFilterCountDesc {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+  }
+
+  body.show-mobile-filters .mobileFilterApplyBtn {
+      background: var(--primary);
+      color: #fff;
+      padding: 0.6rem 2.5rem;
+      border-radius: 4px;
+      font-size: 1.05rem;
+      border: none;
+      font-weight: 600;
+  }
+
+  body.show-mobile-filters .mobileFilterCloseBtn {
+      background: var(--bg-dark);
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      color: var(--text-main);
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+  }
+
+  /* We need to apply padding to filterSidebar when inside the mobile drawer */
+  body.show-mobile-filters .desktop-filter-sidebar {
+      padding: 1rem;
+  }
+  
+  /* Hide the desktop header inside the mobile drawer */
+  body.show-mobile-filters .desktop-filter-header {
+      display: none !important;
+  }
 }

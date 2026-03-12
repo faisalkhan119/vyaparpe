@@ -57,6 +57,26 @@
     font-family: 'Inter', sans-serif;
 }
 
+/* Base styles for the split-pane Layout */
+.filterLayout {
+    display: flex;
+    flex-direction: column;
+}
+
+.filterTabsPanel {
+    display: none; /* Hidden on desktop */
+}
+
+/* Desktop behavior */
+@media (min-width: 769px) {
+    .filterLayout {
+        display: block;
+    }
+    .sectionHidden {
+        display: block !important; 
+    }
+}
+
 .filterList {
     list-style: none;
     padding: 0;
@@ -205,4 +225,99 @@
 
 .filterChip button:hover {
     opacity: 1;
+}
+
+/* Mobile-Specific Flipkart Layout */
+@media (max-width: 768px) {
+    /* Hide desktop-only elements inside the drawer */
+    :global(.show-mobile-filters) .desktop-only-heading {
+        display: none !important;
+    }
+    
+    :global(.show-mobile-filters) .desktop-only-filters {
+        display: none !important;
+    }
+
+    /* Override padding to remove borders around the dual-pane */
+    :global(.show-mobile-filters) :global(.desktop-filter-sidebar) {
+        padding: 0 !important;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    /* Header padding compensation since sidebar padding was removed */
+    :global(.show-mobile-filters) :global(.mobileFilterHeader) {
+        padding: 1.25rem 1rem;
+    }
+
+    .filterLayout {
+        display: flex;
+        flex-direction: row; /* Split left/right */
+        height: 100%;
+        flex-grow: 1;
+    }
+
+    /* Left pane: Tabs */
+    .filterTabsPanel {
+        display: flex;
+        flex-direction: column;
+        width: 140px;
+        background: var(--bg-dark); /* Light grey */
+        border-right: 1px solid var(--border-color);
+        overflow-y: auto;
+    }
+
+    .filterTab {
+        background: transparent;
+        border: none;
+        padding: 1.25rem 1rem;
+        text-align: left;
+        font-size: 0.9rem;
+        color: var(--text-main);
+        cursor: pointer;
+        position: relative;
+        font-family: inherit;
+    }
+
+    .filterTab.activeTab {
+        background: var(--bg-card); /* White */
+        color: var(--primary);
+        font-weight: 500;
+    }
+    
+    .filterTab.activeTab::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background: var(--primary);
+    }
+
+    /* Right pane: Content */
+    .filterContentPanel {
+        flex-grow: 1;
+        background: var(--bg-card);
+        padding: 1.25rem 1.5rem;
+        overflow-y: auto;
+    }
+
+    .filterSection {
+        margin-bottom: 0;
+    }
+
+    .sectionHidden {
+        display: none !important;
+    }
+    
+    .sectionActive {
+        display: block !important;
+        animation: fadeIn 0.2s ease;
+    }
+    
+    .priceSlider {
+        margin-top: 1rem;
+    }
 }

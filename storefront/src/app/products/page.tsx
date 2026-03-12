@@ -6,6 +6,8 @@ import { products } from '@/data/products';
 
 import SortDropdownClient from './SortDropdownClient';
 import AddToCartButton from '@/components/product/AddToCartButton';
+import MobileGridView from './MobileGridView';
+import { MobileFilterBtn } from './MobileFilterControls';
 
 interface ProductsPageProps {
     searchParams: Promise<{ category?: string; brand?: string; maxPrice?: string; rating?: string; sort?: string; inStock?: string }>;
@@ -15,6 +17,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
     const params = await searchParams;
     const categoryFilter = params.category || '';
     const brandFilter = params.brand || '';
+    const brandFilters = brandFilter ? brandFilter.split(',').map(b => b.trim().toLowerCase()).filter(Boolean) : [];
     const maxPrice = Number(params.maxPrice || '200000');
     const minRating = Number(params.rating || '0');
     const sort = params.sort || '';
@@ -30,10 +33,11 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
         breadcrumbParts.push(categoryFilter);
     }
 
-    if (brandFilter) {
-        filtered = filtered.filter(p => p.brand.toLowerCase() === brandFilter.toLowerCase());
-        pageTitle = breadcrumbParts.length > 0 ? `${brandFilter} in ${categoryFilter}` : `${brandFilter} Products`;
-        breadcrumbParts.push(brandFilter);
+    if (brandFilters.length > 0) {
+        filtered = filtered.filter(p => brandFilters.includes(p.brand.toLowerCase()));
+        const displayBrands = brandFilter.split(',').map(b => b.trim()).join(', ');
+        pageTitle = breadcrumbParts.length > 0 ? `${displayBrands} in ${categoryFilter}` : `${displayBrands} Products`;
+        breadcrumbParts.push(displayBrands);
     }
 
     if (maxPrice < 200000) {
@@ -88,11 +92,17 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                     </div>
 
                     <div className={styles.sortControls}>
-                        <SortDropdown currentSort={sort} />
+                        <div className={styles.mobileGridToggleContainer}>
+                            <MobileGridView />
+                            <MobileFilterBtn />
+                        </div>
+                        <div className={styles.sortDropdownWrapper}>
+                            <SortDropdown currentSort={sort} />
+                        </div>
                     </div>
                 </div>
 
-                <div className={styles.mainLayout}>
+                <div id="plp-wrapper" className={styles.mainLayout}>
                     <aside className={styles.sidebar}>
                         <Suspense fallback={<div>Loading filters...</div>}>
                             <SidebarFilter />
