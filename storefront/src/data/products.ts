@@ -22,6 +22,20 @@ export interface DigitalConfig {
     downloadUrl: string;
 }
 
+export interface SkuMatrixItem {
+    id: string;
+    attributes: Record<string, string>;
+    price: number;
+    stock: number;
+    inStock: boolean;
+}
+
+export interface SubscriptionConfig {
+    billingCycle: 'monthly' | 'quarterly' | 'yearly';
+    features: string[];
+    trialDays?: number;
+}
+
 export interface Product {
     id: string;
     title: string;
@@ -39,10 +53,12 @@ export interface Product {
     video?: string;
     highlights?: string[];
     badge?: string;
-    type?: 'physical' | 'service' | 'digital';
+    type?: 'physical' | 'service' | 'digital' | 'subscription';
     serviceConfig?: ServiceConfig;
     digitalConfig?: DigitalConfig;
-    variantGroups?: import('../components/product/ProductVariants').VariantGroup[];
+    subscriptionConfig?: SubscriptionConfig;
+    skuMatrix?: SkuMatrixItem[];
+    variantGroups?: import('@/components/product/ProductVariants').VariantGroup[];
 }
 
 export const products: Product[] = [
@@ -1104,6 +1120,623 @@ export const products: Product[] = [
                 'Outdoor unit scaffolding (above 2nd floor)'
             ],
             convenienceFee: 49
+        }
+    },
+    {
+        id: 'health-multivitamin',
+        title: 'Premium Daily Multivitamin for Men & Women (120 Gummies)',
+        brand: 'VitaGlow',
+        category: 'Health',
+        price: 899,
+        originalPrice: 1299,
+        rating: 4.8,
+        reviewsCount: 1540,
+        description: 'Packed with 20+ essential vitamins and minerals including Vitamin C, D3, Zinc, and B-Complex to support immunity, energy, and overall health.',
+        inStock: true,
+        stock: 45,
+        image: 'https://images.unsplash.com/photo-1577401239170-897942555fb3?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1577401239170-897942555fb3?auto=format&fit=crop&q=80&w=800',
+            'https://images.unsplash.com/photo-1584017911766-d451b3d0e843?auto=format&fit=crop&q=80&w=800'
+        ],
+        highlights: [
+            'Supports Immune System & Energy Levels',
+            '100% Vegan & Gluten-Free Gummies',
+            'No Artificial Colors or Preservatives',
+            'Contains Biotin for Hair & Skin Health'
+        ],
+        badge: 'Bestseller',
+        variantGroups: [
+            {
+                id: 'flavor', name: 'Flavor', type: 'button',
+                options: [
+                    { id: 'mixed-berry', label: 'Mixed Berry' },
+                    { id: 'citrus', label: 'Citrus Blast' }
+                ]
+            }
+        ]
+    },
+    {
+        id: 'health-bp-monitor',
+        title: 'Digital Automatic Blood Pressure Monitor with Large Cuff',
+        brand: 'MediCare',
+        category: 'Health',
+        price: 1899,
+        originalPrice: 2499,
+        rating: 4.6,
+        reviewsCount: 320,
+        description: 'Clinically accurate digital BP monitor for home use. Features a large backlit display, irregular heartbeat detection, and 99-reading memory for 2 users.',
+        inStock: true,
+        stock: 15,
+        image: 'https://images.unsplash.com/photo-1631815587646-b85a1bb02246?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1631815587646-b85a1bb02246?auto=format&fit=crop&q=80&w=800'
+        ],
+        highlights: [
+            'Clinically Validated Accuracy',
+            'Irregular Heartbeat Indicator',
+            'Universal Cuff (22-42cm)',
+            'Includes 4 AA Batteries & Case'
+        ]
+    },
+    {
+        id: 'health-ashwagandha',
+        title: 'Organic Ashwagandha Extract (KSM-66) - Stress & Anxiety Relief',
+        brand: 'Herbals Naturals',
+        category: 'Health',
+        price: 599,
+        originalPrice: 899,
+        rating: 4.7,
+        reviewsCount: 890,
+        description: 'High-potency KSM-66 Ashwagandha extract clinically proven to reduce stress, improve sleep quality, and boost cognitive function.',
+        inStock: true,
+        image: 'https://images.unsplash.com/photo-1620953119128-d8bb2201b17a?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1620953119128-d8bb2201b17a?auto=format&fit=crop&q=80&w=800'
+        ],
+        highlights: [
+            '600mg KSM-66 Ashwagandha Root Extract',
+            '5% Withanolides for Max Potency',
+            'Promotes Restful Sleep & Mood Balance',
+            'Non-GMO and Plant-Based'
+        ],
+        variantGroups: [
+            {
+                id: 'count', name: 'Capsule Count', type: 'button',
+                options: [
+                    { id: '60-caps', label: '60 Capsules' },
+                    { id: '120-caps', label: '120 Capsules', priceModifier: 400 }
+                ]
+            }
+        ]
+    },
+    {
+        id: 'baby-diaper-bag',
+        title: 'Multi-Function Waterproof Maternity Diaper Bag Backpack',
+        brand: 'BabyCare',
+        category: 'Baby & Kids',
+        price: 1499,
+        originalPrice: 2499,
+        rating: 4.8,
+        reviewsCount: 2150,
+        description: 'Spacious and stylish diaper bag backpack featuring insulated bottle pockets, a built-in USB charging port, and stroller straps for easy travel.',
+        inStock: true,
+        badge: 'Mom\'s Choice',
+        image: 'https://images.unsplash.com/photo-1549468057-5b7fa1a41d7a?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1549468057-5b7fa1a41d7a?auto=format&fit=crop&q=80&w=800'
+        ],
+        highlights: [
+            '3 Insulated Bottle Pockets',
+            'Waterproof & Spill-resistant Material',
+            'Includes Changing Pad & Stroller Straps',
+            'Ergonomic Padded Shoulder Straps'
+        ],
+        variantGroups: [
+            {
+                id: 'color', name: 'Color', type: 'colorpicker',
+                options: [
+                    { id: 'navy', label: 'Navy Blue' },
+                    { id: 'pink', label: 'Pastel Pink' },
+                    { id: 'grey', label: 'Heather Grey' }
+                ]
+            }
+        ]
+    },
+    {
+        id: 'baby-stroller',
+        title: 'Compact Foldable Lightweight Baby Stroller',
+        brand: 'KiddoGlide',
+        category: 'Baby & Kids',
+        price: 8999,
+        originalPrice: 12999,
+        rating: 4.5,
+        reviewsCount: 420,
+        description: 'A travel-friendly lightweight stroller featuring a one-hand fold system, multi-position recline, and a large storage basket.',
+        inStock: true,
+        stock: 5,
+        image: 'https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&q=80&w=800'
+        ],
+        highlights: [
+            'One-Hand Gravity Fold System',
+            'Cabin-approved Travel Size',
+            'UV50+ Sun Canopy with Peek-a-boo Window',
+            '5-Point Safety Harness'
+        ]
+    },
+    {
+        id: 'baby-educational-toy',
+        title: 'Wooden Montessori Sorting & Stacking Educational Toy',
+        brand: 'SmartTot',
+        category: 'Baby & Kids',
+        price: 699,
+        originalPrice: 999,
+        rating: 4.9,
+        reviewsCount: 310,
+        description: 'Enhance your toddler\'s cognitive and motor skills with this colorful, child-safe wooden geometric sorting block puzzle.',
+        inStock: true,
+        image: 'https://images.unsplash.com/photo-1587654780291-39c9404d746b?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1587654780291-39c9404d746b?auto=format&fit=crop&q=80&w=800'
+        ],
+        highlights: [
+            'Develops Hand-Eye Coordination',
+            '100% Non-Toxic Water-based Paint',
+            'Smooth Edges for Child Safety',
+            'Ages 1-3 Years'
+        ]
+    },
+    {
+        id: 'pet-dog-food',
+        title: 'Premium Grain-Free Dry Dog Food (Chicken & Sweet Potato)',
+        brand: 'Pawsome Nutrition',
+        category: 'Pet Supplies',
+        price: 2499,
+        originalPrice: 3199,
+        rating: 4.7,
+        reviewsCount: 1250,
+        description: 'Complete and balanced grain-free nutrition for adult dogs. Made with real chicken as the #1 ingredient for healthy muscles and a shiny coat.',
+        inStock: true,
+        badge: 'Top Rated',
+        image: 'https://images.unsplash.com/photo-1589924691995-400dc9ecc119?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1589924691995-400dc9ecc119?auto=format&fit=crop&q=80&w=800'
+        ],
+        highlights: [
+            'Real Chicken is the First Ingredient',
+            'Grain-Free & Gluten-Free Formula',
+            'Added Probiotics for Digestive Health',
+            'Omega 3 & 6 for Skin & Coat'
+        ],
+        variantGroups: [
+            {
+                id: 'weight', name: 'Bag Size', type: 'button',
+                options: [
+                    { id: '2kg', label: '2 KG' },
+                    { id: '10kg', label: '10 KG', priceModifier: 6000 }
+                ]
+            }
+        ]
+    },
+    {
+        id: 'pet-auto-feeder',
+        title: 'Smart Automatic Pet Feeder with HD Camera & App Control',
+        brand: 'TechPet',
+        category: 'Pet Supplies',
+        price: 4999,
+        originalPrice: 7999,
+        rating: 4.5,
+        reviewsCount: 410,
+        description: 'Schedule meals, record voice messages, and monitor your pet remotely with this Wi-Fi enabled automatic smart feeder.',
+        inStock: true,
+        stock: 8,
+        image: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&q=80&w=800'
+        ],
+        highlights: [
+            '5L Capacity Hopper',
+            '1080p HD Camera with Night Vision',
+            'Two-Way Audio to Talk to Pets',
+            'Customizable Meal Scheduling via App'
+        ]
+    },
+    {
+        id: 'pet-cat-tree',
+        title: 'Multi-Level Cat Tree Tower with Scratching Posts',
+        brand: 'FelineFun',
+        category: 'Pet Supplies',
+        price: 3500,
+        originalPrice: 4500,
+        rating: 4.8,
+        reviewsCount: 630,
+        description: 'Give your cats their own paradise! This multi-level tower includes plush condos, sisal-wrapped scratching posts, and engaging dangling toys.',
+        inStock: true,
+        image: 'https://images.unsplash.com/photo-1545249390-6bdfa286032f?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1545249390-6bdfa286032f?auto=format&fit=crop&q=80&w=800'
+        ],
+        highlights: [
+            'Natural Sisal Rope Scratching Posts',
+            'Cozy Plush Condos & Hammocks',
+            'Sturdy Anti-Toppling Design',
+            'Easy to Assemble'
+        ]
+    },
+    {
+        id: 'stat-fountain-pen',
+        title: 'Executive Luxury Fountain Pen (18K Gold Nib)',
+        brand: 'Scritto',
+        category: 'Stationery',
+        price: 2999,
+        originalPrice: 3999,
+        rating: 4.9,
+        reviewsCount: 180,
+        description: 'A masterpiece of writing craft. This elegant fountain pen offers a smooth, perfectly balanced writing experience with an 18K gold-plated nib.',
+        inStock: true,
+        image: 'https://images.unsplash.com/photo-1585336261022-680e295ce3fe?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1585336261022-680e295ce3fe?auto=format&fit=crop&q=80&w=800'
+        ],
+        highlights: [
+            '18K Gold-Plated Fine Nib',
+            'Includes Ink Converter & 2 Cartridges',
+            'Sleek Matte Black & Gold Finish',
+            'Premium Gift Box Packaging'
+        ],
+        variantGroups: [
+            {
+                id: 'nib', name: 'Nib Size', type: 'button',
+                options: [
+                    { id: 'fine', label: 'Fine (F)' },
+                    { id: 'medium', label: 'Medium (M)' }
+                ]
+            }
+        ]
+    },
+    {
+        id: 'stat-leather-journal',
+        title: 'Handcrafted Vintage Leather Bound Journal',
+        brand: 'ArtisanWritings',
+        category: 'Stationery',
+        price: 899,
+        originalPrice: 1499,
+        rating: 4.7,
+        reviewsCount: 450,
+        description: 'Capture your thoughts in this rustic genuine leather journal filled with 240 pages of premium, ink-proof unlined vintage paper.',
+        inStock: true,
+        badge: 'Handmade',
+        image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=800'
+        ],
+        highlights: [
+            '100% Genuine Water Buffalo Leather',
+            '240 Pages of 120GSM Recycled Cotton Paper',
+            'No Bleed-Through with Fountain Pens',
+            'Antique Brass Lock Clasp'
+        ]
+    },
+    {
+        id: 'stat-desk-organizer',
+        title: 'Bamboo Wood Desktop Organizer & Monitor Stand',
+        brand: 'EcoDesk',
+        category: 'Stationery',
+        price: 1599,
+        originalPrice: 2199,
+        rating: 4.6,
+        reviewsCount: 320,
+        description: 'Elevate your monitor for better ergonomics while organizing your pens, phone, and sticky notes with this sustainable bamboo desk accessory.',
+        inStock: true,
+        stock: 20,
+        image: 'https://images.unsplash.com/photo-1517365830460-955ce3ccd263?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1517365830460-955ce3ccd263?auto=format&fit=crop&q=80&w=800'
+        ],
+        highlights: [
+            'Ergonomic Monitor Riser',
+            'Durable & Eco-Friendly Solid Bamboo',
+            'Built-in Phone & Pen Slots',
+            'Keyboard Storage Underneath'
+        ]
+    },
+    {
+        id: 'fit-adjustable-dumbbells',
+        title: 'Quick-Adjustable Cast Iron Dumbbell Set (Up to 24kg)',
+        brand: 'IronCore',
+        category: 'Fitness',
+        price: 12500,
+        originalPrice: 16000,
+        rating: 4.8,
+        reviewsCount: 840,
+        description: 'Replace an entire rack of weights with a single pair. Dial in your desired weight from 2.5kg to 24kg instantly for space-saving home workouts.',
+        inStock: true,
+        stock: 2,
+        badge: 'Selling Fast',
+        image: 'https://images.unsplash.com/photo-1586401700863-71ab52382fe8?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1586401700863-71ab52382fe8?auto=format&fit=crop&q=80&w=800'
+        ],
+        highlights: [
+            'Weight Range: 2.5kg to 24kg per Dumbbell',
+            'Quick-Turn Dial Mechanism',
+            'Durable Cast Iron Plates',
+            'Anti-Slip Ergonomic Grips'
+        ]
+    },
+    {
+        id: 'fit-yoga-mat',
+        title: 'Eco-Friendly TPE Anti-Slip Yoga Mat with Alignment Lines',
+        brand: 'ZenFit',
+        category: 'Fitness',
+        price: 799,
+        originalPrice: 1299,
+        rating: 4.6,
+        reviewsCount: 1100,
+        description: 'Perfect your poses with our 6mm thick, dual-color TPE yoga mat featuring laser-engraved alignment lines and strong tear-resistant grip.',
+        inStock: true,
+        image: 'https://images.unsplash.com/photo-1592432678016-e910b452f9a2?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1592432678016-e910b452f9a2?auto=format&fit=crop&q=80&w=800'
+        ],
+        highlights: [
+            '6mm Premium Cushioning',
+            'Body Alignment System',
+            'Eco-friendly & Odor-less TPE',
+            'Includes Free Carrying Strap'
+        ],
+        variantGroups: [
+            {
+                id: 'color', name: 'Color', type: 'colorpicker',
+                options: [
+                    { id: 'purple', label: 'Lavender/Pink' },
+                    { id: 'blue', label: 'Ocean/Cyan' },
+                    { id: 'black', label: 'Midnight Black' }
+                ]
+            }
+        ]
+    },
+    {
+        id: 'fit-smart-tracker',
+        title: 'Smart Fitness Band with SpO2 & Heart Rate Monitor',
+        brand: 'VitalTech',
+        category: 'Fitness',
+        price: 2499,
+        originalPrice: 3999,
+        rating: 4.4,
+        reviewsCount: 2200,
+        description: 'Track your daily activity, sleep patterns, blood oxygen levels, and heart rate directly from your wrist. Features a vibrant AMOLED display.',
+        inStock: true,
+        image: 'https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?auto=format&fit=crop&q=80&w=800'
+        ],
+        highlights: [
+            '1.1" Full Color AMOLED Display',
+            '24/7 Heart Rate & SpO2 Tracking',
+            '14 Days Battery Life',
+            '5 ATM Water Resistance'
+        ]
+    },
+    {
+        id: 'travel-luggage-set',
+        title: '3-Piece Lightweight Polycarbonate Luggage Set',
+        brand: 'Voyager',
+        category: 'Travel',
+        price: 8999,
+        originalPrice: 14999,
+        rating: 4.7,
+        reviewsCount: 650,
+        description: 'Travel in style with this durable 3-piece spinner luggage set (20/24/28 inch). Features TSA-approved locks and expanding zippers for extra capacity.',
+        inStock: true,
+        badge: 'Great Deal',
+        image: 'https://images.unsplash.com/photo-1565026057447-bc90a3dceb87?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1565026057447-bc90a3dceb87?auto=format&fit=crop&q=80&w=800'
+        ],
+        highlights: [
+            '100% Lightweight Polycarbonate Hard Shell',
+            '360° Double Spinner Wheels',
+            'Built-in TSA Combination Locks',
+            'Expands 2 Inches for Extra Packing Space'
+        ],
+        variantGroups: [
+            {
+                id: 'color', name: 'Color', type: 'button',
+                options: [
+                    { id: 'silver', label: 'Metallic Silver' },
+                    { id: 'black', label: 'Matte Black' },
+                    { id: 'rose-gold', label: 'Rose Gold' }
+                ]
+            }
+        ]
+    },
+    {
+        id: 'travel-neck-pillow',
+        title: 'Memory Foam Travel Neck Pillow with Contoured Support',
+        brand: 'SleepWell',
+        category: 'Travel',
+        price: 999,
+        originalPrice: 1599,
+        rating: 4.8,
+        reviewsCount: 1420,
+        description: 'Arrive rested! This memory foam travel pillow features an ergonomic raised lobe design to prevent your head from falling forward.',
+        inStock: true,
+        image: 'https://images.unsplash.com/photo-1550980482-eb0a7c41fe23?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1550980482-eb0a7c41fe23?auto=format&fit=crop&q=80&w=800'
+        ],
+        highlights: [
+            '100% Pure Memory Foam Core',
+            'Washable Breathable Velour Cover',
+            'Includes Sleep Mask & Earplugs',
+            'Compresses into Travel Bag (1/2 size)'
+        ]
+    },
+    {
+        id: 'travel-universal-adapter',
+        title: 'Universal Worldwide Travel Power Adapter (4 USB Ports)',
+        brand: 'ChargeGo',
+        category: 'Travel',
+        price: 1299,
+        originalPrice: 1999,
+        rating: 4.6,
+        reviewsCount: 890,
+        description: 'An essential for international travel. Covers 150+ countries with US/EU/UK/AUS plugs and intelligently charges up to 5 devices simultaneously.',
+        inStock: true,
+        stock: 35,
+        image: 'https://images.unsplash.com/photo-1610488701046-2fe276332da7?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1610488701046-2fe276332da7?auto=format&fit=crop&q=80&w=800'
+        ],
+        highlights: [
+            'All-in-One US/UK/EU/AUS Adapter',
+            '4 USB-A ports & 1 AC Socket',
+            'Built-in Dual 8A Safety Fuses',
+            'Compact & Lightweight Design'
+        ]
+    },
+    {
+        id: 'furniture-office-chair',
+        title: 'Ergonomic Mesh Office Chair with Lumbar Support',
+        brand: 'ComfortSit',
+        category: 'Furniture',
+        price: 6499,
+        originalPrice: 9999,
+        rating: 4.5,
+        reviewsCount: 420,
+        description: 'Work comfortably for hours with this breathable mesh ergonomic chair. Features adjustable lumbar support, 3D armrests, and dynamic tilt.',
+        inStock: true,
+        badge: 'Top Pick',
+        image: 'https://images.unsplash.com/photo-1505843490538-5133c6c7d0d1?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1505843490538-5133c6c7d0d1?auto=format&fit=crop&q=80&w=800',
+            'https://images.unsplash.com/photo-1592393375373-b68427f7f90e?auto=format&fit=crop&q=80&w=800'
+        ],
+        highlights: [
+            'Breathable High-Density Mesh Back',
+            'Adjustable Ergonomic Lumbar Support',
+            'Multi-function Tilt Mechanism (90°-135°)',
+            'Smooth Rolling Casters'
+        ],
+        variantGroups: [
+            {
+                id: 'color', name: 'Frame Color', type: 'button',
+                options: [
+                    { id: 'black', label: 'Jet Black' },
+                    { id: 'white', label: 'Modern White', priceModifier: 500 }
+                ]
+            }
+        ]
+    },
+    {
+        id: 'furniture-coffee-tables',
+        title: 'Modern Nesting Coffee Table Set (Gold/Marble)',
+        brand: 'UrbanLiving',
+        category: 'Furniture',
+        price: 4999,
+        originalPrice: 7499,
+        rating: 4.8,
+        reviewsCount: 154,
+        description: 'Add a touch of contemporary elegance to your living room. This 2-piece nesting table set features faux marble tops and a sturdy gold metallic frame.',
+        inStock: true,
+        stock: 12,
+        image: 'https://images.unsplash.com/photo-1533090481720-856c6e3c1fdc?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1533090481720-856c6e3c1fdc?auto=format&fit=crop&q=80&w=800'
+        ],
+        highlights: [
+            'Space-Saving Nesting Design',
+            'Premium Faux White Marble Finish top',
+            'Rust-Resistant Electroplated Gold Frame',
+            'Easy 10-Minute Assembly'
+        ]
+    },
+    {
+        id: 'furniture-bookshelf',
+        title: 'Industrial 5-Tier Minimalist Bookshelf Unit',
+        brand: 'Timber&Iron',
+        category: 'Furniture',
+        price: 3899,
+        originalPrice: 5999,
+        rating: 4.6,
+        reviewsCount: 280,
+        description: 'Display your favorite books, plants, and decor with this sturdy 5-tier industrial shelving unit made of rustic wood-finish panels and black steel tubing.',
+        inStock: true,
+        image: 'https://images.unsplash.com/photo-1594620302200-9a762244a156?auto=format&fit=crop&q=80&w=800',
+        images: [
+            'https://images.unsplash.com/photo-1594620302200-9a762244a156?auto=format&fit=crop&q=80&w=800'
+        ],
+        highlights: [
+            '5 Spacious Display Shelves',
+            'Vintage Rustic Oak Finish',
+            'Heavy-Duty X-Bracing Metal Frame',
+            'Includes Anti-Tip Safety Kit'
+        ]
+    },
+    {
+        id: 'tech-pro-phone',
+        title: 'TechPro X1 Flagship Smartphone',
+        brand: 'TechPro',
+        category: 'Electronics',
+        price: 59999, // Base price, overriden by Matrix
+        originalPrice: 69999,
+        rating: 4.8,
+        reviewsCount: 320,
+        description: 'Experience ultra-fast performance with the new TechPro X1. Features a 120Hz OLED display, 108MP camera, and all-day battery.',
+        inStock: true,
+        image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&q=80&w=800',
+        highlights: [
+            '120Hz OLED Display',
+            '108MP Main Camera',
+            '5000mAh Battery with 65W Fast Charging'
+        ],
+        variantGroups: [
+            {
+                id: 'ram', name: 'RAM Options', type: 'button',
+                options: [
+                    { id: '6gb', label: '6GB RAM' },
+                    { id: '8gb', label: '8GB RAM' }
+                ]
+            },
+            {
+                id: 'storage', name: 'Storage Capacity', type: 'button',
+                options: [
+                    { id: '128gb', label: '128GB' },
+                    { id: '256gb', label: '256GB' }
+                ]
+            }
+        ],
+        skuMatrix: [
+            { id: 'sku-p1', attributes: { ram: '6gb', storage: '128gb' }, price: 59999, stock: 50, inStock: true },
+            { id: 'sku-p2', attributes: { ram: '8gb', storage: '128gb' }, price: 64999, stock: 30, inStock: true },
+            { id: 'sku-p3', attributes: { ram: '8gb', storage: '256gb' }, price: 69999, stock: 15, inStock: true }
+        ]
+    },
+    {
+        id: 'stream-plus-sub',
+        title: 'StreamPlus Ultimate Entertainment Subscription',
+        brand: 'StreamPlus',
+        category: 'Digital',
+        type: 'subscription',
+        price: 999,
+        originalPrice: 1499,
+        rating: 4.9,
+        reviewsCount: 5400,
+        description: 'Watch thousands of movies, TV shows, and live sports on up to 4 devices simultaneously in stunning 4K HDR.',
+        inStock: true,
+        image: 'https://images.unsplash.com/photo-1593784991095-a205069470b6?auto=format&fit=crop&q=80&w=800',
+        subscriptionConfig: {
+            billingCycle: 'monthly',
+            trialDays: 14,
+            features: [
+                'Unlimited Ad-Free Streaming',
+                '4K HDR Video Quality',
+                'Watch on 4 Screens at once',
+                'Download and watch offline'
+            ]
         }
     }
 ];

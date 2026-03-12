@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import styles from './ProductActions.module.css';
+import { SkuMatrixItem } from '@/data/products';
 
 import { VariantButton } from './variants/VariantButton';
 import { VariantImage } from './variants/VariantImage';
@@ -43,14 +44,50 @@ export interface LegacyVariant {
 
 export default function ProductVariants({ 
     variantGroups = [],
-    legacyVariants = [] 
+    legacyVariants = [],
+    skuMatrix
 }: { 
     variantGroups?: VariantGroup[],
-    legacyVariants?: LegacyVariant[] 
+    legacyVariants?: LegacyVariant[],
+    skuMatrix?: SkuMatrixItem[]
 }) {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
+
+    // Matrix Logic Helper
+    const getDisabledOptions = (group: VariantGroup): string[] => {
+        if (!skuMatrix || skuMatrix.length === 0) return [];
+
+        const disabledIds: string[] = [];
+        const currentSelections: Record<string, string> = {};
+        variantGroups.forEach(g => {
+            if (g.id !== group.id) {
+                const sel = searchParams.get(g.id);
+                if (sel) currentSelections[g.id] = sel;
+            }
+        });
+
+        // For each option in this group, check if there is AT LEAST ONE sku in the matrix
+        // that has this option AND satisfies all currently selected options in other groups.
+        group.options.forEach(opt => {
+            const hasValidCombo = skuMatrix.some(sku => {
+                if (!sku.inStock || sku.stock === 0) return false;
+                if (sku.attributes[group.id] !== opt.id) return false;
+                
+                // Check if all OTHER active selections match this SKU
+                return Object.entries(currentSelections).every(([key, value]) => {
+                    return sku.attributes[key] === value;
+                });
+            });
+
+            if (!hasValidCombo) {
+                disabledIds.push(opt.id);
+            }
+        });
+
+        return disabledIds;
+    };
     
     const [quantity, setQuantity] = useState(1);
 
@@ -110,7 +147,8 @@ export default function ProductVariants({
                 return <VariantImage key={group.id} group={group} activeOptionId={activeOptionId} onChange={handleGroupVariantChange} />;
             case 'button':
             default:
-                return <VariantButton key={group.id} group={group} activeOptionId={activeOptionId} onChange={handleGroupVariantChange} />;
+                const disabledIds = getDisabledOptions(group);
+                return <VariantButton key={group.id} group={group} activeOptionId={activeOptionId} onChange={handleGroupVariantChange} disabledOptionIds={disabledIds} />;
         }
     };
 

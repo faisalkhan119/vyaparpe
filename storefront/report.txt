@@ -1,0 +1,3 @@
+src/components/product/ProductVariants.tsx(51,17): error TS2304: Cannot find name 'SkuMatrixItem'.
+src/data/products.ts(45,26): error TS2304: Cannot find name 'SubscriptionConfig'.
+src/data/products.ts(46,17): error TS2304: Cannot find name 'SkuMatrixItem'.

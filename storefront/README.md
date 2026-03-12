@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 VyaparPe — Premium E-commerce Storefront
 
-## Getting Started
+**VyaparPe** is a state-of-the-art, high-performance e-commerce storefront built with **Next.js 15**, **TypeScript**, and **CSS Modules**. It features a highly dynamic, context-aware homepage navigation system, advanced faceted search, and a premium "glassmorphism" design aesthetic.
 
-First, run the development server:
+![VyaparPe Storefront Preview](public/vyapaarpe_logo.jpg)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## ✨ Key Features
+
+### 🌈 Context-Aware Homepage
+*   **Dynamic Navigation**: Categories switch homepage context via `/?category=...` without losing performance.
+*   **Smart Hero Banners**: Hero sliders automatically adjust their offers and gradients based on the active category.
+*   **Contextual Sections**: Trending, Flash Sales, and Promo sections filter dynamically to show only relevant products.
+
+### 🔍 Advanced Search & Discovery
+*   **Cascading Faceted Search**: Intelligent filter engine that eliminates "zero results" traps by providing valid filter combinations.
+*   **Multi-Select Brand Filters**: True OR-logic brand selection via URL-encoded filtering.
+*   **Smart Autocomplete**: Global Navbar search with instant results and category suggestions.
+
+### 📦 Robust Product Engine
+*   **Hybrid Product Support**: Seamless handling of Physical Goods, Digital Downloads, and Services (with booking slots).
+*   **Deep Variant Management**: Supports image-swapping, price modifiers, custom text/hex inputs, and multi-select variant configurations.
+*   **Trust Indicators**: Real-time stock status ("Only X left!"), verified expert badges, and warranty cards.
+
+### 🛒 High-Performance UX
+*   **Glassmorphism UI**: A premium visual style with subtle blurs, elegant gradients, and micro-animations.
+*   **Cart & Wishlist**: Optimized state-managed drawers for a friction-less checkout experience.
+*   **Theme Engine**: Built-in support for Dark, Light, and System themes.
+
+## 🛠️ Tech Stack
+
+- **Framework**: [Next.js 15](https://nextjs.org/) (App Router)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Styling**: Vanilla CSS Modules (Glassmorphism architecture)
+- **Optimization**: Turbopack & Image Optimization
+- **Icons**: Lucide-inspired Emoji icons for universal compatibility
+- **Components**: Functional React Components with `useMemo` & `useCallback` optimization
+
+## 📂 Project Structure
+
+```text
+storefront/
+├── public/          # Static assets & logos
+├── src/
+│   ├── app/         # Next.js App Router (pages & layouts)
+│   ├── components/  # Atomic & Molecular UI components
+│   ├── context/     # React Context for Cart & Global state
+│   ├── data/        # Mock product engine & helper functions
+│   └── styles/      # Global CSS & Design Tokens
+└── scripts/         # Audit & Data Enrichment utilities
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Getting Started
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1.  **Clone & Install**:
+    ```bash
+    git clone https://github.com/faisalkhan119/vyaparpe.git
+    cd vyaparpe/storefront
+    npm install
+    ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2.  **Run Development Server**:
+    ```bash
+    npm run dev
+    ```
 
-## Learn More
+3.  **Explore**:
+    Open [http://localhost:3000](http://localhost:3000) to see the magic.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📄 License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Built with ❤️ for the **VyaparPe** Ecosystem.

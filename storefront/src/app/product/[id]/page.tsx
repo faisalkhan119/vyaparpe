@@ -132,6 +132,27 @@ export default async function ProductDetailsPage({
     product.price = derivedPrice;
     product.originalPrice = derivedOriginalPrice;
 
+    if (product.skuMatrix && product.skuMatrix.length > 0) {
+        const currentSelections: Record<string, string> = {};
+        product.variantGroups?.forEach(group => {
+            currentSelections[group.id] = resolvedSearchParams[group.id] as string || group.options[0]?.id;
+        });
+        
+        const matchedSku = product.skuMatrix.find(sku => {
+            return Object.entries(currentSelections).every(([key, value]) => sku.attributes[key] === value);
+        });
+
+        if (matchedSku) {
+            product.price = matchedSku.price;
+            // Maintain the fixed discount amount conceptually
+            product.originalPrice = Math.max(product.originalPrice, matchedSku.price + (product.originalPrice - derivedPrice));
+            
+            // Override stock based on matrix
+            product.inStock = matchedSku.inStock && matchedSku.stock > 0;
+            product.stock = matchedSku.stock;
+        }
+    }
+
     // get related products (same category, exclude current)
     const related = products.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4);
 
@@ -232,6 +253,7 @@ export default async function ProductDetailsPage({
                                     <ProductVariants 
                                         legacyVariants={productVariants} 
                                         variantGroups={(product as any).variantGroups} 
+                                        skuMatrix={(product as any).skuMatrix}
                                     />
                                     <hr className={styles.divider} style={{ marginTop: '1.5rem', marginBottom: '1.5rem' }} />
                                 </div>
