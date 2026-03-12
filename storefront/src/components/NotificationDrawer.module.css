@@ -33,8 +33,9 @@
 .drawerHeader {
     display: flex;
     align-items: center;
-    padding: 1.5rem;
+    padding: 1.25rem 1.5rem;
     border-bottom: 1px solid var(--border-color);
+    position: relative; /* For absolute positioning of close button if needed */
 }
 
 .drawerHeader h3 {
@@ -42,6 +43,19 @@
     margin: 0;
     flex-grow: 1;
     font-size: 1.3rem;
+}
+
+@media (max-width: 480px) {
+    .drawerHeader {
+        padding: 1rem;
+    }
+    .drawerHeader h3 {
+        font-size: 1.1rem;
+    }
+    .markAll {
+        font-size: 0.7rem;
+        margin-right: 0.5rem;
+    }
 }
 
 .markAll {
@@ -54,11 +68,26 @@
 }
 
 .closeBtn {
-    background: none;
-    border: none;
-    color: var(--text-muted);
-    font-size: 1.2rem;
+    background: var(--bg-darker);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 0.9rem;
     cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.closeBtn:hover {
+    background: var(--bg-card);
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: rotate(90deg);
 }
 
 .notifList {
