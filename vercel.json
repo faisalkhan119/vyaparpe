@@ -1,5 +1,0 @@
-{
-  "buildCommand": "npm run build --prefix storefront",
-  "outputDirectory": "storefront/.next",
-  "installCommand": "npm install --prefix storefront"
-}
