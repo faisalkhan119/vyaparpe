@@ -135,26 +135,14 @@
 
     .navMenu {
         display: flex;
-        flex-direction: row;
-        overflow-x: auto;
-        padding-bottom: 0.5rem;
-        scrollbar-width: none;
-        /* Firefox */
-    }
-
-    .navMenu::-webkit-scrollbar {
-        display: none;
-        /* Chrome/Safari */
-    }
-
-    .navItem {
-        white-space: nowrap;
+        flex-direction: column;
+        gap: 0.5rem;
     }
 
     .logoutBtn {
-        margin-top: 0;
-        border-top: none;
-        border-left: 1px dashed var(--glass-border);
+        margin-top: 1rem;
+        border-top: 1px dashed var(--glass-border);
+        border-left: none;
         border-radius: var(--radius-md);
     }
 
