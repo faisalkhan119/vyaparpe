@@ -9,6 +9,7 @@ export default function AccountLayout({
     children: React.ReactNode
 }) {
     const pathname = usePathname();
+    const isSubPage = pathname !== '/account';
 
     const navLinks = [
         { name: 'Profile Overview', path: '/account', icon: '👤' },
@@ -21,12 +22,17 @@ export default function AccountLayout({
         { name: 'Refer & Earn', path: '/account/referrals', icon: '🎁' },
     ];
 
+    // Find the current page name for the back button header
+    const currentPageName = navLinks.find(l => pathname.startsWith(l.path) && l.path !== '/account')?.name
+        || navLinks.find(l => pathname === l.path)?.name
+        || 'Account';
+
     return (
         <main className={styles.accountContainer}>
             <div className={`container ${styles.layoutGrid}`}>
 
-                {/* Sidebar Navigation */}
-                <aside className={styles.sidebar}>
+                {/* Sidebar Navigation - hidden on mobile sub-pages */}
+                <aside className={`${styles.sidebar} ${isSubPage ? styles.hiddenOnMobile : ''}`}>
                     <div className={`glass-panel ${styles.userProfileCard}`}>
                         <div className={styles.avatar}>AK</div>
                         <div className={styles.userInfo}>
@@ -37,7 +43,7 @@ export default function AccountLayout({
 
                     <nav className={styles.navMenu}>
                         {navLinks.map((link) => {
-                            const isActive = pathname === link.path;
+                            const isActive = pathname === link.path || (link.path !== '/account' && pathname.startsWith(link.path));
                             return (
                                 <Link
                                     key={link.path}
@@ -58,7 +64,16 @@ export default function AccountLayout({
                 </aside>
 
                 {/* Main Content Area */}
-                <section className={styles.mainContent}>
+                <section className={`${styles.mainContent} ${!isSubPage ? styles.contentHiddenOnMobile : ''}`}>
+                    {/* Mobile Back Button - only visible on sub-pages on mobile */}
+                    {isSubPage && (
+                        <div className={styles.mobileBackHeader}>
+                            <Link href="/account" className={styles.backBtn}>
+                                ← Back
+                            </Link>
+                            <span className={styles.mobilePageTitle}>{currentPageName}</span>
+                        </div>
+                    )}
                     {children}
                 </section>
 
