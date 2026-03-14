@@ -1,0 +1,103 @@
+.container {
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0.6rem 0;
+}
+
+.scrollRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    padding: 0 1rem;
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.4rem 0.75rem;
+    border-radius: 20px;
+    background: var(--bg-body);
+    border: 1px solid var(--border-color);
+    text-decoration: none;
+    color: var(--text-main);
+    font-size: 0.75rem;
+    font-weight: 500;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'Inter', sans-serif;
+}
+
+.chip:hover {
+    border-color: var(--primary);
+    background: rgba(99, 102, 241, 0.06);
+    color: var(--primary);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(99, 102, 241, 0.1);
+}
+
+.chipIcon {
+    font-size: 0.9rem;
+    line-height: 1;
+}
+
+.chipLabel {
+    line-height: 1;
+}
+
+.moreBtn {
+    background: linear-gradient(135deg, var(--primary), #8b5cf6);
+    color: #fff;
+    border-color: transparent;
+    font-weight: 600;
+}
+
+.moreBtn:hover {
+    background: linear-gradient(135deg, #5b21b6, var(--primary));
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+}
+
+.lessBtn {
+    background: rgba(239, 68, 68, 0.08);
+    color: var(--danger, #ef4444);
+    border-color: rgba(239, 68, 68, 0.2);
+    font-weight: 600;
+}
+
+.lessBtn:hover {
+    background: rgba(239, 68, 68, 0.15);
+    color: var(--danger, #ef4444);
+    border-color: rgba(239, 68, 68, 0.3);
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .scrollRow {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        padding: 0 0.75rem;
+    }
+
+    .scrollRow::-webkit-scrollbar {
+        display: none;
+    }
+
+    .chip {
+        flex-shrink: 0;
+        padding: 0.35rem 0.65rem;
+        font-size: 0.7rem;
+    }
+
+    /* When expanded on mobile, wrap instead of scroll */
+    .scrollRow:has(.lessBtn) {
+        flex-wrap: wrap;
+        overflow-x: visible;
+    }
+}

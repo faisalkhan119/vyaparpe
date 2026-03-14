@@ -5,7 +5,7 @@ import CategoryPills from '@/components/CategoryPills';
 import DealTimer from '@/components/DealTimer';
 import PromoBanners from '@/components/PromoBanners';
 import RecentlyViewed from '@/components/RecentlyViewed';
-import SubCategoryGrid from '@/components/SubCategoryGrid';
+import SubCategoryStrip from '@/components/SubCategoryStrip';
 import StillLooking from '@/components/StillLooking';
 import { getFeaturedProducts, getTrendingProducts } from '@/data/products';
 import AddToCartButton from '@/components/product/AddToCartButton';
@@ -26,12 +26,9 @@ export default async function Home({ searchParams }: HomeProps) {
     <main className={styles.main}>
 
       <CategoryPills activeCategory={activeCategory} platform={activePlatform} />
+      <SubCategoryStrip platform={activePlatform} category={activeCategory} />
       <HeroCarousel category={activeCategory} />
 
-      {/* Sub-Category Grid (like Flipkart brand icons) */}
-      <div className="container">
-        <SubCategoryGrid platform={activePlatform} category={activeCategory} />
-      </div>
 
       <DealTimer category={activeCategory} />
 
