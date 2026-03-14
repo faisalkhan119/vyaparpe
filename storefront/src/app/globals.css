@@ -215,15 +215,15 @@ a {
 
 /* Layout Utilities */
 .main-content {
-  min-height: calc(100vh - 80px);
-  padding-top: 80px; /* Offset for top fixed navbar */
+  min-height: calc(100vh - 128px);
+  padding-top: 128px; /* Offset: PlatformTabs(48px) + Navbar(80px) */
   display: flex;
   flex-direction: column;
 }
 
 @media (max-width: 768px) {
   .main-content {
-    padding-top: 60px; /* Offset for new thinner mobile navbar */
+    padding-top: 102px; /* Offset: PlatformTabs(42px) + Navbar(60px) */
     padding-bottom: 75px; /* Offset for bottom fixed nav */
   }
 

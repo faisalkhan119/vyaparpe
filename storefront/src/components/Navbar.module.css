@@ -1,6 +1,6 @@
 .navbar {
     position: fixed;
-    top: 0;
+    top: 48px;
     left: 0;
     right: 0;
     height: 80px;
@@ -320,6 +320,7 @@
 
     .navbar {
         height: 60px; /* Thinner header */
+        top: 42px; /* Below PlatformTabs on mobile */
     }
 
     .logoImg {

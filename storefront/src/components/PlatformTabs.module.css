@@ -1,7 +1,10 @@
 .tabsBar {
     background: linear-gradient(135deg, #e8222e 0%, #c6171f 50%, #b81419 100%);
-    position: relative;
-    z-index: 99;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 101;
     overflow: hidden;
     box-shadow: 0 2px 12px rgba(200, 30, 30, 0.25);
 }
@@ -111,9 +114,7 @@
 /* Mobile */
 @media (max-width: 768px) {
     .tabsBar {
-        position: sticky;
-        top: 0;
-        z-index: 101;
+        /* Already fixed from base styles */
     }
 
     .tabsScroll {
