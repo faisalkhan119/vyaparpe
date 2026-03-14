@@ -2,7 +2,7 @@
     position: fixed;
     inset: 0;
     background: var(--bg-darker);
-    z-index: 98;
+    z-index: 9998; /* Above Navbar's 100 */
 }
 
 .drawer {
@@ -14,7 +14,7 @@
     height: 100vh;
     background: var(--bg-card);
     border-left: 1px solid var(--border-color);
-    z-index: 99;
+    z-index: 9999; /* Above Navbar's 100 */
     display: flex;
     flex-direction: column;
     animation: slideIn 0.25s ease;

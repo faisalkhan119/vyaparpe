@@ -12,7 +12,7 @@ export default function AccountLayout({
     const isSubPage = pathname !== '/account';
 
     const navLinks = [
-        { name: 'Profile Overview', path: '/account', icon: '👤' },
+        { name: 'Profile Overview', path: '/account/profile', icon: '👤' },
         { name: 'My Orders', path: '/account/orders', icon: '📦' },
         { name: 'Subscriptions', path: '/account/subscriptions', icon: '🔄' },
         { name: 'My Downloads', path: '/account/downloads', icon: '📥' },
@@ -63,8 +63,8 @@ export default function AccountLayout({
                     </nav>
                 </aside>
 
-                {/* Main Content Area */}
-                <section className={styles.mainContent}>
+                {/* Main Content Area — hidden on mobile when on root /account */}
+                <section className={`${styles.mainContent} ${!isSubPage ? styles.hiddenOnMobile : ''}`}>
                     {/* Mobile Back Button - only visible on sub-pages on mobile */}
                     {isSubPage && (
                         <div className={styles.mobileBackHeader}>
