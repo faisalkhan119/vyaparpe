@@ -33,9 +33,11 @@
 .drawerHeader {
     display: flex;
     align-items: center;
-    padding: 1.25rem 1.5rem;
+    padding: 1.25rem 4rem 1.25rem 1.5rem;
     border-bottom: 1px solid var(--border-color);
-    position: relative; /* For absolute positioning of close button if needed */
+    position: relative;
+    flex-wrap: wrap;
+    gap: 0.5rem;
 }
 
 .drawerHeader h3 {
@@ -47,14 +49,19 @@
 
 @media (max-width: 480px) {
     .drawerHeader {
-        padding: 1rem;
+        padding: 1rem 3.5rem 1rem 1rem;
     }
     .drawerHeader h3 {
         font-size: 1.1rem;
+        flex-basis: 100%; /* Force 'mark all' to next line if needed, or keep it */
     }
     .markAll {
-        font-size: 0.7rem;
-        margin-right: 0.5rem;
+        font-size: 0.75rem;
+        margin-right: 0;
+    }
+    .closeBtn {
+        top: 1rem !important;
+        right: 0.75rem !important;
     }
 }
 
@@ -68,6 +75,9 @@
 }
 
 .closeBtn {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
     background: var(--bg-darker);
     border: 1px solid var(--border-color);
     color: var(--text-main);
@@ -81,6 +91,7 @@
     cursor: pointer;
     transition: all 0.2s ease;
     flex-shrink: 0;
+    z-index: 10;
 }
 
 .closeBtn:hover {
