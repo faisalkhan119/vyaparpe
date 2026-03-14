@@ -64,7 +64,7 @@ export default function AccountLayout({
                 </aside>
 
                 {/* Main Content Area */}
-                <section className={`${styles.mainContent} ${!isSubPage ? styles.contentHiddenOnMobile : ''}`}>
+                <section className={styles.mainContent}>
                     {/* Mobile Back Button - only visible on sub-pages on mobile */}
                     {isSubPage && (
                         <div className={styles.mobileBackHeader}>

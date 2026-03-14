@@ -171,10 +171,6 @@
         display: none !important;
     }
 
-    /* Hide content area when on root /account (show only menu) */
-    .contentHiddenOnMobile {
-        display: none !important;
-    }
 
     /* Mobile Back Button Header */
     .mobileBackHeader {
