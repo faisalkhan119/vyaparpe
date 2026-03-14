@@ -1,5 +1,6 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import styles from './NotificationDrawer.module.css';
 
 interface NotificationDrawerProps {
@@ -8,6 +9,11 @@ interface NotificationDrawerProps {
 }
 
 export default function NotificationDrawer({ isOpen, onClose }: NotificationDrawerProps) {
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
     const [notifications] = useState([
         { id: 1, type: 'order', title: 'Order Shipped! 🚚', message: 'Your order ORD-84A29B has been shipped via Delhivery.', time: '2 hours ago', read: false },
         { id: 2, type: 'promo', title: 'Flash Sale Live! ⚡', message: 'Up to 67% off on Electronics. Ends in 5 hours!', time: '3 hours ago', read: false },
@@ -17,9 +23,9 @@ export default function NotificationDrawer({ isOpen, onClose }: NotificationDraw
         { id: 6, type: 'sub', title: 'Subscription Renewed 🔄', message: 'Your A2 Cow Milk daily subscription has been renewed.', time: '4 days ago', read: true },
     ]);
 
-    if (!isOpen) return null;
+    if (!isOpen || !mounted) return null;
 
-    return (
+    const drawerContent = (
         <>
             <div className={styles.overlay} onClick={onClose}></div>
             <div className={styles.drawer}>
@@ -43,4 +49,6 @@ export default function NotificationDrawer({ isOpen, onClose }: NotificationDraw
             </div>
         </>
     );
+
+    return createPortal(drawerContent, document.body);
 }
