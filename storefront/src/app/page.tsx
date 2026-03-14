@@ -5,16 +5,19 @@ import CategoryPills from '@/components/CategoryPills';
 import DealTimer from '@/components/DealTimer';
 import PromoBanners from '@/components/PromoBanners';
 import RecentlyViewed from '@/components/RecentlyViewed';
+import SubCategoryGrid from '@/components/SubCategoryGrid';
+import StillLooking from '@/components/StillLooking';
 import { getFeaturedProducts, getTrendingProducts } from '@/data/products';
 import AddToCartButton from '@/components/product/AddToCartButton';
 
 interface HomeProps {
-  searchParams: Promise<{ category?: string }>;
+  searchParams: Promise<{ category?: string; platform?: string }>;
 }
 
 export default async function Home({ searchParams }: HomeProps) {
   const params = await searchParams;
   const activeCategory = params.category || '';
+  const activePlatform = params.platform || 'vyaparpe';
 
   const featured = getFeaturedProducts(activeCategory);
   const trending = getTrendingProducts(activeCategory);
@@ -22,11 +25,20 @@ export default async function Home({ searchParams }: HomeProps) {
   return (
     <main className={styles.main}>
 
-      <CategoryPills activeCategory={activeCategory} />
+      <CategoryPills activeCategory={activeCategory} platform={activePlatform} />
       <HeroCarousel category={activeCategory} />
+
+      {/* Sub-Category Grid (like Flipkart brand icons) */}
+      <div className="container">
+        <SubCategoryGrid platform={activePlatform} category={activeCategory} />
+      </div>
+
       <DealTimer category={activeCategory} />
 
       <div className="container">
+
+        {/* Personalized "Still Looking" Section */}
+        <StillLooking />
 
         {/* PROMO BANNERS */}
         <PromoBanners category={activeCategory} />
@@ -114,7 +126,6 @@ export default async function Home({ searchParams }: HomeProps) {
 
         {/* Shop by Brand */}
         {(() => {
-          // Dynamically compute brands from current featured/trending list
           const brandSet = new Set<string>();
           [...featured, ...trending].forEach(p => brandSet.add(p.brand));
           const dynamicBrands = Array.from(brandSet).slice(0, 8);

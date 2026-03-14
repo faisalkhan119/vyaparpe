@@ -2,33 +2,11 @@
 import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
 import styles from './CategoryPills.module.css';
+import { getPlatformCategories } from '@/data/platformData';
 
-const categories = [
-    { id: 'home', name: 'For You', icon: '🏠', slug: '' },
-    { id: 'electronics', name: 'Electronics', icon: '💻', slug: 'Electronics' },
-    { id: 'fashion', name: 'Fashion', icon: '👕', slug: 'Fashion' },
-    { id: 'grocery', name: 'Groceries', icon: '🛒', slug: 'Groceries' },
-    { id: 'appliances', name: 'Home & Kitchen', icon: '🧺', slug: 'Home & Kitchen' },
-    { id: 'beauty', name: 'Beauty', icon: '💄', slug: 'Beauty' },
-    { id: 'sports', name: 'Sports', icon: '⚽', slug: 'Sports' },
-    { id: 'books', name: 'Books', icon: '📚', slug: 'Books' },
-    { id: 'toys', name: 'Toys', icon: '🎲', slug: 'Toys' },
-    { id: 'jewelry', name: 'Jewelry', icon: '💎', slug: 'Jewelry' },
-    { id: 'food', name: 'Food', icon: '🍕', slug: 'Food' },
-    { id: 'digital', name: 'Digital', icon: '💾', slug: 'Digital' },
-    { id: 'services', name: 'Services', icon: '🛠️', slug: 'Services' },
-    { id: 'gifts', name: 'Gifts', icon: '🎁', slug: 'Gifts' },
-    { id: 'automotive', name: 'Automotive', icon: '🚗', slug: 'Automotive' },
-    { id: 'health', name: 'Health', icon: '💊', slug: 'Health' },
-    { id: 'baby', name: 'Baby & Kids', icon: '👶', slug: 'Baby & Kids' },
-    { id: 'pets', name: 'Pet Supplies', icon: '🐾', slug: 'Pet Supplies' },
-    { id: 'stationery', name: 'Stationery', icon: '✏️', slug: 'Stationery' },
-    { id: 'fitness', name: 'Fitness', icon: '🏋️', slug: 'Fitness' },
-    { id: 'travel', name: 'Travel', icon: '✈️', slug: 'Travel' },
-    { id: 'furniture', name: 'Furniture', icon: '🛋️', slug: 'Furniture' },
-];
 
-export default function CategoryPills({ activeCategory = '' }: { activeCategory?: string }) {
+export default function CategoryPills({ activeCategory = '', platform = 'vyaparpe' }: { activeCategory?: string; platform?: string }) {
+    const categories = getPlatformCategories(platform);
     const [isScrolledDown, setIsScrolledDown] = useState(false);
     const isScrolledDownRef = useRef(false);
     const lastScrollY = useRef(0);
@@ -41,7 +19,6 @@ export default function CategoryPills({ activeCategory = '' }: { activeCategory?
         const handleScroll = () => {
             const currentScrollY = window.scrollY;
 
-            // Always expand at the very top, forcibly
             if (currentScrollY <= 10) {
                 if (isScrolledDownRef.current) {
                     setIsScrolledDown(false);
@@ -59,26 +36,22 @@ export default function CategoryPills({ activeCategory = '' }: { activeCategory?
                 return;
             }
 
-            // Ignored during layout shift transitions to stop vibration loops
             if (isTransitioning.current) return;
 
             const delta = currentScrollY - lastScrollY.current;
 
-            // Using 5px sensitivity for "instant" feel, without triggering on micro-jitters
             if (delta > 5 && !isScrolledDownRef.current) {
-                // Scrolled down -> Shrink
                 setIsScrolledDown(true);
                 isScrolledDownRef.current = true;
                 
                 isTransitioning.current = true;
                 if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
                 scrollTimeout.current = setTimeout(() => {
-                    lastScrollY.current = window.scrollY; // Reset anchor to post-shift position
+                    lastScrollY.current = window.scrollY;
                     isTransitioning.current = false;
                 }, 350);
                 
             } else if (delta < -5 && isScrolledDownRef.current) {
-                // Scrolled up -> Expand
                 setIsScrolledDown(false);
                 isScrolledDownRef.current = false;
                 
@@ -90,7 +63,6 @@ export default function CategoryPills({ activeCategory = '' }: { activeCategory?
                 }, 350);
                 
             } else if (!isTransitioning.current) {
-                // If scrolling in the 'same' direction as current state, keep the anchor updated
                 if ((delta > 0 && isScrolledDownRef.current) || (delta < 0 && !isScrolledDownRef.current)) {
                     lastScrollY.current = currentScrollY;
                 }
@@ -101,14 +73,16 @@ export default function CategoryPills({ activeCategory = '' }: { activeCategory?
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    const platformParam = platform !== 'vyaparpe' ? `&platform=${platform}` : '';
+
     return (
         <div className={`${styles.categoryContainer} ${isScrolledDown ? styles.scrolled : ''}`}>
             <div className="container">
                 <div className={styles.scrollWrapper}>
-                    {categories.map((cat, idx) => (
+                    {categories.map((cat) => (
                         <Link
                             key={cat.id}
-                            href={cat.slug ? `/?category=${encodeURIComponent(cat.slug)}` : '/'}
+                            href={cat.slug ? `/?category=${encodeURIComponent(cat.slug)}${platformParam}` : `/${platform !== 'vyaparpe' ? `?platform=${platform}` : ''}`}
                             className={`${styles.pill} ${activeCategory.toLowerCase() === cat.slug.toLowerCase() ? styles.active : ''}`}
                         >
                             <span className={styles.iconContainer}>
@@ -122,3 +96,4 @@ export default function CategoryPills({ activeCategory = '' }: { activeCategory?
         </div>
     );
 }
+

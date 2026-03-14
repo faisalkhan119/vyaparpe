@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -10,6 +11,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import BottomNav from "@/components/BottomNav";
 import CookieConsent from "@/components/CookieConsent";
 import { CartProvider } from "@/context/CartContext";
+import PlatformTabs from "@/components/PlatformTabs";
 
 export const metadata: Metadata = {
   title: "Vyaparpe Demo - Premium Storefront",
@@ -27,6 +29,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <CartProvider>
           <div className="app-container">
+            <Suspense fallback={null}><PlatformTabs /></Suspense>
             <Navbar />
             <main className="main-content">
               <AnnouncementBar />
