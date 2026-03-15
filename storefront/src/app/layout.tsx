@@ -26,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="light">
           <CartProvider>
           <div className="app-container">
             <Suspense fallback={null}><PlatformTabs /></Suspense>
