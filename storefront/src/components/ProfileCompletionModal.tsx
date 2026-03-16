@@ -1,8 +1,10 @@
 'use client';
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import styles from './ProfileCompletionModal.module.css';
 
 export default function ProfileCompletionModal() {
+    const pathname = usePathname();
     const [isOpen, setIsOpen] = useState(false);
 
     // Track what exactly is missing
@@ -85,6 +87,7 @@ export default function ProfileCompletionModal() {
         setIsOpen(false);
     };
 
+    if (pathname === '/socials' || pathname === '/pitchdeck' || pathname === '/systemdiagram') return null;
     if (!isOpen) return null;
 
     return (

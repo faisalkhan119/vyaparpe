@@ -1,6 +1,7 @@
 'use client';
 import styles from './SocialProofPopup.module.css';
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 
 const purchases = [
     { name: 'Rahul from Mumbai', product: 'Sony WH-1000XM5', time: '2 min ago' },
@@ -10,6 +11,7 @@ const purchases = [
 ];
 
 export default function SocialProofPopup() {
+    const pathname = usePathname();
     const [visible, setVisible] = useState(false);
     const [index, setIndex] = useState(0);
     const [isDismissed, setIsDismissed] = useState(false);
@@ -46,6 +48,7 @@ export default function SocialProofPopup() {
         sessionStorage.setItem('socialProofDismissed', 'true');
     };
 
+    if (pathname === '/socials' || pathname === '/pitchdeck' || pathname === '/systemdiagram') return null;
     if (isDismissed) return null;
 
     const purchase = purchases[index];

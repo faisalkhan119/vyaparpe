@@ -1,7 +1,9 @@
 'use client';
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 
 export default function CookieConsent() {
+    const pathname = usePathname();
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
@@ -21,6 +23,7 @@ export default function CookieConsent() {
         setIsVisible(false);
     };
 
+    if (pathname === '/socials' || pathname === '/pitchdeck' || pathname === '/systemdiagram') return null;
     if (!isVisible) return null;
 
     return (

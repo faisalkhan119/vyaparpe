@@ -1,8 +1,10 @@
 'use client';
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import styles from './AIChatbot.module.css';
 
 export default function AIChatbot() {
+    const pathname = usePathname();
     const [isOpen, setIsOpen] = useState(false);
     const [messages, setMessages] = useState([
         { sender: 'bot', text: 'Hi! I am the Vyaparpe AI Assistant. How can I help you today?' },
@@ -38,6 +40,8 @@ export default function AIChatbot() {
             setMessages(prev => [...prev, { sender: 'bot', text: botReply }]);
         }, 800);
     };
+
+    if (pathname === '/socials' || pathname === '/pitchdeck' || pathname === '/systemdiagram') return null;
 
     return (
         <>
