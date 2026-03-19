@@ -2637,6 +2637,7 @@
             let W, H, particles = [];
             function resize() { W = cvs.width = window.innerWidth; H = cvs.height = window.innerHeight; }
             resize(); window.addEventListener('resize', resize);
+            let mx = W / 2, my = H / 2, rx = W / 2, ry = H / 2;
             class P {
                 constructor() { this.reset() }
                 reset() { this.x = Math.random() * W; this.y = Math.random() * H; this.vx = (Math.random() - .5) * .3; this.vy = (Math.random() - .5) * .3; this.r = Math.random() * 1.5 + .5; this.a = Math.random() * .3 + .05; this.color = Math.random() > .7 ? '212,168,75' : Math.random() > .5 ? '86,192,43' : '38,189,226' }
@@ -2709,7 +2710,6 @@
             document.addEventListener('touchend', e => { const d = tx - e.changedTouches[0].clientX; if (Math.abs(d) > 50) { d > 0 ? next() : prev(); } });
             // === CURSOR + SPOTLIGHT ===
             const dot = document.getElementById('cDot'), ring = document.getElementById('cRing'), spot = document.getElementById('spotlight');
-            let mx = W / 2, my = H / 2, rx = W / 2, ry = H / 2;
             document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; dot.style.transform = `translate(${mx - 4}px,${my - 4}px)`; spot.style.left = mx + 'px'; spot.style.top = my + 'px'; });
             (function lag() { rx += (mx - rx) * .1; ry += (my - ry) * .1; ring.style.transform = `translate(${rx - 20}px,${ry - 20}px)`; requestAnimationFrame(lag) })();
             // Click ripple
