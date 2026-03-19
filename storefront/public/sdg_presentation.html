@@ -1,634 +1,2723 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Sustainable Development &amp; the 17 SDGs</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&family=DM+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{--sdg1:#E5243B;--sdg2:#DDA63A;--sdg3:#4C9F38;--sdg4:#C5192D;--sdg5:#FF3A21;--sdg6:#26BDE2;--sdg7:#FCC30B;--sdg8:#A21942;--sdg9:#FD6925;--sdg10:#DD1367;--sdg11:#FD9D24;--sdg12:#BF8B2E;--sdg13:#3F7E44;--sdg14:#0A97D9;--sdg15:#56C02B;--sdg16:#00689D;--sdg17:#19486A;--cream:#FAF7F2;--charcoal:#0B0B1A;--gold:#D4A84B;--surface:rgba(255,255,255,.03)}
-html,body{height:100%;overflow:hidden}
-body{font-family:'DM Sans',sans-serif;background:#050510;color:#e2e2e2;cursor:none}
-/* === CUSTOM CURSOR === */
-.cur-dot{position:fixed;width:8px;height:8px;border-radius:50%;background:var(--gold);pointer-events:none;z-index:100000;mix-blend-mode:screen;box-shadow:0 0 20px var(--gold),0 0 60px rgba(212,168,75,.3);transition:width .3s,height .3s}
-.cur-ring{position:fixed;width:40px;height:40px;border-radius:50%;border:1.5px solid rgba(212,168,75,.5);pointer-events:none;z-index:99999;transition:transform .15s ease-out,border-color .3s}
-/* === CANVAS BG === */
-#particleCanvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
-/* === MOUSE SPOTLIGHT === */
-.spotlight{position:fixed;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(212,168,75,.06) 0%,transparent 70%);pointer-events:none;z-index:1;transform:translate(-50%,-50%);transition:opacity .3s}
-/* === PROGRESS === */
-#progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--sdg1),var(--sdg2),var(--sdg3),var(--sdg6),var(--gold));background-size:200% 100%;animation:gradientShift 4s linear infinite;z-index:100001;transition:width .6s cubic-bezier(.4,0,.2,1);box-shadow:0 0 20px rgba(212,168,75,.4)}
-@keyframes gradientShift{0%{background-position:0% 50%}100%{background-position:200% 50%}}
-/* === NOISE OVERLAY === */
-.noise{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.035;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-/* === SLIDES === */
-.slide{position:fixed;inset:0;display:none;flex-direction:column;justify-content:center;align-items:center;z-index:10;perspective:1200px}
-.slide.active{display:flex}
-.slide-inner{width:min(100vw,177.78vh);height:min(100vh,56.25vw);position:relative;display:flex;flex-direction:column;justify-content:center;align-items:center;overflow:hidden;transform-style:preserve-3d}
-/* === ANIMATIONS === */
-@keyframes fadeUp{from{opacity:0;transform:translateY(50px) scale(.92);filter:blur(8px)}to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}
-@keyframes slideInLeft{from{opacity:0;transform:translateX(-80px) rotateY(8deg)}to{opacity:1;transform:translateX(0) rotateY(0)}}
-@keyframes slideInRight{from{opacity:0;transform:translateX(80px) rotateY(-8deg)}to{opacity:1;transform:translateX(0) rotateY(0)}}
-@keyframes scaleIn{from{opacity:0;transform:scale(.6) rotate(-8deg);filter:blur(6px)}to{opacity:1;transform:scale(1) rotate(0);filter:blur(0)}}
-@keyframes float{0%,100%{transform:translateY(0) rotate(0deg)}25%{transform:translateY(-10px) rotate(1deg)}75%{transform:translateY(-14px) rotate(-1deg)}}
-@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.93)}}
-@keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
-@keyframes borderGlow{0%,100%{box-shadow:0 0 8px 2px rgba(212,168,75,.2)}50%{box-shadow:0 0 30px 6px rgba(212,168,75,.6)}}
-@keyframes lineExpand{from{width:0;opacity:0}to{width:100%;opacity:1}}
-@keyframes morphBg{0%{border-radius:30% 70% 70% 30%/30% 30% 70% 70%}25%{border-radius:58% 42% 75% 25%/76% 46% 54% 24%}50%{border-radius:50% 50% 33% 67%/55% 27% 73% 45%}75%{border-radius:33% 67% 58% 42%/63% 68% 32% 37%}100%{border-radius:30% 70% 70% 30%/30% 30% 70% 70%}}
-@keyframes aurora{0%{transform:translateX(-25%) rotate(0deg);opacity:.4}50%{transform:translateX(25%) rotate(180deg);opacity:.6}100%{transform:translateX(-25%) rotate(360deg);opacity:.4}}
-@keyframes revealMask{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0% 0 0)}}
-@keyframes typewriter{from{width:0}to{width:100%}}
-@keyframes blink{0%,100%{border-color:var(--gold)}50%{border-color:transparent}}
-@keyframes ripple{0%{transform:scale(0);opacity:.6}100%{transform:scale(4);opacity:0}}
-@keyframes slideExitUp{to{opacity:0;transform:perspective(1200px) rotateX(3deg) translateY(-60px) scale(1.02);filter:blur(4px)}}
-@keyframes slideEnterUp{from{opacity:0;transform:perspective(1200px) rotateX(-3deg) translateY(60px) scale(.96);filter:blur(6px)}to{opacity:1;transform:perspective(1200px) rotateX(0) translateY(0) scale(1);filter:blur(0)}}
-.slide.active .a{opacity:0;animation:fadeUp .9s cubic-bezier(.16,1,.3,1) forwards}
-.slide.active .al{opacity:0;animation:slideInLeft .9s cubic-bezier(.16,1,.3,1) forwards}
-.slide.active .ar{opacity:0;animation:slideInRight .9s cubic-bezier(.16,1,.3,1) forwards}
-.slide.active .as{opacity:0;animation:scaleIn .8s cubic-bezier(.16,1,.3,1) forwards}
-.d1{animation-delay:.1s!important}.d2{animation-delay:.2s!important}.d3{animation-delay:.3s!important}.d4{animation-delay:.4s!important}.d5{animation-delay:.5s!important}.d6{animation-delay:.6s!important}.d7{animation-delay:.7s!important}.d8{animation-delay:.8s!important}.d9{animation-delay:.9s!important}.d10{animation-delay:1s!important}.d11{animation-delay:1.1s!important}.d12{animation-delay:1.2s!important}.d13{animation-delay:1.3s!important}
-/* === AURORA === */
-.aurora-wrap{position:absolute;inset:0;overflow:hidden;pointer-events:none}
-.aurora-band{position:absolute;width:200%;height:300px;top:10%;left:-50%;background:linear-gradient(90deg,transparent,rgba(86,192,43,.08),rgba(38,189,226,.1),rgba(212,168,75,.06),transparent);filter:blur(60px);animation:aurora 20s ease-in-out infinite;transform-origin:center}
-.aurora-band:nth-child(2){top:40%;animation-delay:-7s;animation-duration:25s;background:linear-gradient(90deg,transparent,rgba(108,92,231,.08),rgba(0,206,201,.06),transparent)}
-.aurora-band:nth-child(3){top:70%;animation-delay:-14s;animation-duration:30s;background:linear-gradient(90deg,transparent,rgba(212,168,75,.06),rgba(229,36,59,.04),transparent)}
-/* === ORBIT RINGS === */
-.orbit{position:absolute;border:1px solid rgba(212,168,75,.08);border-radius:50%;animation:spin linear infinite}
-.orbit-dot{position:absolute;width:5px;height:5px;border-radius:50%;background:var(--gold);box-shadow:0 0 15px var(--gold),0 0 40px rgba(212,168,75,.3);top:-2.5px;left:50%}
-/* === MORPH BLOB === */
-.morph-blob{position:absolute;border-radius:30% 70% 70% 30%/30% 30% 70% 70%;filter:blur(80px);animation:morphBg 15s ease-in-out infinite;pointer-events:none}
-/* === TYPOGRAPHY === */
-h1,h2,.pf{font-family:'Playfair Display',serif}
-.mono{font-family:'Space Mono',monospace}
-.shimmer{background:linear-gradient(90deg,#56C02B,#26BDE2,#D4A84B,#E5243B,#56C02B);background-size:300% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 4s linear infinite}
-.gold-line{height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);animation:lineExpand 1.2s ease forwards}
-.slide-label{font-family:'Space Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:5px;text-transform:uppercase;text-shadow:0 0 30px rgba(212,168,75,.3)}
-.ghost{position:absolute;font-family:'Playfair Display',serif;font-size:clamp(120px,15vw,220px);font-weight:900;color:rgba(255,255,255,.02);top:5%;left:5%;line-height:1;pointer-events:none;-webkit-user-select:none;user-select:none}
-/* === CARDS === */
-.gcard{background:rgba(255,255,255,.03);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.06);border-radius:20px;padding:28px;transition:all .5s cubic-bezier(.16,1,.3,1);position:relative;overflow:hidden}
-.gcard::before{content:'';position:absolute;inset:-1px;border-radius:20px;padding:1px;background:linear-gradient(135deg,rgba(212,168,75,.2),transparent,rgba(86,192,43,.15));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;opacity:0;transition:opacity .5s}
-.gcard:hover{transform:translateY(-10px) scale(1.02);box-shadow:0 20px 60px rgba(0,0,0,.4),0 0 30px rgba(212,168,75,.1)}
-.gcard:hover::before{opacity:1}
-.gcard-light{background:rgba(26,26,46,.04);border:1px solid rgba(26,26,46,.08);border-radius:20px;padding:24px;transition:all .5s cubic-bezier(.16,1,.3,1);position:relative;overflow:hidden}
-.gcard-light::before{content:'';position:absolute;inset:-1px;border-radius:20px;padding:1px;background:linear-gradient(135deg,rgba(212,168,75,.3),transparent,rgba(76,159,56,.2));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;opacity:0;transition:opacity .5s}
-.gcard-light:hover{transform:translateY(-8px) scale(1.01);box-shadow:0 16px 48px rgba(0,0,0,.1)}
-.gcard-light:hover::before{opacity:1}
-.sdg-badge{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-weight:700;color:#fff;font-size:16px;flex-shrink:0;box-shadow:0 4px 20px rgba(0,0,0,.3);transition:transform .3s,box-shadow .3s}
-.sdg-badge:hover{transform:rotate(-8deg) scale(1.15);box-shadow:0 8px 30px rgba(0,0,0,.5)}
-.stat-num{font-family:'Playfair Display',serif;font-size:clamp(36px,4vw,56px);font-weight:900;color:var(--charcoal);line-height:1}
-.sdg-tile{width:clamp(60px,5vw,78px);height:clamp(60px,5vw,78px);border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all .4s cubic-bezier(.16,1,.3,1);position:relative;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.2)}
-.sdg-tile:hover{transform:scale(1.25) rotate(-6deg) translateY(-8px);box-shadow:0 12px 40px rgba(0,0,0,.4);z-index:2}
-.sdg-tile .num{font-family:'Space Mono',monospace;font-size:clamp(16px,1.5vw,22px);font-weight:700;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.3)}
-.sdg-tile .lbl{font-size:clamp(5px,.6vw,7px);color:rgba(255,255,255,.9);text-align:center;line-height:1.1;margin-top:1px;font-weight:500}
-.sdg-tile .bg-e{position:absolute;font-size:clamp(20px,2.5vw,32px);opacity:.12;bottom:-6px;right:-4px}
-.pill{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;border-radius:60px;font-family:'Space Mono',monospace;font-size:14px;font-weight:700;color:#fff;position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s}
-.pill:hover{transform:scale(1.08) translateY(-3px)}
-.pill::after{content:'';position:absolute;inset:0;border-radius:60px;background:linear-gradient(45deg,transparent 30%,rgba(255,255,255,.1) 50%,transparent 70%);background-size:200% 100%;animation:shimmer 3s linear infinite;pointer-events:none}
-/* === NAV === */
-.nav-bar{position:fixed;bottom:0;left:0;right:0;height:60px;background:rgba(5,5,16,.9);-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);display:flex;align-items:center;justify-content:center;gap:20px;z-index:10000;border-top:1px solid rgba(212,168,75,.1)}
-.nav-btn{width:44px;height:44px;border-radius:12px;border:1px solid rgba(212,168,75,.2);background:rgba(212,168,75,.05);color:#fff;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all .4s cubic-bezier(.16,1,.3,1);pointer-events:auto;position:relative;overflow:hidden}
-.nav-btn:hover{background:var(--gold);color:var(--charcoal);box-shadow:0 0 30px rgba(212,168,75,.4);transform:scale(1.08)}
-.nav-btn::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at center,rgba(255,255,255,.2),transparent);opacity:0;transition:opacity .3s}
-.nav-btn:active::after{opacity:1}
-.nav-dots{display:flex;gap:8px;align-items:center}
-.nav-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.15);cursor:pointer;transition:all .5s cubic-bezier(.16,1,.3,1);pointer-events:auto}
-.nav-dot.active{background:var(--gold);transform:scale(1.5);box-shadow:0 0 16px rgba(212,168,75,.5)}
-.nav-dot:hover:not(.active){background:rgba(255,255,255,.4);transform:scale(1.2)}
-.nav-counter{font-family:'Space Mono',monospace;font-size:12px;color:rgba(255,255,255,.35);letter-spacing:2px}
-/* === RIPPLE ON CLICK === */
-.click-ripple{position:fixed;width:20px;height:20px;border-radius:50%;background:rgba(212,168,75,.3);pointer-events:none;z-index:100001;animation:ripple .8s ease-out forwards}
-/* === RESPONSIVE 16:9 === */
-@media(max-aspect-ratio:16/9){.slide-inner{width:100vw;height:56.25vw}}
-@media(min-aspect-ratio:16/9){.slide-inner{width:177.78vh;height:100vh}}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Sustainable Development &amp; the 17 SDGs</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&family=DM+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
 
-/* Extracted Inline Styles */
-.ex-style-1 { width:0% }
-.ex-style-2 { background:linear-gradient(135deg,#060614,#0D1B2A,#0A1628) }
-.ex-style-3 { width:500px;height:500px;top:50%;left:50%;margin:-250px 0 0 -250px;animation-duration:35s }
-.ex-style-4 { width:800px;height:800px;top:50%;left:50%;margin:-400px 0 0 -400px;animation-duration:60s;animation-direction:reverse;border-color:rgba(86,192,43,.06) }
-.ex-style-5 { background:#56C02B;box-shadow:0 0 15px #56C02B }
-.ex-style-6 { width:1100px;height:1100px;top:50%;left:50%;margin:-550px 0 0 -550px;animation-duration:90s;border-color:rgba(38,189,226,.05) }
-.ex-style-7 { background:#26BDE2;box-shadow:0 0 15px #26BDE2 }
-.ex-style-8 { width:400px;height:400px;background:rgba(76,159,56,.12);top:5%;left:0 }
-.ex-style-9 { width:500px;height:500px;background:rgba(38,189,226,.08);bottom:5%;right:0;animation-delay:-5s }
-.ex-style-10 { width:300px;height:300px;background:rgba(212,168,75,.1);top:30%;right:15%;animation-delay:-10s }
-.ex-style-11 { position:relative;z-index:5;text-align:center;max-width:950px;padding:20px }
-.ex-style-12 { font-size:clamp(36px,5.5vw,72px);color:#fff;margin:20px 0 24px;line-height:1.1;letter-spacing:-1px }
-.ex-style-13 { font-size:clamp(13px,1.2vw,16px);color:rgba(255,255,255,.45);letter-spacing:1px }
-.ex-style-14 { width:80px;margin:24px auto }
-.ex-style-15 { display:grid;grid-template-columns:1fr 1fr;gap:12px 50px;margin-top:28px;text-align:left }
-.ex-style-16 { border-left:2px solid var(--gold);padding-left:14px }
-.ex-style-17 { font-size:14px;font-weight:600;color:#fff }
-.ex-style-18 { font-size:10px;color:rgba(255,255,255,.3) }
-.ex-style-19 { margin-top:24px;padding:14px 28px;background:rgba(212,168,75,.08);border:1px solid rgba(212,168,75,.2);border-radius:40px;display:inline-block;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 10px 30px rgba(0,0,0,.3) }
-.ex-style-20 { font-size:12px;color:rgba(255,255,255,.6);margin:0;text-transform:uppercase;letter-spacing:1px }
-.ex-style-21 { font-size:22px;color:var(--gold);font-weight:700;margin:6px 0 2px;letter-spacing:1px;text-shadow:0 0 15px rgba(212,168,75,.4) }
-.ex-style-22 { font-size:11px;color:rgba(255,255,255,.7);margin:0 }
-.ex-style-23 { flex-direction:row }
-.ex-style-24 { flex:1;background:linear-gradient(135deg,#0B0B1A,#111128);padding:clamp(30px,4vw,60px) clamp(20px,3vw,45px);display:flex;flex-direction:column;justify-content:center;clip-path:polygon(0 0,94% 0,100% 100%,0 100%);position:relative;z-index:1 }
-.ex-style-25 { opacity:.5 }
-.ex-style-26 { margin-bottom:14px }
-.ex-style-27 { font-size:clamp(24px,3vw,40px);color:#fff;margin-bottom:28px;line-height:1.15 }
-.ex-style-28 { display:flex;gap:12px;align-items:flex-start;margin-bottom:18px }
-.ex-style-29 { font-size:22px }
-.ex-style-30 { color:var(--gold);font-size:14px }
-.ex-style-31 { font-size:13px;color:rgba(255,255,255,.6);margin-top:6px;line-height:1.6 }
-.ex-style-32 { display:flex;gap:12px;align-items:flex-start }
-.ex-style-33 { flex:1;background:linear-gradient(180deg,#FAF7F2,#F0EDE6);padding:clamp(30px,4vw,60px) clamp(20px,3vw,45px);display:flex;flex-direction:column;justify-content:center;align-items:center }
-.ex-style-34 { color:var(--gold);margin-bottom:24px }
-.ex-style-35 { display:grid;grid-template-columns:1fr 1fr;gap:24px }
-.ex-style-36 { text-align:center;padding:16px }
-.ex-style-37 { font-size:12px;color:rgba(26,26,46,.5);margin-top:4px;font-weight:500 }
-.ex-style-38 { background:linear-gradient(160deg,#080818,#0F2027,#0A1628) }
-.ex-style-39 { position:relative;z-index:5;max-width:900px;text-align:center;padding:20px }
-.ex-style-40 { font-family:'Playfair Display',serif;font-size:clamp(100px,12vw,160px);color:rgba(212,168,75,.08);line-height:.8;-webkit-user-select:none;user-select:none }
-.ex-style-41 { font-size:clamp(18px,2.2vw,30px);color:#fff;font-style:italic;line-height:1.65;margin-top:-30px }
-.ex-style-42 { font-size:11px;color:var(--gold);margin-top:24px;letter-spacing:2px }
-.ex-style-43 { width:80px;margin:28px auto }
-.ex-style-44 { display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:32px }
-.ex-style-45 { border-top:2px solid var(--sdg3) }
-.ex-style-46 { font-size:36px;margin-bottom:10px;animation:float 4s ease-in-out infinite }
-.ex-style-47 { font-size:17px;color:#fff;margin-bottom:8px;font-weight:600 }
-.ex-style-48 { font-size:12px;color:rgba(255,255,255,.5);line-height:1.5 }
-.ex-style-49 { border-top:2px solid var(--sdg6) }
-.ex-style-50 { font-size:36px;margin-bottom:10px;animation:float 4s ease-in-out infinite .7s }
-.ex-style-51 { border-top:2px solid var(--gold) }
-.ex-style-52 { font-size:36px;margin-bottom:10px;animation:float 4s ease-in-out infinite 1.4s }
-.ex-style-53 { background:linear-gradient(180deg,#FAF7F2,#F0EDE6) }
-.ex-style-54 { color:var(--gold) }
-.ex-style-55 { font-size:clamp(24px,3vw,40px);color:var(--charcoal);margin:14px 0 28px }
-.ex-style-56 { display:flex;flex-wrap:wrap;gap:clamp(6px,1vw,12px);justify-content:center;max-width:900px }
-.ex-style-57 { width:clamp(280px,30vw,400px);flex-shrink:0;background:linear-gradient(180deg,var(--sdg1),#B01C30);padding:clamp(30px,4vw,60px) clamp(20px,2.5vw,35px);display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden }
-.ex-style-58 { color:rgba(255,255,255,.04) }
-.ex-style-59 { width:300px;height:300px;background:rgba(255,255,255,.06);bottom:-50px;right:-50px }
-.ex-style-60 { color:rgba(255,255,255,.65) }
-.ex-style-61 { font-size:clamp(22px,2.5vw,32px);color:#fff;margin:14px 0 }
-.ex-style-62 { font-size:13px;color:rgba(255,255,255,.7);line-height:1.6 }
-.ex-style-63 { flex:1;background:linear-gradient(180deg,#FAF7F2,#F0EDE6);padding:clamp(20px,2.5vw,35px);display:flex;flex-direction:column;gap:clamp(8px,1vw,14px);justify-content:center }
-.ex-style-64 { display:flex;gap:16px;align-items:center;border-left:4px solid var(--sdg1) }
-.ex-style-65 { background:var(--sdg1) }
-.ex-style-66 { color:var(--charcoal);font-size:15px }
-.ex-style-67 { font-size:12px;color:rgba(26,26,46,.6);margin-top:4px;line-height:1.5 }
-.ex-style-68 { display:flex;gap:16px;align-items:center;border-left:4px solid var(--sdg2) }
-.ex-style-69 { background:var(--sdg2) }
-.ex-style-70 { display:flex;gap:16px;align-items:center;border-left:4px solid var(--sdg3) }
-.ex-style-71 { background:var(--sdg3) }
-.ex-style-72 { display:flex;gap:16px;align-items:center;border-left:4px solid var(--sdg4) }
-.ex-style-73 { background:var(--sdg4) }
-.ex-style-74 { display:flex;gap:16px;align-items:center;border-left:4px solid var(--sdg5) }
-.ex-style-75 { background:var(--sdg5) }
-.ex-style-76 { width:clamp(280px,30vw,400px);flex-shrink:0;background:linear-gradient(180deg,var(--sdg6),#1A8BAF);padding:clamp(30px,4vw,60px) clamp(20px,2.5vw,35px);display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden }
-.ex-style-77 { display:flex;gap:16px;align-items:center;border-left:4px solid var(--sdg6) }
-.ex-style-78 { background:var(--sdg6) }
-.ex-style-79 { display:flex;gap:16px;align-items:center;border-left:4px solid var(--sdg7) }
-.ex-style-80 { background:var(--sdg7) }
-.ex-style-81 { display:flex;gap:16px;align-items:center;border-left:4px solid var(--sdg8) }
-.ex-style-82 { background:var(--sdg8) }
-.ex-style-83 { display:flex;gap:16px;align-items:center;border-left:4px solid var(--sdg9) }
-.ex-style-84 { background:var(--sdg9) }
-.ex-style-85 { display:flex;gap:16px;align-items:center;border-left:4px solid var(--sdg10) }
-.ex-style-86 { background:var(--sdg10) }
-.ex-style-87 { width:clamp(280px,30vw,400px);flex-shrink:0;background:linear-gradient(180deg,var(--sdg13),#2D6432);padding:clamp(30px,4vw,60px) clamp(20px,2.5vw,35px);display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden }
-.ex-style-88 { display:flex;gap:16px;align-items:center;border-left:4px solid var(--sdg11) }
-.ex-style-89 { background:var(--sdg11) }
-.ex-style-90 { display:flex;gap:16px;align-items:center;border-left:4px solid var(--sdg12) }
-.ex-style-91 { background:var(--sdg12) }
-.ex-style-92 { display:flex;gap:16px;align-items:center;border-left:4px solid var(--sdg13) }
-.ex-style-93 { background:var(--sdg13) }
-.ex-style-94 { display:flex;gap:16px;align-items:center;border-left:4px solid var(--sdg14) }
-.ex-style-95 { background:var(--sdg14) }
-.ex-style-96 { display:flex;gap:16px;align-items:center;border-left:4px solid var(--sdg15) }
-.ex-style-97 { background:var(--sdg15) }
-.ex-style-98 { background:linear-gradient(160deg,#060614,#0A1628,#0D1B2A);flex-direction:row }
-.ex-style-99 { flex:1;padding:clamp(30px,4vw,55px) clamp(20px,3vw,45px);display:flex;flex-direction:column;justify-content:center;position:relative;z-index:5;border-right:1px solid rgba(212,168,75,.1) }
-.ex-style-100 { background:linear-gradient(135deg,var(--sdg16),#004d73);width:64px;height:64px;font-size:22px;margin-bottom:18px;border-radius:18px }
-.ex-style-101 { font-size:clamp(20px,2.5vw,28px);color:#fff }
-.ex-style-102 { font-size:13px;color:rgba(255,255,255,.55);margin:14px 0 22px;line-height:1.6 }
-.ex-style-103 { display:flex;gap:10px;align-items:center;margin-bottom:12px }
-.ex-style-104 { font-size:20px }
-.ex-style-105 { font-size:13px;color:rgba(255,255,255,.75) }
-.ex-style-106 { display:flex;gap:10px;align-items:center }
-.ex-style-107 { flex:1;padding:clamp(30px,4vw,55px) clamp(20px,3vw,45px);display:flex;flex-direction:column;justify-content:center;position:relative;z-index:5 }
-.ex-style-108 { background:linear-gradient(135deg,var(--sdg17),#0D2F4F);width:64px;height:64px;font-size:22px;margin-bottom:18px;border-radius:18px }
-.ex-style-109 { background:linear-gradient(135deg,#060614,#0B0B1A) }
-.ex-style-110 { position:relative;z-index:5;text-align:center;width:100%;max-width:1050px;padding:20px }
-.ex-style-111 { font-size:clamp(24px,3.5vw,42px);color:#fff;margin:14px 0 34px }
-.ex-style-112 { display:grid;grid-template-columns:1fr 1fr;gap:20px }
-.ex-style-113 { border-top:3px solid var(--sdg3);text-align:left }
-.ex-style-114 { font-size:32px;margin-bottom:12px;animation:float 4s ease-in-out infinite }
-.ex-style-115 { color:#fff;font-size:17px;margin-bottom:8px;font-weight:600 }
-.ex-style-116 { font-size:12px;color:rgba(255,255,255,.5);line-height:1.6 }
-.ex-style-117 { border-top:3px solid var(--sdg6);text-align:left }
-.ex-style-118 { font-size:32px;margin-bottom:12px;animation:float 4s ease-in-out infinite .5s }
-.ex-style-119 { border-top:3px solid var(--sdg10);text-align:left }
-.ex-style-120 { font-size:32px;margin-bottom:12px;animation:float 4s ease-in-out infinite 1s }
-.ex-style-121 { border-top:3px solid var(--gold);text-align:left }
-.ex-style-122 { font-size:32px;margin-bottom:12px;animation:float 4s ease-in-out infinite 1.5s }
-.ex-style-123 { flex:1;background:linear-gradient(180deg,rgba(63,126,68,.1),rgba(63,126,68,.02));padding:clamp(30px,4vw,55px) clamp(20px,3vw,40px);display:flex;flex-direction:column;justify-content:center;border-right:1px solid rgba(255,255,255,.04);position:relative }
-.ex-style-124 { background:linear-gradient(90deg,transparent,rgba(76,159,56,.06),transparent);opacity:.6 }
-.ex-style-125 { font-size:clamp(26px,3vw,36px);color:#fff;position:relative;z-index:2 }
-.ex-style-126 { font-size:10px;color:var(--gold);letter-spacing:3px;margin-bottom:22px;position:relative;z-index:2 }
-.ex-style-127 { display:flex;gap:12px;align-items:flex-start;margin-bottom:16px;position:relative;z-index:2 }
-.ex-style-128 { width:10px;height:10px;border-radius:50%;background:var(--sdg3);flex-shrink:0;margin-top:5px;box-shadow:0 0 8px rgba(76,159,56,.5) }
-.ex-style-129 { font-size:14px }
-.ex-style-130 { font-size:12px;color:rgba(255,255,255,.5);margin-top:4px;line-height:1.5 }
-.ex-style-131 { display:flex;gap:12px;align-items:flex-start;position:relative;z-index:2 }
-.ex-style-132 { flex:1;background:linear-gradient(180deg,rgba(0,104,157,.1),rgba(0,104,157,.02));padding:clamp(30px,4vw,55px) clamp(20px,3vw,40px);display:flex;flex-direction:column;justify-content:center;position:relative }
-.ex-style-133 { background:linear-gradient(90deg,transparent,rgba(38,189,226,.06),transparent);opacity:.6 }
-.ex-style-134 { width:10px;height:10px;border-radius:50%;background:var(--sdg6);flex-shrink:0;margin-top:5px;box-shadow:0 0 8px rgba(38,189,226,.5) }
-.ex-style-135 { background:linear-gradient(135deg,#0A0A18,#120A18) }
-.ex-style-136 { background:linear-gradient(90deg,transparent,rgba(229,36,59,.06),rgba(221,19,103,.04),transparent) }
-.ex-style-137 { color:#E5243B;text-shadow:0 0 30px rgba(229,36,59,.3) }
-.ex-style-138 { border-left:4px solid #E5243B;text-align:left }
-.ex-style-139 { font-size:32px;margin-bottom:10px }
-.ex-style-140 { border-left:4px solid var(--sdg10);text-align:left }
-.ex-style-141 { border-left:4px solid var(--gold);text-align:left }
-.ex-style-142 { border-left:4px solid var(--sdg6);text-align:left }
-.ex-style-143 { background:linear-gradient(135deg,#060614,#0B0B1A);flex-direction:row }
-.ex-style-144 { flex:1.2;padding:clamp(30px,4vw,55px) clamp(20px,3vw,45px);display:flex;flex-direction:column;justify-content:center;position:relative;z-index:5 }
-.ex-style-145 { color:var(--sdg6);text-shadow:0 0 20px rgba(38,189,226,.3) }
-.ex-style-146 { font-size:clamp(24px,3.5vw,38px);color:#fff;margin:14px 0 18px;line-height:1.2 }
-.ex-style-147 { font-size:14px;color:rgba(255,255,255,.5);line-height:1.8 }
-.ex-style-148 { flex:1;padding:clamp(20px,3vw,45px);display:grid;grid-template-columns:1fr 1fr;gap:18px;align-content:center;position:relative;z-index:5 }
-.ex-style-149 { text-align:center;border-top:3px solid var(--sdg3) }
-.ex-style-150 { font-size:36px;animation:float 4s ease-in-out infinite;margin-bottom:10px }
-.ex-style-151 { text-align:center;border-top:3px solid var(--sdg6) }
-.ex-style-152 { font-size:36px;animation:float 4s ease-in-out infinite .5s;margin-bottom:10px }
-.ex-style-153 { text-align:center;border-top:3px solid var(--gold) }
-.ex-style-154 { font-size:36px;animation:float 4s ease-in-out infinite 1s;margin-bottom:10px }
-.ex-style-155 { text-align:center;border-top:3px solid var(--sdg14) }
-.ex-style-156 { font-size:36px;animation:float 4s ease-in-out infinite 1.5s;margin-bottom:10px }
-.ex-style-157 { position:relative;z-index:5;text-align:center;max-width:850px;padding:20px }
-.ex-style-158 { font-size:64px;animation:float 4s ease-in-out infinite }
-.ex-style-159 { font-size:clamp(30px,4.5vw,56px);color:#fff;margin:18px 0 28px }
-.ex-style-160 { display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-bottom:28px }
-.ex-style-161 { background:rgba(229,36,59,.15);border:1px solid var(--sdg1);box-shadow:0 0 20px rgba(229,36,59,.2) }
-.ex-style-162 { background:rgba(38,189,226,.15);border:1px solid var(--sdg6);box-shadow:0 0 20px rgba(38,189,226,.2) }
-.ex-style-163 { background:rgba(212,168,75,.15);border:1px solid var(--gold);box-shadow:0 0 20px rgba(212,168,75,.2) }
-.ex-style-164 { font-size:15px;color:rgba(255,255,255,.55);line-height:1.8 }
-.ex-style-165 { font-size:17px;color:var(--gold);font-style:italic;margin-top:28px;text-shadow:0 0 20px rgba(212,168,75,.2) }
-.ex-style-166 { font-size:10px;color:rgba(255,255,255,.3);margin-top:10px }
-.ex-style-167 { width:450px;height:450px;top:50%;left:50%;margin:-225px 0 0 -225px;animation-duration:40s }
-.ex-style-168 { width:700px;height:700px;top:50%;left:50%;margin:-350px 0 0 -350px;animation-duration:65s;animation-direction:reverse;border-color:rgba(86,192,43,.06) }
-.ex-style-169 { width:350px;height:350px;background:rgba(86,192,43,.1);top:10%;left:5% }
-.ex-style-170 { width:400px;height:400px;background:rgba(38,189,226,.08);bottom:10%;right:5%;animation-delay:-6s }
-.ex-style-171 { position:relative;z-index:5;text-align:center }
-.ex-style-172 { font-size:clamp(52px,8vw,96px);letter-spacing:-2px }
-.ex-style-173 { font-size:17px;color:rgba(255,255,255,.45);margin-top:14px;letter-spacing:1px }
-.ex-style-174 { display:flex;gap:8px;justify-content:center;margin-top:34px;flex-wrap:wrap }
-.ex-style-175 { font-size:10px;color:rgba(255,255,255,.25);margin-top:34px;letter-spacing:1px }
-</style>
+        :root {
+            --sdg1: #E5243B;
+            --sdg2: #DDA63A;
+            --sdg3: #4C9F38;
+            --sdg4: #C5192D;
+            --sdg5: #FF3A21;
+            --sdg6: #26BDE2;
+            --sdg7: #FCC30B;
+            --sdg8: #A21942;
+            --sdg9: #FD6925;
+            --sdg10: #DD1367;
+            --sdg11: #FD9D24;
+            --sdg12: #BF8B2E;
+            --sdg13: #3F7E44;
+            --sdg14: #0A97D9;
+            --sdg15: #56C02B;
+            --sdg16: #00689D;
+            --sdg17: #19486A;
+            --cream: #FAF7F2;
+            --charcoal: #0B0B1A;
+            --gold: #D4A84B;
+            --surface: rgba(255, 255, 255, .03)
+        }
+
+        html,
+        body {
+            height: 100%;
+            overflow: hidden
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #050510;
+            color: #e2e2e2;
+            cursor: none
+        }
+
+        /* === CUSTOM CURSOR === */
+        .cur-dot {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--gold);
+            pointer-events: none;
+            z-index: 100000;
+            mix-blend-mode: screen;
+            box-shadow: 0 0 20px var(--gold), 0 0 60px rgba(212, 168, 75, .3);
+            transition: width .3s, height .3s
+        }
+
+        .cur-ring {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1.5px solid rgba(212, 168, 75, .5);
+            pointer-events: none;
+            z-index: 99999;
+            transition: transform .15s ease-out, border-color .3s
+        }
+
+        /* === CANVAS BG === */
+        #particleCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none
+        }
+
+        /* === MOUSE SPOTLIGHT === */
+        .spotlight {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(212, 168, 75, .06) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+            transform: translate(-50%, -50%);
+            transition: opacity .3s
+        }
+
+        /* === PROGRESS === */
+        #progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--sdg1), var(--sdg2), var(--sdg3), var(--sdg6), var(--gold));
+            background-size: 200% 100%;
+            animation: gradientShift 4s linear infinite;
+            z-index: 100001;
+            transition: width .6s cubic-bezier(.4, 0, .2, 1);
+            box-shadow: 0 0 20px rgba(212, 168, 75, .4)
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%
+            }
+
+            100% {
+                background-position: 200% 50%
+            }
+        }
+
+        /* === NOISE OVERLAY === */
+        .noise {
+            position: fixed;
+            inset: 0;
+            z-index: 2;
+            pointer-events: none;
+            opacity: .035;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")
+        }
+
+        /* === SLIDES === */
+        .slide {
+            position: fixed;
+            inset: 0;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            perspective: 1200px
+        }
+
+        .slide.active {
+            display: flex
+        }
+
+        .slide-inner {
+            width: min(100vw, 177.78vh);
+            height: min(100vh, 56.25vw);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            transform-style: preserve-3d
+        }
+
+        /* === ANIMATIONS === */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px) scale(.92);
+                filter: blur(8px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                filter: blur(0)
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-80px) rotateY(8deg)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0) rotateY(0)
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(80px) rotateY(-8deg)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0) rotateY(0)
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(.6) rotate(-8deg);
+                filter: blur(6px)
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) rotate(0);
+                filter: blur(0)
+            }
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg)
+            }
+
+            25% {
+                transform: translateY(-10px) rotate(1deg)
+            }
+
+            75% {
+                transform: translateY(-14px) rotate(-1deg)
+            }
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg)
+            }
+
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1)
+            }
+
+            50% {
+                opacity: .5;
+                transform: scale(.93)
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -200% center
+            }
+
+            100% {
+                background-position: 200% center
+            }
+        }
+
+        @keyframes borderGlow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 8px 2px rgba(212, 168, 75, .2)
+            }
+
+            50% {
+                box-shadow: 0 0 30px 6px rgba(212, 168, 75, .6)
+            }
+        }
+
+        @keyframes lineExpand {
+            from {
+                width: 0;
+                opacity: 0
+            }
+
+            to {
+                width: 100%;
+                opacity: 1
+            }
+        }
+
+        @keyframes morphBg {
+            0% {
+                border-radius: 30% 70% 70% 30%/30% 30% 70% 70%
+            }
+
+            25% {
+                border-radius: 58% 42% 75% 25%/76% 46% 54% 24%
+            }
+
+            50% {
+                border-radius: 50% 50% 33% 67%/55% 27% 73% 45%
+            }
+
+            75% {
+                border-radius: 33% 67% 58% 42%/63% 68% 32% 37%
+            }
+
+            100% {
+                border-radius: 30% 70% 70% 30%/30% 30% 70% 70%
+            }
+        }
+
+        @keyframes aurora {
+            0% {
+                transform: translateX(-25%) rotate(0deg);
+                opacity: .4
+            }
+
+            50% {
+                transform: translateX(25%) rotate(180deg);
+                opacity: .6
+            }
+
+            100% {
+                transform: translateX(-25%) rotate(360deg);
+                opacity: .4
+            }
+        }
+
+        @keyframes revealMask {
+            from {
+                clip-path: inset(0 100% 0 0)
+            }
+
+            to {
+                clip-path: inset(0 0% 0 0)
+            }
+        }
+
+        @keyframes typewriter {
+            from {
+                width: 0
+            }
+
+            to {
+                width: 100%
+            }
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                border-color: var(--gold)
+            }
+
+            50% {
+                border-color: transparent
+            }
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0);
+                opacity: .6
+            }
+
+            100% {
+                transform: scale(4);
+                opacity: 0
+            }
+        }
+
+        @keyframes slideExitUp {
+            to {
+                opacity: 0;
+                transform: perspective(1200px) rotateX(3deg) translateY(-60px) scale(1.02);
+                filter: blur(4px)
+            }
+        }
+
+        @keyframes slideEnterUp {
+            from {
+                opacity: 0;
+                transform: perspective(1200px) rotateX(-3deg) translateY(60px) scale(.96);
+                filter: blur(6px)
+            }
+
+            to {
+                opacity: 1;
+                transform: perspective(1200px) rotateX(0) translateY(0) scale(1);
+                filter: blur(0)
+            }
+        }
+
+        .slide.active .a {
+            opacity: 0;
+            animation: fadeUp .9s cubic-bezier(.16, 1, .3, 1) forwards
+        }
+
+        .slide.active .al {
+            opacity: 0;
+            animation: slideInLeft .9s cubic-bezier(.16, 1, .3, 1) forwards
+        }
+
+        .slide.active .ar {
+            opacity: 0;
+            animation: slideInRight .9s cubic-bezier(.16, 1, .3, 1) forwards
+        }
+
+        .slide.active .as {
+            opacity: 0;
+            animation: scaleIn .8s cubic-bezier(.16, 1, .3, 1) forwards
+        }
+
+        .d1 {
+            animation-delay: .1s !important
+        }
+
+        .d2 {
+            animation-delay: .2s !important
+        }
+
+        .d3 {
+            animation-delay: .3s !important
+        }
+
+        .d4 {
+            animation-delay: .4s !important
+        }
+
+        .d5 {
+            animation-delay: .5s !important
+        }
+
+        .d6 {
+            animation-delay: .6s !important
+        }
+
+        .d7 {
+            animation-delay: .7s !important
+        }
+
+        .d8 {
+            animation-delay: .8s !important
+        }
+
+        .d9 {
+            animation-delay: .9s !important
+        }
+
+        .d10 {
+            animation-delay: 1s !important
+        }
+
+        .d11 {
+            animation-delay: 1.1s !important
+        }
+
+        .d12 {
+            animation-delay: 1.2s !important
+        }
+
+        .d13 {
+            animation-delay: 1.3s !important
+        }
+
+        /* === AURORA === */
+        .aurora-wrap {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none
+        }
+
+        .aurora-band {
+            position: absolute;
+            width: 200%;
+            height: 300px;
+            top: 10%;
+            left: -50%;
+            background: linear-gradient(90deg, transparent, rgba(86, 192, 43, .08), rgba(38, 189, 226, .1), rgba(212, 168, 75, .06), transparent);
+            filter: blur(60px);
+            animation: aurora 20s ease-in-out infinite;
+            transform-origin: center
+        }
+
+        .aurora-band:nth-child(2) {
+            top: 40%;
+            animation-delay: -7s;
+            animation-duration: 25s;
+            background: linear-gradient(90deg, transparent, rgba(108, 92, 231, .08), rgba(0, 206, 201, .06), transparent)
+        }
+
+        .aurora-band:nth-child(3) {
+            top: 70%;
+            animation-delay: -14s;
+            animation-duration: 30s;
+            background: linear-gradient(90deg, transparent, rgba(212, 168, 75, .06), rgba(229, 36, 59, .04), transparent)
+        }
+
+        /* === ORBIT RINGS === */
+        .orbit {
+            position: absolute;
+            border: 1px solid rgba(212, 168, 75, .08);
+            border-radius: 50%;
+            animation: spin linear infinite
+        }
+
+        .orbit-dot {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--gold);
+            box-shadow: 0 0 15px var(--gold), 0 0 40px rgba(212, 168, 75, .3);
+            top: -2.5px;
+            left: 50%
+        }
+
+        /* === MORPH BLOB === */
+        .morph-blob {
+            position: absolute;
+            border-radius: 30% 70% 70% 30%/30% 30% 70% 70%;
+            filter: blur(80px);
+            animation: morphBg 15s ease-in-out infinite;
+            pointer-events: none
+        }
+
+        /* === TYPOGRAPHY === */
+        h1,
+        h2,
+        .pf {
+            font-family: 'Playfair Display', serif
+        }
+
+        .mono {
+            font-family: 'Space Mono', monospace
+        }
+
+        .shimmer {
+            background: linear-gradient(90deg, #56C02B, #26BDE2, #D4A84B, #E5243B, #56C02B);
+            background-size: 300% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 4s linear infinite
+        }
+
+        .gold-line {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            animation: lineExpand 1.2s ease forwards
+        }
+
+        .slide-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 11px;
+            color: var(--gold);
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            text-shadow: 0 0 30px rgba(212, 168, 75, .3)
+        }
+
+        .ghost {
+            position: absolute;
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(120px, 15vw, 220px);
+            font-weight: 900;
+            color: rgba(255, 255, 255, .02);
+            top: 5%;
+            left: 5%;
+            line-height: 1;
+            pointer-events: none;
+            -webkit-user-select: none;
+            user-select: none
+        }
+
+        /* === CARDS === */
+        .gcard {
+            background: rgba(255, 255, 255, .03);
+            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, .06);
+            border-radius: 20px;
+            padding: 28px;
+            transition: all .5s cubic-bezier(.16, 1, .3, 1);
+            position: relative;
+            overflow: hidden
+        }
+
+        .gcard::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: 20px;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(212, 168, 75, .2), transparent, rgba(86, 192, 43, .15));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity .5s
+        }
+
+        .gcard:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .4), 0 0 30px rgba(212, 168, 75, .1)
+        }
+
+        .gcard:hover::before {
+            opacity: 1
+        }
+
+        .gcard-light {
+            background: rgba(26, 26, 46, .04);
+            border: 1px solid rgba(26, 26, 46, .08);
+            border-radius: 20px;
+            padding: 24px;
+            transition: all .5s cubic-bezier(.16, 1, .3, 1);
+            position: relative;
+            overflow: hidden
+        }
+
+        .gcard-light::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: 20px;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(212, 168, 75, .3), transparent, rgba(76, 159, 56, .2));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity .5s
+        }
+
+        .gcard-light:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, .1)
+        }
+
+        .gcard-light:hover::before {
+            opacity: 1
+        }
+
+        .sdg-badge {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            color: #fff;
+            font-size: 16px;
+            flex-shrink: 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, .3);
+            transition: transform .3s, box-shadow .3s
+        }
+
+        .sdg-badge:hover {
+            transform: rotate(-8deg) scale(1.15);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, .5)
+        }
+
+        .stat-num {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(36px, 4vw, 56px);
+            font-weight: 900;
+            color: var(--charcoal);
+            line-height: 1
+        }
+
+        .sdg-tile {
+            width: clamp(60px, 5vw, 78px);
+            height: clamp(60px, 5vw, 78px);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all .4s cubic-bezier(.16, 1, .3, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, .2)
+        }
+
+        .sdg-tile:hover {
+            transform: scale(1.25) rotate(-6deg) translateY(-8px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, .4);
+            z-index: 2
+        }
+
+        .sdg-tile .num {
+            font-family: 'Space Mono', monospace;
+            font-size: clamp(16px, 1.5vw, 22px);
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, .3)
+        }
+
+        .sdg-tile .lbl {
+            font-size: clamp(5px, .6vw, 7px);
+            color: rgba(255, 255, 255, .9);
+            text-align: center;
+            line-height: 1.1;
+            margin-top: 1px;
+            font-weight: 500
+        }
+
+        .sdg-tile .bg-e {
+            position: absolute;
+            font-size: clamp(20px, 2.5vw, 32px);
+            opacity: .12;
+            bottom: -6px;
+            right: -4px
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 32px;
+            border-radius: 60px;
+            font-family: 'Space Mono', monospace;
+            font-size: 14px;
+            font-weight: 700;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+            transition: transform .3s, box-shadow .3s
+        }
+
+        .pill:hover {
+            transform: scale(1.08) translateY(-3px)
+        }
+
+        .pill::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 60px;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, .1) 50%, transparent 70%);
+            background-size: 200% 100%;
+            animation: shimmer 3s linear infinite;
+            pointer-events: none
+        }
+
+        /* === SIDE BUTTONS === */
+        .side-btn {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 100px;
+            background: rgba(212, 168, 75, 0.05);
+            border: 1px solid rgba(212, 168, 75, 0.1);
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 9999;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: auto;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        .side-btn.left {
+            left: 0;
+            border-radius: 0 16px 16px 0;
+            border-left: none;
+        }
+        .side-btn.right {
+            right: 0;
+            border-radius: 16px 0 0 16px;
+            border-right: none;
+        }
+        .side-btn:hover {
+            background: rgba(212, 168, 75, 0.2);
+            color: #fff;
+            box-shadow: 0 0 30px rgba(212, 168, 75, 0.3);
+            border-color: rgba(212, 168, 75, 0.4);
+            width: 65px;
+        }
+
+        /* === NAV === */
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: rgba(5, 5, 16, .9);
+            -webkit-backdrop-filter: blur(24px);
+            backdrop-filter: blur(24px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            z-index: 10000;
+            border-top: 1px solid rgba(212, 168, 75, .1)
+        }
+
+        .nav-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            border: 1px solid rgba(212, 168, 75, .2);
+            background: rgba(212, 168, 75, .05);
+            color: #fff;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all .4s cubic-bezier(.16, 1, .3, 1);
+            pointer-events: auto;
+            position: relative;
+            overflow: hidden
+        }
+
+        .nav-btn:hover {
+            background: var(--gold);
+            color: var(--charcoal);
+            box-shadow: 0 0 30px rgba(212, 168, 75, .4);
+            transform: scale(1.08)
+        }
+
+        .nav-btn::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(255, 255, 255, .2), transparent);
+            opacity: 0;
+            transition: opacity .3s
+        }
+
+        .nav-btn:active::after {
+            opacity: 1
+        }
+
+        .nav-dots {
+            display: flex;
+            gap: 8px;
+            align-items: center
+        }
+
+        .nav-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .15);
+            cursor: pointer;
+            transition: all .5s cubic-bezier(.16, 1, .3, 1);
+            pointer-events: auto
+        }
+
+        .nav-dot.active {
+            background: var(--gold);
+            transform: scale(1.5);
+            box-shadow: 0 0 16px rgba(212, 168, 75, .5)
+        }
+
+        .nav-dot:hover:not(.active) {
+            background: rgba(255, 255, 255, .4);
+            transform: scale(1.2)
+        }
+
+        .nav-counter {
+            font-family: 'Space Mono', monospace;
+            font-size: 12px;
+            color: rgba(255, 255, 255, .35);
+            letter-spacing: 2px
+        }
+
+        /* === RIPPLE ON CLICK === */
+        .click-ripple {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: rgba(212, 168, 75, .3);
+            pointer-events: none;
+            z-index: 100001;
+            animation: ripple .8s ease-out forwards
+        }
+
+        /* === RESPONSIVE 16:9 === */
+        @media(max-aspect-ratio:16/9) {
+            .slide-inner {
+                width: 100vw;
+                height: 56.25vw
+            }
+        }
+
+        @media(min-aspect-ratio:16/9) {
+            .slide-inner {
+                width: 177.78vh;
+                height: 100vh
+            }
+        }
+
+        /* Extracted Inline Styles */
+        .ex-style-1 {
+            width: 0%
+        }
+
+        .ex-style-2 {
+            background: linear-gradient(135deg, #060614, #0D1B2A, #0A1628)
+        }
+
+        .ex-style-3 {
+            width: 500px;
+            height: 500px;
+            top: 50%;
+            left: 50%;
+            margin: -250px 0 0 -250px;
+            animation-duration: 35s
+        }
+
+        .ex-style-4 {
+            width: 800px;
+            height: 800px;
+            top: 50%;
+            left: 50%;
+            margin: -400px 0 0 -400px;
+            animation-duration: 60s;
+            animation-direction: reverse;
+            border-color: rgba(86, 192, 43, .06)
+        }
+
+        .ex-style-5 {
+            background: #56C02B;
+            box-shadow: 0 0 15px #56C02B
+        }
+
+        .ex-style-6 {
+            width: 1100px;
+            height: 1100px;
+            top: 50%;
+            left: 50%;
+            margin: -550px 0 0 -550px;
+            animation-duration: 90s;
+            border-color: rgba(38, 189, 226, .05)
+        }
+
+        .ex-style-7 {
+            background: #26BDE2;
+            box-shadow: 0 0 15px #26BDE2
+        }
+
+        .ex-style-8 {
+            width: 400px;
+            height: 400px;
+            background: rgba(76, 159, 56, .12);
+            top: 5%;
+            left: 0
+        }
+
+        .ex-style-9 {
+            width: 500px;
+            height: 500px;
+            background: rgba(38, 189, 226, .08);
+            bottom: 5%;
+            right: 0;
+            animation-delay: -5s
+        }
+
+        .ex-style-10 {
+            width: 300px;
+            height: 300px;
+            background: rgba(212, 168, 75, .1);
+            top: 30%;
+            right: 15%;
+            animation-delay: -10s
+        }
+
+        .ex-style-11 {
+            position: relative;
+            z-index: 5;
+            text-align: center;
+            max-width: 950px;
+            padding: 20px
+        }
+
+        .ex-style-12 {
+            font-size: clamp(36px, 5.5vw, 72px);
+            color: #fff;
+            margin: 20px 0 24px;
+            line-height: 1.1;
+            letter-spacing: -1px
+        }
+
+        .ex-style-13 {
+            font-size: clamp(13px, 1.2vw, 16px);
+            color: rgba(255, 255, 255, .45);
+            letter-spacing: 1px
+        }
+
+        .ex-style-14 {
+            width: 80px;
+            margin: 24px auto
+        }
+
+        .ex-style-15 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px 50px;
+            margin-top: 28px;
+            text-align: left
+        }
+
+        .ex-style-16 {
+            border-left: 2px solid var(--gold);
+            padding-left: 14px
+        }
+
+        .ex-style-17 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff
+        }
+
+        .ex-style-18 {
+            font-size: 10px;
+            color: rgba(255, 255, 255, .3)
+        }
+
+        .ex-style-19 {
+            margin-top: 24px;
+            padding: 14px 28px;
+            background: rgba(212, 168, 75, .08);
+            border: 1px solid rgba(212, 168, 75, .2);
+            border-radius: 40px;
+            display: inline-block;
+            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .3)
+        }
+
+        .ex-style-20 {
+            font-size: 12px;
+            color: rgba(255, 255, 255, .6);
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px
+        }
+
+        .ex-style-21 {
+            font-size: 22px;
+            color: var(--gold);
+            font-weight: 700;
+            margin: 6px 0 2px;
+            letter-spacing: 1px;
+            text-shadow: 0 0 15px rgba(212, 168, 75, .4)
+        }
+
+        .ex-style-22 {
+            font-size: 11px;
+            color: rgba(255, 255, 255, .7);
+            margin: 0
+        }
+
+        .ex-style-23 {
+            flex-direction: row
+        }
+
+        .ex-style-24 {
+            flex: 1;
+            background: linear-gradient(135deg, #0B0B1A, #111128);
+            padding: clamp(30px, 4vw, 60px) clamp(20px, 3vw, 45px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            clip-path: polygon(0 0, 94% 0, 100% 100%, 0 100%);
+            position: relative;
+            z-index: 1
+        }
+
+        .ex-style-25 {
+            opacity: .5
+        }
+
+        .ex-style-26 {
+            margin-bottom: 14px
+        }
+
+        .ex-style-27 {
+            font-size: clamp(24px, 3vw, 40px);
+            color: #fff;
+            margin-bottom: 28px;
+            line-height: 1.15
+        }
+
+        .ex-style-28 {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            margin-bottom: 18px
+        }
+
+        .ex-style-29 {
+            font-size: 22px
+        }
+
+        .ex-style-30 {
+            color: var(--gold);
+            font-size: 14px
+        }
+
+        .ex-style-31 {
+            font-size: 13px;
+            color: rgba(255, 255, 255, .6);
+            margin-top: 6px;
+            line-height: 1.6
+        }
+
+        .ex-style-32 {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start
+        }
+
+        .ex-style-33 {
+            flex: 1;
+            background: linear-gradient(180deg, #FAF7F2, #F0EDE6);
+            padding: clamp(30px, 4vw, 60px) clamp(20px, 3vw, 45px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center
+        }
+
+        .ex-style-34 {
+            color: var(--gold);
+            margin-bottom: 24px
+        }
+
+        .ex-style-35 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px
+        }
+
+        .ex-style-36 {
+            text-align: center;
+            padding: 16px
+        }
+
+        .ex-style-37 {
+            font-size: 12px;
+            color: rgba(26, 26, 46, .5);
+            margin-top: 4px;
+            font-weight: 500
+        }
+
+        .ex-style-38 {
+            background: linear-gradient(160deg, #080818, #0F2027, #0A1628)
+        }
+
+        .ex-style-39 {
+            position: relative;
+            z-index: 5;
+            max-width: 900px;
+            text-align: center;
+            padding: 20px
+        }
+
+        .ex-style-40 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(100px, 12vw, 160px);
+            color: rgba(212, 168, 75, .08);
+            line-height: .8;
+            -webkit-user-select: none;
+            user-select: none
+        }
+
+        .ex-style-41 {
+            font-size: clamp(18px, 2.2vw, 30px);
+            color: #fff;
+            font-style: italic;
+            line-height: 1.65;
+            margin-top: -30px
+        }
+
+        .ex-style-42 {
+            font-size: 11px;
+            color: var(--gold);
+            margin-top: 24px;
+            letter-spacing: 2px
+        }
+
+        .ex-style-43 {
+            width: 80px;
+            margin: 28px auto
+        }
+
+        .ex-style-44 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 32px
+        }
+
+        .ex-style-45 {
+            border-top: 2px solid var(--sdg3)
+        }
+
+        .ex-style-46 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            animation: float 4s ease-in-out infinite
+        }
+
+        .ex-style-47 {
+            font-size: 17px;
+            color: #fff;
+            margin-bottom: 8px;
+            font-weight: 600
+        }
+
+        .ex-style-48 {
+            font-size: 12px;
+            color: rgba(255, 255, 255, .5);
+            line-height: 1.5
+        }
+
+        .ex-style-49 {
+            border-top: 2px solid var(--sdg6)
+        }
+
+        .ex-style-50 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            animation: float 4s ease-in-out infinite .7s
+        }
+
+        .ex-style-51 {
+            border-top: 2px solid var(--gold)
+        }
+
+        .ex-style-52 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            animation: float 4s ease-in-out infinite 1.4s
+        }
+
+        .ex-style-53 {
+            background: linear-gradient(180deg, #FAF7F2, #F0EDE6)
+        }
+
+        .ex-style-54 {
+            color: var(--gold)
+        }
+
+        .ex-style-55 {
+            font-size: clamp(24px, 3vw, 40px);
+            color: var(--charcoal);
+            margin: 14px 0 28px
+        }
+
+        .ex-style-56 {
+            display: flex;
+            flex-wrap: wrap;
+            gap: clamp(6px, 1vw, 12px);
+            justify-content: center;
+            max-width: 900px
+        }
+
+        .ex-style-57 {
+            width: clamp(280px, 30vw, 400px);
+            flex-shrink: 0;
+            background: linear-gradient(180deg, var(--sdg1), #B01C30);
+            padding: clamp(30px, 4vw, 60px) clamp(20px, 2.5vw, 35px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden
+        }
+
+        .ex-style-58 {
+            color: rgba(255, 255, 255, .04)
+        }
+
+        .ex-style-59 {
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, .06);
+            bottom: -50px;
+            right: -50px
+        }
+
+        .ex-style-60 {
+            color: rgba(255, 255, 255, .65)
+        }
+
+        .ex-style-61 {
+            font-size: clamp(22px, 2.5vw, 32px);
+            color: #fff;
+            margin: 14px 0
+        }
+
+        .ex-style-62 {
+            font-size: 13px;
+            color: rgba(255, 255, 255, .7);
+            line-height: 1.6
+        }
+
+        .ex-style-63 {
+            flex: 1;
+            background: linear-gradient(180deg, #FAF7F2, #F0EDE6);
+            padding: clamp(20px, 2.5vw, 35px);
+            display: flex;
+            flex-direction: column;
+            gap: clamp(8px, 1vw, 14px);
+            justify-content: center
+        }
+
+        .ex-style-64 {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            border-left: 4px solid var(--sdg1)
+        }
+
+        .ex-style-65 {
+            background: var(--sdg1)
+        }
+
+        .ex-style-66 {
+            color: var(--charcoal);
+            font-size: 15px
+        }
+
+        .ex-style-67 {
+            font-size: 12px;
+            color: rgba(26, 26, 46, .6);
+            margin-top: 4px;
+            line-height: 1.5
+        }
+
+        .ex-style-68 {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            border-left: 4px solid var(--sdg2)
+        }
+
+        .ex-style-69 {
+            background: var(--sdg2)
+        }
+
+        .ex-style-70 {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            border-left: 4px solid var(--sdg3)
+        }
+
+        .ex-style-71 {
+            background: var(--sdg3)
+        }
+
+        .ex-style-72 {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            border-left: 4px solid var(--sdg4)
+        }
+
+        .ex-style-73 {
+            background: var(--sdg4)
+        }
+
+        .ex-style-74 {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            border-left: 4px solid var(--sdg5)
+        }
+
+        .ex-style-75 {
+            background: var(--sdg5)
+        }
+
+        .ex-style-76 {
+            width: clamp(280px, 30vw, 400px);
+            flex-shrink: 0;
+            background: linear-gradient(180deg, var(--sdg6), #1A8BAF);
+            padding: clamp(30px, 4vw, 60px) clamp(20px, 2.5vw, 35px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden
+        }
+
+        .ex-style-77 {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            border-left: 4px solid var(--sdg6)
+        }
+
+        .ex-style-78 {
+            background: var(--sdg6)
+        }
+
+        .ex-style-79 {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            border-left: 4px solid var(--sdg7)
+        }
+
+        .ex-style-80 {
+            background: var(--sdg7)
+        }
+
+        .ex-style-81 {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            border-left: 4px solid var(--sdg8)
+        }
+
+        .ex-style-82 {
+            background: var(--sdg8)
+        }
+
+        .ex-style-83 {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            border-left: 4px solid var(--sdg9)
+        }
+
+        .ex-style-84 {
+            background: var(--sdg9)
+        }
+
+        .ex-style-85 {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            border-left: 4px solid var(--sdg10)
+        }
+
+        .ex-style-86 {
+            background: var(--sdg10)
+        }
+
+        .ex-style-87 {
+            width: clamp(280px, 30vw, 400px);
+            flex-shrink: 0;
+            background: linear-gradient(180deg, var(--sdg13), #2D6432);
+            padding: clamp(30px, 4vw, 60px) clamp(20px, 2.5vw, 35px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden
+        }
+
+        .ex-style-88 {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            border-left: 4px solid var(--sdg11)
+        }
+
+        .ex-style-89 {
+            background: var(--sdg11)
+        }
+
+        .ex-style-90 {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            border-left: 4px solid var(--sdg12)
+        }
+
+        .ex-style-91 {
+            background: var(--sdg12)
+        }
+
+        .ex-style-92 {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            border-left: 4px solid var(--sdg13)
+        }
+
+        .ex-style-93 {
+            background: var(--sdg13)
+        }
+
+        .ex-style-94 {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            border-left: 4px solid var(--sdg14)
+        }
+
+        .ex-style-95 {
+            background: var(--sdg14)
+        }
+
+        .ex-style-96 {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            border-left: 4px solid var(--sdg15)
+        }
+
+        .ex-style-97 {
+            background: var(--sdg15)
+        }
+
+        .ex-style-98 {
+            background: linear-gradient(160deg, #060614, #0A1628, #0D1B2A);
+            flex-direction: row
+        }
+
+        .ex-style-99 {
+            flex: 1;
+            padding: clamp(30px, 4vw, 55px) clamp(20px, 3vw, 45px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            z-index: 5;
+            border-right: 1px solid rgba(212, 168, 75, .1)
+        }
+
+        .ex-style-100 {
+            background: linear-gradient(135deg, var(--sdg16), #004d73);
+            width: 64px;
+            height: 64px;
+            font-size: 22px;
+            margin-bottom: 18px;
+            border-radius: 18px
+        }
+
+        .ex-style-101 {
+            font-size: clamp(20px, 2.5vw, 28px);
+            color: #fff
+        }
+
+        .ex-style-102 {
+            font-size: 13px;
+            color: rgba(255, 255, 255, .55);
+            margin: 14px 0 22px;
+            line-height: 1.6
+        }
+
+        .ex-style-103 {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 12px
+        }
+
+        .ex-style-104 {
+            font-size: 20px
+        }
+
+        .ex-style-105 {
+            font-size: 13px;
+            color: rgba(255, 255, 255, .75)
+        }
+
+        .ex-style-106 {
+            display: flex;
+            gap: 10px;
+            align-items: center
+        }
+
+        .ex-style-107 {
+            flex: 1;
+            padding: clamp(30px, 4vw, 55px) clamp(20px, 3vw, 45px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            z-index: 5
+        }
+
+        .ex-style-108 {
+            background: linear-gradient(135deg, var(--sdg17), #0D2F4F);
+            width: 64px;
+            height: 64px;
+            font-size: 22px;
+            margin-bottom: 18px;
+            border-radius: 18px
+        }
+
+        .ex-style-109 {
+            background: linear-gradient(135deg, #060614, #0B0B1A)
+        }
+
+        .ex-style-110 {
+            position: relative;
+            z-index: 5;
+            text-align: center;
+            width: 100%;
+            max-width: 1050px;
+            padding: 20px
+        }
+
+        .ex-style-111 {
+            font-size: clamp(24px, 3.5vw, 42px);
+            color: #fff;
+            margin: 14px 0 34px
+        }
+
+        .ex-style-112 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px
+        }
+
+        .ex-style-113 {
+            border-top: 3px solid var(--sdg3);
+            text-align: left
+        }
+
+        .ex-style-114 {
+            font-size: 32px;
+            margin-bottom: 12px;
+            animation: float 4s ease-in-out infinite
+        }
+
+        .ex-style-115 {
+            color: #fff;
+            font-size: 17px;
+            margin-bottom: 8px;
+            font-weight: 600
+        }
+
+        .ex-style-116 {
+            font-size: 12px;
+            color: rgba(255, 255, 255, .5);
+            line-height: 1.6
+        }
+
+        .ex-style-117 {
+            border-top: 3px solid var(--sdg6);
+            text-align: left
+        }
+
+        .ex-style-118 {
+            font-size: 32px;
+            margin-bottom: 12px;
+            animation: float 4s ease-in-out infinite .5s
+        }
+
+        .ex-style-119 {
+            border-top: 3px solid var(--sdg10);
+            text-align: left
+        }
+
+        .ex-style-120 {
+            font-size: 32px;
+            margin-bottom: 12px;
+            animation: float 4s ease-in-out infinite 1s
+        }
+
+        .ex-style-121 {
+            border-top: 3px solid var(--gold);
+            text-align: left
+        }
+
+        .ex-style-122 {
+            font-size: 32px;
+            margin-bottom: 12px;
+            animation: float 4s ease-in-out infinite 1.5s
+        }
+
+        .ex-style-123 {
+            flex: 1;
+            background: linear-gradient(180deg, rgba(63, 126, 68, .1), rgba(63, 126, 68, .02));
+            padding: clamp(30px, 4vw, 55px) clamp(20px, 3vw, 40px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-right: 1px solid rgba(255, 255, 255, .04);
+            position: relative
+        }
+
+        .ex-style-124 {
+            background: linear-gradient(90deg, transparent, rgba(76, 159, 56, .06), transparent);
+            opacity: .6
+        }
+
+        .ex-style-125 {
+            font-size: clamp(26px, 3vw, 36px);
+            color: #fff;
+            position: relative;
+            z-index: 2
+        }
+
+        .ex-style-126 {
+            font-size: 10px;
+            color: var(--gold);
+            letter-spacing: 3px;
+            margin-bottom: 22px;
+            position: relative;
+            z-index: 2
+        }
+
+        .ex-style-127 {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 2
+        }
+
+        .ex-style-128 {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--sdg3);
+            flex-shrink: 0;
+            margin-top: 5px;
+            box-shadow: 0 0 8px rgba(76, 159, 56, .5)
+        }
+
+        .ex-style-129 {
+            font-size: 14px
+        }
+
+        .ex-style-130 {
+            font-size: 12px;
+            color: rgba(255, 255, 255, .5);
+            margin-top: 4px;
+            line-height: 1.5
+        }
+
+        .ex-style-131 {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            position: relative;
+            z-index: 2
+        }
+
+        .ex-style-132 {
+            flex: 1;
+            background: linear-gradient(180deg, rgba(0, 104, 157, .1), rgba(0, 104, 157, .02));
+            padding: clamp(30px, 4vw, 55px) clamp(20px, 3vw, 40px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative
+        }
+
+        .ex-style-133 {
+            background: linear-gradient(90deg, transparent, rgba(38, 189, 226, .06), transparent);
+            opacity: .6
+        }
+
+        .ex-style-134 {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--sdg6);
+            flex-shrink: 0;
+            margin-top: 5px;
+            box-shadow: 0 0 8px rgba(38, 189, 226, .5)
+        }
+
+        .ex-style-135 {
+            background: linear-gradient(135deg, #0A0A18, #120A18)
+        }
+
+        .ex-style-136 {
+            background: linear-gradient(90deg, transparent, rgba(229, 36, 59, .06), rgba(221, 19, 103, .04), transparent)
+        }
+
+        .ex-style-137 {
+            color: #E5243B;
+            text-shadow: 0 0 30px rgba(229, 36, 59, .3)
+        }
+
+        .ex-style-138 {
+            border-left: 4px solid #E5243B;
+            text-align: left
+        }
+
+        .ex-style-139 {
+            font-size: 32px;
+            margin-bottom: 10px
+        }
+
+        .ex-style-140 {
+            border-left: 4px solid var(--sdg10);
+            text-align: left
+        }
+
+        .ex-style-141 {
+            border-left: 4px solid var(--gold);
+            text-align: left
+        }
+
+        .ex-style-142 {
+            border-left: 4px solid var(--sdg6);
+            text-align: left
+        }
+
+        .ex-style-143 {
+            background: linear-gradient(135deg, #060614, #0B0B1A);
+            flex-direction: row
+        }
+
+        .ex-style-144 {
+            flex: 1.2;
+            padding: clamp(30px, 4vw, 55px) clamp(20px, 3vw, 45px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            z-index: 5
+        }
+
+        .ex-style-145 {
+            color: var(--sdg6);
+            text-shadow: 0 0 20px rgba(38, 189, 226, .3)
+        }
+
+        .ex-style-146 {
+            font-size: clamp(24px, 3.5vw, 38px);
+            color: #fff;
+            margin: 14px 0 18px;
+            line-height: 1.2
+        }
+
+        .ex-style-147 {
+            font-size: 14px;
+            color: rgba(255, 255, 255, .5);
+            line-height: 1.8
+        }
+
+        .ex-style-148 {
+            flex: 1;
+            padding: clamp(20px, 3vw, 45px);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            align-content: center;
+            position: relative;
+            z-index: 5
+        }
+
+        .ex-style-149 {
+            text-align: center;
+            border-top: 3px solid var(--sdg3)
+        }
+
+        .ex-style-150 {
+            font-size: 36px;
+            animation: float 4s ease-in-out infinite;
+            margin-bottom: 10px
+        }
+
+        .ex-style-151 {
+            text-align: center;
+            border-top: 3px solid var(--sdg6)
+        }
+
+        .ex-style-152 {
+            font-size: 36px;
+            animation: float 4s ease-in-out infinite .5s;
+            margin-bottom: 10px
+        }
+
+        .ex-style-153 {
+            text-align: center;
+            border-top: 3px solid var(--gold)
+        }
+
+        .ex-style-154 {
+            font-size: 36px;
+            animation: float 4s ease-in-out infinite 1s;
+            margin-bottom: 10px
+        }
+
+        .ex-style-155 {
+            text-align: center;
+            border-top: 3px solid var(--sdg14)
+        }
+
+        .ex-style-156 {
+            font-size: 36px;
+            animation: float 4s ease-in-out infinite 1.5s;
+            margin-bottom: 10px
+        }
+
+        .ex-style-157 {
+            position: relative;
+            z-index: 5;
+            text-align: center;
+            max-width: 850px;
+            padding: 20px
+        }
+
+        .ex-style-158 {
+            font-size: 64px;
+            animation: float 4s ease-in-out infinite
+        }
+
+        .ex-style-159 {
+            font-size: clamp(30px, 4.5vw, 56px);
+            color: #fff;
+            margin: 18px 0 28px
+        }
+
+        .ex-style-160 {
+            display: flex;
+            gap: 18px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 28px
+        }
+
+        .ex-style-161 {
+            background: rgba(229, 36, 59, .15);
+            border: 1px solid var(--sdg1);
+            box-shadow: 0 0 20px rgba(229, 36, 59, .2)
+        }
+
+        .ex-style-162 {
+            background: rgba(38, 189, 226, .15);
+            border: 1px solid var(--sdg6);
+            box-shadow: 0 0 20px rgba(38, 189, 226, .2)
+        }
+
+        .ex-style-163 {
+            background: rgba(212, 168, 75, .15);
+            border: 1px solid var(--gold);
+            box-shadow: 0 0 20px rgba(212, 168, 75, .2)
+        }
+
+        .ex-style-164 {
+            font-size: 15px;
+            color: rgba(255, 255, 255, .55);
+            line-height: 1.8
+        }
+
+        .ex-style-165 {
+            font-size: 17px;
+            color: var(--gold);
+            font-style: italic;
+            margin-top: 28px;
+            text-shadow: 0 0 20px rgba(212, 168, 75, .2)
+        }
+
+        .ex-style-166 {
+            font-size: 10px;
+            color: rgba(255, 255, 255, .3);
+            margin-top: 10px
+        }
+
+        .ex-style-167 {
+            width: 450px;
+            height: 450px;
+            top: 50%;
+            left: 50%;
+            margin: -225px 0 0 -225px;
+            animation-duration: 40s
+        }
+
+        .ex-style-168 {
+            width: 700px;
+            height: 700px;
+            top: 50%;
+            left: 50%;
+            margin: -350px 0 0 -350px;
+            animation-duration: 65s;
+            animation-direction: reverse;
+            border-color: rgba(86, 192, 43, .06)
+        }
+
+        .ex-style-169 {
+            width: 350px;
+            height: 350px;
+            background: rgba(86, 192, 43, .1);
+            top: 10%;
+            left: 5%
+        }
+
+        .ex-style-170 {
+            width: 400px;
+            height: 400px;
+            background: rgba(38, 189, 226, .08);
+            bottom: 10%;
+            right: 5%;
+            animation-delay: -6s
+        }
+
+        .ex-style-171 {
+            position: relative;
+            z-index: 5;
+            text-align: center
+        }
+
+        .ex-style-172 {
+            font-size: clamp(52px, 8vw, 96px);
+            letter-spacing: -2px
+        }
+
+        .ex-style-173 {
+            font-size: 17px;
+            color: rgba(255, 255, 255, .45);
+            margin-top: 14px;
+            letter-spacing: 1px
+        }
+
+        .ex-style-174 {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 34px;
+            flex-wrap: wrap
+        }
+
+        .ex-style-175 {
+            font-size: 10px;
+            color: rgba(255, 255, 255, .25);
+            margin-top: 34px;
+            letter-spacing: 1px
+        }
+    </style>
 </head>
+
 <body>
-<canvas id="particleCanvas"></canvas>
-<div class="noise"></div>
-<div class="spotlight" id="spotlight"></div>
-<div class="cur-dot" id="cDot"></div>
-<div class="cur-ring" id="cRing"></div>
-<div id="progress"  class="ex-style-1"></div>
+    <canvas id="particleCanvas"></canvas>
+    <div class="noise"></div>
+    <div class="spotlight" id="spotlight"></div>
+    <div class="cur-dot" id="cDot"></div>
+    <div class="cur-ring" id="cRing"></div>
+    <div id="progress" class="ex-style-1"></div>
 
-<!-- ============= SLIDE 1: TITLE ============= -->
-<div class="slide active" id="s1">
-<div class="slide-inner ex-style-2" >
-<div class="aurora-wrap"><div class="aurora-band"></div><div class="aurora-band"></div><div class="aurora-band"></div></div>
-<div class="orbit ex-style-3" ><div class="orbit-dot"></div></div>
-<div class="orbit ex-style-4" ><div class="orbit-dot ex-style-5" ></div></div>
-<div class="orbit ex-style-6" ><div class="orbit-dot ex-style-7" ></div></div>
-<div class="morph-blob ex-style-8" ></div>
-<div class="morph-blob ex-style-9" ></div>
-<div class="morph-blob ex-style-10" ></div>
-<div  class="ex-style-11">
-<div class="slide-label a d2">SUSTAINABLE DEVELOPMENT GOALS — 2025</div>
-<h1 class="a d4 ex-style-12" >Sustainable Development<br/>& the <span class="shimmer">17 SDGs</span></h1>
-<p class="a d6 ex-style-13" >Agenda 2030 · United Nations · Global Framework</p>
-<div class="a d7 ex-style-14" ><div class="gold-line"></div></div>
-<div class="a d9 ex-style-15" >
-<div  class="ex-style-16"><span  class="ex-style-17">Faisal Khan</span><br/><span class="mono ex-style-18" >RA442</span></div>
-<div  class="ex-style-16"><span  class="ex-style-17">Sheikh Hemayoou Jawaid</span><br/><span class="mono ex-style-18" >RA476</span></div>
-<div  class="ex-style-16"><span  class="ex-style-17">Yash Vishesh</span><br/><span class="mono ex-style-18" >RA468</span></div>
-<div  class="ex-style-16"><span  class="ex-style-17">Utsav Upadhyay</span><br/><span class="mono ex-style-18" >RA463</span></div>
-</div>
-<div class="a d12 ex-style-19" >
-<p  class="ex-style-20">Presented under the guidance of</p>
-<p  class="ex-style-21">Mr. Mudit Kumar</p>
-<p class="mono ex-style-22" >Professor of Social Engineering</p>
-</div>
-</div></div>
+    <div class="slide active" id="s1">
+        <div class="slide-inner ex-style-2">
+            <div class="aurora-wrap">
+                <div class="aurora-band"></div>
+                <div class="aurora-band"></div>
+                <div class="aurora-band"></div>
+            </div>
+            <div class="orbit ex-style-3">
+                <div class="orbit-dot"></div>
+            </div>
+            <div class="orbit ex-style-4">
+                <div class="orbit-dot ex-style-5"></div>
+            </div>
+            <div class="orbit ex-style-6">
+                <div class="orbit-dot ex-style-7"></div>
+            </div>
+            <div class="morph-blob ex-style-8"></div>
+            <div class="morph-blob ex-style-9"></div>
+            <div class="morph-blob ex-style-10"></div>
+            <div class="ex-style-11">
+                <div class="slide-label a d2">SUSTAINABLE DEVELOPMENT GOALS — 2025</div>
+                <h1 class="a d4 ex-style-12">Sustainable Development<br />& the <span class="shimmer">17 SDGs</span>
+                </h1>
+                <p class="a d6 ex-style-13">Agenda 2030 · United Nations · Global Framework</p>
+                <div class="a d7 ex-style-14">
+                    <div class="gold-line"></div>
+                </div>
+                <div class="a d9 ex-style-15">
+                    <div class="ex-style-16"><span class="ex-style-17">Faisal Khan</span><br /><span
+                            class="mono ex-style-18">RA442</span></div>
+                    <div class="ex-style-16"><span class="ex-style-17">Sheikh Hemayoou Jawaid</span><br /><span
+                            class="mono ex-style-18">RA476</span></div>
+                    <div class="ex-style-16"><span class="ex-style-17">Yash Vishesh</span><br /><span
+                            class="mono ex-style-18">RA468</span></div>
+                    <div class="ex-style-16"><span class="ex-style-17">Utsav Upadhyay</span><br /><span
+                            class="mono ex-style-18">RA463</span></div>
+                </div>
+                <div class="a d12 ex-style-19">
+                    <p class="ex-style-20">Presented under the guidance of</p>
+                    <p class="ex-style-21">Mr. Mudit Kumar</p>
+                    <p class="mono ex-style-22">Professor of Social Engineering</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<!-- ============= SLIDE 2: INTRODUCTION ============= -->
-<div class="slide" id="s2">
-<div class="slide-inner ex-style-23" >
-<div  class="ex-style-24">
-<div class="aurora-wrap"><div class="aurora-band ex-style-25" ></div></div>
-<div class="ghost">02</div>
-<div class="slide-label al d2 ex-style-26" >INTRODUCTION</div>
-<h2 class="pf al d3 ex-style-27" >What is Sustainable<br/>Development?</h2>
-<div class="al d4 ex-style-28" ><span  class="ex-style-29">🌱</span><div><strong  class="ex-style-30">Brundtland Definition (1987)</strong><p  class="ex-style-31">"Development that meets the needs of the present without compromising future generations."</p></div></div>
-<div class="al d5 ex-style-28" ><span  class="ex-style-29">🔗</span><div><strong  class="ex-style-30">Interconnected Systems</strong><p  class="ex-style-31">Environment, economy, and society are inseparable pillars of sustainable progress.</p></div></div>
-<div class="al d6 ex-style-32" ><span  class="ex-style-29">📅</span><div><strong  class="ex-style-30">Adopted in 2015</strong><p  class="ex-style-31">193 UN member states committed to 17 Goals, 169 targets, 232 indicators.</p></div></div>
-</div>
-<div  class="ex-style-33">
-<div class="slide-label ar d2 ex-style-34" >THE FOUNDATION</div>
-<div  class="ex-style-35">
-<div class="ar d3 ex-style-36" ><div class="stat-num" data-count="193">0</div><div  class="ex-style-37">Nations Committed</div></div>
-<div class="ar d4 ex-style-36" ><div class="stat-num" data-count="17">0</div><div  class="ex-style-37">Global Goals</div></div>
-<div class="ar d5 ex-style-36" ><div class="stat-num" data-count="169">0</div><div  class="ex-style-37">Measurable Targets</div></div>
-<div class="ar d6 ex-style-36" ><div class="stat-num" data-count="2030">0</div><div  class="ex-style-37">Deadline Year</div></div>
-</div>
-</div>
-</div></div>
+    <div class="slide" id="s2">
+            <div class="slide-inner ex-style-23">
+                <div class="ex-style-24">
+                    <div class="aurora-wrap">
+                        <div class="aurora-band ex-style-25"></div>
+                    </div>
+                    <div class="ghost">02</div>
+                    <div class="slide-label al d2 ex-style-26">INTRODUCTION</div>
+                    <h2 class="pf al d3 ex-style-27">What is Sustainable<br />Development?</h2>
+                    <div class="al d4 ex-style-28"><span class="ex-style-29">🌱</span>
+                        <div><strong class="ex-style-30">Brundtland Definition (1987)</strong>
+                            <p class="ex-style-31">"Development that meets the needs of the present without compromising
+                                future generations."</p>
+                        </div>
+                    </div>
+                    <div class="al d5 ex-style-28"><span class="ex-style-29">🔗</span>
+                        <div><strong class="ex-style-30">Interconnected Systems</strong>
+                            <p class="ex-style-31">Environment, economy, and society are inseparable pillars of
+                                sustainable progress.</p>
+                        </div>
+                    </div>
+                    <div class="al d6 ex-style-32"><span class="ex-style-29">📅</span>
+                        <div><strong class="ex-style-30">Adopted in 2015</strong>
+                            <p class="ex-style-31">193 UN member states committed to 17 Goals, 169 targets, 232
+                                indicators.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="ex-style-33">
+                    <div class="slide-label ar d2 ex-style-34">THE FOUNDATION</div>
+                    <div class="ex-style-35">
+                        <div class="ar d3 ex-style-36">
+                            <div class="stat-num" data-count="193">0</div>
+                            <div class="ex-style-37">Nations Committed</div>
+                        </div>
+                        <div class="ar d4 ex-style-36">
+                            <div class="stat-num" data-count="17">0</div>
+                            <div class="ex-style-37">Global Goals</div>
+                        </div>
+                        <div class="ar d5 ex-style-36">
+                            <div class="stat-num" data-count="169">0</div>
+                            <div class="ex-style-37">Measurable Targets</div>
+                        </div>
+                        <div class="ar d6 ex-style-36">
+                            <div class="stat-num" data-count="2030">0</div>
+                            <div class="ex-style-37">Deadline Year</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<!-- ============= SLIDE 3: BRUNDTLAND ============= -->
-<div class="slide" id="s3">
-<div class="slide-inner ex-style-38" >
-<div class="aurora-wrap"><div class="aurora-band"></div><div class="aurora-band"></div></div>
-<div  class="ex-style-39">
-<div class="a d2 ex-style-40" >"</div>
-<p class="pf a d4 ex-style-41" >"Sustainable development is development that meets the needs of the present without compromising the ability of future generations to meet their own needs."</p>
-<p class="mono a d6 ex-style-42" >— BRUNDTLAND COMMISSION, OUR COMMON FUTURE, 1987</p>
-<div class="a d7 ex-style-43" ><div class="gold-line"></div></div>
-<div  class="ex-style-44">
-<div class="gcard as d8 ex-style-45" ><div  class="ex-style-46">🌿</div><h3  class="ex-style-47">Ecological</h3><p  class="ex-style-48">Protect natural systems & biodiversity</p></div>
-<div class="gcard as d9 ex-style-49" ><div  class="ex-style-50">🤝</div><h3  class="ex-style-47">Social</h3><p  class="ex-style-48">Ensure equity & global inclusion</p></div>
-<div class="gcard as d10 ex-style-51" ><div  class="ex-style-52">💰</div><h3  class="ex-style-47">Economic</h3><p  class="ex-style-48">Foster growth within planetary limits</p></div>
-</div>
-</div>
-</div></div>
+        <div class="slide" id="s3">
+            <div class="slide-inner ex-style-38">
+                <div class="aurora-wrap">
+                    <div class="aurora-band"></div>
+                    <div class="aurora-band"></div>
+                </div>
+                <div class="ex-style-39">
+                    <div class="a d2 ex-style-40">"</div>
+                    <p class="pf a d4 ex-style-41">"Sustainable development is development that meets the needs of the
+                        present without compromising the ability of future generations to meet their own needs."</p>
+                    <p class="mono a d6 ex-style-42">— BRUNDTLAND COMMISSION, OUR COMMON FUTURE, 1987</p>
+                    <div class="a d7 ex-style-43">
+                        <div class="gold-line"></div>
+                    </div>
+                    <div class="ex-style-44">
+                        <div class="gcard as d8 ex-style-45">
+                            <div class="ex-style-46">🌿</div>
+                            <h3 class="ex-style-47">Ecological</h3>
+                            <p class="ex-style-48">Protect natural systems & biodiversity</p>
+                        </div>
+                        <div class="gcard as d9 ex-style-49">
+                            <div class="ex-style-50">🤝</div>
+                            <h3 class="ex-style-47">Social</h3>
+                            <p class="ex-style-48">Ensure equity & global inclusion</p>
+                        </div>
+                        <div class="gcard as d10 ex-style-51">
+                            <div class="ex-style-52">💰</div>
+                            <h3 class="ex-style-47">Economic</h3>
+                            <p class="ex-style-48">Foster growth within planetary limits</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<!-- ============= SLIDE 4: ALL 17 SDGs ============= -->
-<div class="slide" id="s4">
-<div class="slide-inner ex-style-53" >
-<div class="slide-label a d1 ex-style-54" >OVERVIEW</div>
-<h2 class="pf a d2 ex-style-55" >The 17 Global Goals at a Glance</h2>
-<div  id="sdgGrid" class="ex-style-56"></div>
-</div></div>
+        <div class="slide" id="s4">
+            <div class="slide-inner ex-style-53">
+                <div class="slide-label a d1 ex-style-54">OVERVIEW</div>
+                <h2 class="pf a d2 ex-style-55">The 17 Global Goals at a Glance</h2>
+                <div id="sdgGrid" class="ex-style-56"></div>
+            </div>
+        </div>
 
-<!-- ============= SLIDE 5: SDGs 1-5 ============= -->
-<div class="slide" id="s5">
-<div class="slide-inner ex-style-23" >
-<div  class="ex-style-57">
-<div class="ghost ex-style-58" >1–5</div>
-<div class="morph-blob ex-style-59" ></div>
-<div class="slide-label al d2 ex-style-60" >PEOPLE</div>
-<h2 class="pf al d3 ex-style-61" >Goals for Human Dignity</h2>
-<p class="al d4 ex-style-62" >Ending poverty & hunger, ensuring healthy lives, quality education, and gender equality for all.</p>
-</div>
-<div  class="ex-style-63">
-<div class="gcard-light ar d3 ex-style-64" ><div class="sdg-badge ex-style-65" >1</div><div><strong  class="ex-style-66">No Poverty</strong><p  class="ex-style-67">End poverty in all forms — targeting 700M+ living on less than $2.15/day.</p></div></div>
-<div class="gcard-light ar d4 ex-style-68" ><div class="sdg-badge ex-style-69" >2</div><div><strong  class="ex-style-66">Zero Hunger</strong><p  class="ex-style-67">Achieve food security, improve nutrition, promote sustainable agriculture.</p></div></div>
-<div class="gcard-light ar d5 ex-style-70" ><div class="sdg-badge ex-style-71" >3</div><div><strong  class="ex-style-66">Good Health</strong><p  class="ex-style-67">Ensure healthy lives targeting maternal health, diseases & universal healthcare.</p></div></div>
-<div class="gcard-light ar d6 ex-style-72" ><div class="sdg-badge ex-style-73" >4</div><div><strong  class="ex-style-66">Quality Education</strong><p  class="ex-style-67">Ensure inclusive, equitable education & lifelong learning for all.</p></div></div>
-<div class="gcard-light ar d7 ex-style-74" ><div class="sdg-badge ex-style-75" >5</div><div><strong  class="ex-style-66">Gender Equality</strong><p  class="ex-style-67">Achieve gender equality & empower all women and girls.</p></div></div>
-</div>
-</div></div>
+        <div class="slide" id="s5">
+            <div class="slide-inner ex-style-23">
+                <div class="ex-style-57">
+                    <div class="ghost ex-style-58">1–5</div>
+                    <div class="morph-blob ex-style-59"></div>
+                    <div class="slide-label al d2 ex-style-60">PEOPLE</div>
+                    <h2 class="pf al d3 ex-style-61">Goals for Human Dignity</h2>
+                    <p class="al d4 ex-style-62">Ending poverty & hunger, ensuring healthy lives, quality education, and
+                        gender equality for all.</p>
+                </div>
+                <div class="ex-style-63">
+                    <div class="gcard-light ar d3 ex-style-64">
+                        <div class="sdg-badge ex-style-65">1</div>
+                        <div><strong class="ex-style-66">No Poverty</strong>
+                            <p class="ex-style-67">End poverty in all forms — targeting 700M+ living on less than
+                                $2.15/day.</p>
+                        </div>
+                    </div>
+                    <div class="gcard-light ar d4 ex-style-68">
+                        <div class="sdg-badge ex-style-69">2</div>
+                        <div><strong class="ex-style-66">Zero Hunger</strong>
+                            <p class="ex-style-67">Achieve food security, improve nutrition, promote sustainable
+                                agriculture.</p>
+                        </div>
+                    </div>
+                    <div class="gcard-light ar d5 ex-style-70">
+                        <div class="sdg-badge ex-style-71">3</div>
+                        <div><strong class="ex-style-66">Good Health</strong>
+                            <p class="ex-style-67">Ensure healthy lives targeting maternal health, diseases & universal
+                                healthcare.</p>
+                        </div>
+                    </div>
+                    <div class="gcard-light ar d6 ex-style-72">
+                        <div class="sdg-badge ex-style-73">4</div>
+                        <div><strong class="ex-style-66">Quality Education</strong>
+                            <p class="ex-style-67">Ensure inclusive, equitable education & lifelong learning for all.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="gcard-light ar d7 ex-style-74">
+                        <div class="sdg-badge ex-style-75">5</div>
+                        <div><strong class="ex-style-66">Gender Equality</strong>
+                            <p class="ex-style-67">Achieve gender equality & empower all women and girls.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<!-- ============= SLIDE 6: SDGs 6-10 ============= -->
-<div class="slide" id="s6">
-<div class="slide-inner ex-style-23" >
-<div  class="ex-style-76">
-<div class="ghost ex-style-58" >6–10</div>
-<div class="morph-blob ex-style-59" ></div>
-<div class="slide-label al d2 ex-style-60" >PROSPERITY</div>
-<h2 class="pf al d3 ex-style-61" >Goals for Shared Growth</h2>
-<p class="al d4 ex-style-62" >Clean water, affordable energy, decent work, innovation, and reducing global inequalities.</p>
-</div>
-<div  class="ex-style-63">
-<div class="gcard-light ar d3 ex-style-77" ><div class="sdg-badge ex-style-78" >6</div><div><strong  class="ex-style-66">Clean Water</strong><p  class="ex-style-67">Ensure sustainable water management & sanitation for all communities.</p></div></div>
-<div class="gcard-light ar d4 ex-style-79" ><div class="sdg-badge ex-style-80" >7</div><div><strong  class="ex-style-66">Clean Energy</strong><p  class="ex-style-67">Universal access to affordable, reliable energy with solar & wind at center.</p></div></div>
-<div class="gcard-light ar d5 ex-style-81" ><div class="sdg-badge ex-style-82" >8</div><div><strong  class="ex-style-66">Decent Work</strong><p  class="ex-style-67">Promote sustained, inclusive economic growth & decent work for all.</p></div></div>
-<div class="gcard-light ar d6 ex-style-83" ><div class="sdg-badge ex-style-84" >9</div><div><strong  class="ex-style-66">Industry & Innovation</strong><p  class="ex-style-67">Build resilient infrastructure & foster inclusive industrialization.</p></div></div>
-<div class="gcard-light ar d7 ex-style-85" ><div class="sdg-badge ex-style-86" >10</div><div><strong  class="ex-style-66">Reduced Inequalities</strong><p  class="ex-style-67">Reduce inequality within & among countries through inclusive policies.</p></div></div>
-</div>
-</div></div>
+        <div class="slide" id="s6">
+            <div class="slide-inner ex-style-23">
+                <div class="ex-style-76">
+                    <div class="ghost ex-style-58">6–10</div>
+                    <div class="morph-blob ex-style-59"></div>
+                    <div class="slide-label al d2 ex-style-60">PROSPERITY</div>
+                    <h2 class="pf al d3 ex-style-61">Goals for Shared Growth</h2>
+                    <p class="al d4 ex-style-62">Clean water, affordable energy, decent work, innovation, and reducing
+                        global inequalities.</p>
+                </div>
+                <div class="ex-style-63">
+                    <div class="gcard-light ar d3 ex-style-77">
+                        <div class="sdg-badge ex-style-78">6</div>
+                        <div><strong class="ex-style-66">Clean Water</strong>
+                            <p class="ex-style-67">Ensure sustainable water management & sanitation for all communities.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="gcard-light ar d4 ex-style-79">
+                        <div class="sdg-badge ex-style-80">7</div>
+                        <div><strong class="ex-style-66">Clean Energy</strong>
+                            <p class="ex-style-67">Universal access to affordable, reliable energy with solar & wind at
+                                center.</p>
+                        </div>
+                    </div>
+                    <div class="gcard-light ar d5 ex-style-81">
+                        <div class="sdg-badge ex-style-82">8</div>
+                        <div><strong class="ex-style-66">Decent Work</strong>
+                            <p class="ex-style-67">Promote sustained, inclusive economic growth & decent work for all.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="gcard-light ar d6 ex-style-83">
+                        <div class="sdg-badge ex-style-84">9</div>
+                        <div><strong class="ex-style-66">Industry & Innovation</strong>
+                            <p class="ex-style-67">Build resilient infrastructure & foster inclusive industrialization.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="gcard-light ar d7 ex-style-85">
+                        <div class="sdg-badge ex-style-86">10</div>
+                        <div><strong class="ex-style-66">Reduced Inequalities</strong>
+                            <p class="ex-style-67">Reduce inequality within & among countries through inclusive
+                                policies.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<!-- ============= SLIDE 7: SDGs 11-15 ============= -->
-<div class="slide" id="s7">
-<div class="slide-inner ex-style-23" >
-<div  class="ex-style-87">
-<div class="ghost ex-style-58" >11–15</div>
-<div class="morph-blob ex-style-59" ></div>
-<div class="slide-label al d2 ex-style-60" >PLANET</div>
-<h2 class="pf al d3 ex-style-61" >Goals for Our Earth</h2>
-<p class="al d4 ex-style-62" >Sustainable cities, responsible consumption, climate action & protecting life on land and water.</p>
-</div>
-<div  class="ex-style-63">
-<div class="gcard-light ar d3 ex-style-88" ><div class="sdg-badge ex-style-89" >11</div><div><strong  class="ex-style-66">Sustainable Cities</strong><p  class="ex-style-67">Make cities inclusive, safe, resilient & sustainable for all residents.</p></div></div>
-<div class="gcard-light ar d4 ex-style-90" ><div class="sdg-badge ex-style-91" >12</div><div><strong  class="ex-style-66">Responsible Consumption</strong><p  class="ex-style-67">Ensure sustainable consumption & production patterns across industries.</p></div></div>
-<div class="gcard-light ar d5 ex-style-92" ><div class="sdg-badge ex-style-93" >13</div><div><strong  class="ex-style-66">Climate Action</strong><p  class="ex-style-67">Immediate action to combat climate change — limiting warming to 1.5°C per Paris Agreement.</p></div></div>
-<div class="gcard-light ar d6 ex-style-94" ><div class="sdg-badge ex-style-95" >14</div><div><strong  class="ex-style-66">Life Below Water</strong><p  class="ex-style-67">Conserve & sustainably use oceans, seas & marine resources.</p></div></div>
-<div class="gcard-light ar d7 ex-style-96" ><div class="sdg-badge ex-style-97" >15</div><div><strong  class="ex-style-66">Life On Land</strong><p  class="ex-style-67">Protect terrestrial ecosystems & halt biodiversity loss permanently.</p></div></div>
-</div>
-</div></div>
+        <div class="slide" id="s7">
+            <div class="slide-inner ex-style-23">
+                <div class="ex-style-87">
+                    <div class="ghost ex-style-58">11–15</div>
+                    <div class="morph-blob ex-style-59"></div>
+                    <div class="slide-label al d2 ex-style-60">PLANET</div>
+                    <h2 class="pf al d3 ex-style-61">Goals for Our Earth</h2>
+                    <p class="al d4 ex-style-62">Sustainable cities, responsible consumption, climate action &
+                        protecting life on land and water.</p>
+                </div>
+                <div class="ex-style-63">
+                    <div class="gcard-light ar d3 ex-style-88">
+                        <div class="sdg-badge ex-style-89">11</div>
+                        <div><strong class="ex-style-66">Sustainable Cities</strong>
+                            <p class="ex-style-67">Make cities inclusive, safe, resilient & sustainable for all
+                                residents.</p>
+                        </div>
+                    </div>
+                    <div class="gcard-light ar d4 ex-style-90">
+                        <div class="sdg-badge ex-style-91">12</div>
+                        <div><strong class="ex-style-66">Responsible Consumption</strong>
+                            <p class="ex-style-67">Ensure sustainable consumption & production patterns across
+                                industries.</p>
+                        </div>
+                    </div>
+                    <div class="gcard-light ar d5 ex-style-92">
+                        <div class="sdg-badge ex-style-93">13</div>
+                        <div><strong class="ex-style-66">Climate Action</strong>
+                            <p class="ex-style-67">Immediate action to combat climate change — limiting warming to 1.5°C
+                                per Paris Agreement.</p>
+                        </div>
+                    </div>
+                    <div class="gcard-light ar d6 ex-style-94">
+                        <div class="sdg-badge ex-style-95">14</div>
+                        <div><strong class="ex-style-66">Life Below Water</strong>
+                            <p class="ex-style-67">Conserve & sustainably use oceans, seas & marine resources.</p>
+                        </div>
+                    </div>
+                    <div class="gcard-light ar d7 ex-style-96">
+                        <div class="sdg-badge ex-style-97">15</div>
+                        <div><strong class="ex-style-66">Life On Land</strong>
+                            <p class="ex-style-67">Protect terrestrial ecosystems & halt biodiversity loss permanently.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<!-- ============= SLIDE 8: SDGs 16 & 17 ============= -->
-<div class="slide" id="s8">
-<div class="slide-inner ex-style-98" >
-<div class="aurora-wrap"><div class="aurora-band"></div><div class="aurora-band"></div></div>
-<div  class="ex-style-99">
-<div class="sdg-badge al d2 ex-style-100" >16</div>
-<h2 class="pf al d3 ex-style-101" >Peace, Justice &amp;<br/>Strong Institutions</h2>
-<p class="al d4 ex-style-102" >Peaceful and inclusive societies with transparent, accountable institutions are the backbone of sustainable progress.</p>
-<div class="al d5 ex-style-103" ><span  class="ex-style-104">⚖️</span><span  class="ex-style-105">Access to justice for all</span></div>
-<div class="al d6 ex-style-103" ><span  class="ex-style-104">🏛️</span><span  class="ex-style-105">Accountable governance</span></div>
-<div class="al d7 ex-style-106" ><span  class="ex-style-104">🕊️</span><span  class="ex-style-105">End violence &amp; conflict</span></div>
-</div>
-<div  class="ex-style-107">
-<div class="sdg-badge ar d2 ex-style-108" >17</div>
-<h2 class="pf ar d3 ex-style-101" >Partnerships<br/>for the Goals</h2>
-<p class="ar d4 ex-style-102" >No country can achieve the SDGs alone — solidarity, shared technology, and fair financing across borders.</p>
-<div class="ar d5 ex-style-103" ><span  class="ex-style-104">🤝</span><span  class="ex-style-105">International cooperation</span></div>
-<div class="ar d6 ex-style-103" ><span  class="ex-style-104">💡</span><span  class="ex-style-105">Technology transfer</span></div>
-<div class="ar d7 ex-style-106" ><span  class="ex-style-104">💰</span><span  class="ex-style-105">Climate finance &amp; ODA</span></div>
-</div>
-</div></div>
+        <div class="slide" id="s8">
+            <div class="slide-inner ex-style-98">
+                <div class="aurora-wrap">
+                    <div class="aurora-band"></div>
+                    <div class="aurora-band"></div>
+                </div>
+                <div class="ex-style-99">
+                    <div class="sdg-badge al d2 ex-style-100">16</div>
+                    <h2 class="pf al d3 ex-style-101">Peace, Justice &amp;<br />Strong Institutions</h2>
+                    <p class="al d4 ex-style-102">Peaceful and inclusive societies with transparent, accountable
+                        institutions are the backbone of sustainable progress.</p>
+                    <div class="al d5 ex-style-103"><span class="ex-style-104">⚖️</span><span
+                            class="ex-style-105">Access to justice for all</span></div>
+                    <div class="al d6 ex-style-103"><span class="ex-style-104">🏛️</span><span
+                            class="ex-style-105">Accountable governance</span></div>
+                    <div class="al d7 ex-style-106"><span class="ex-style-104">🕊️</span><span class="ex-style-105">End
+                            violence &amp; conflict</span></div>
+                </div>
+                <div class="ex-style-107">
+                    <div class="sdg-badge ar d2 ex-style-108">17</div>
+                    <h2 class="pf ar d3 ex-style-101">Partnerships<br />for the Goals</h2>
+                    <p class="ar d4 ex-style-102">No country can achieve the SDGs alone — solidarity, shared technology,
+                        and fair financing across borders.</p>
+                    <div class="ar d5 ex-style-103"><span class="ex-style-104">🤝</span><span
+                            class="ex-style-105">International cooperation</span></div>
+                    <div class="ar d6 ex-style-103"><span class="ex-style-104">💡</span><span
+                            class="ex-style-105">Technology transfer</span></div>
+                    <div class="ar d7 ex-style-106"><span class="ex-style-104">💰</span><span
+                            class="ex-style-105">Climate finance &amp; ODA</span></div>
+                </div>
+            </div>
+        </div>
 
-<!-- ============= SLIDE 9: IMPORTANCE ============= -->
-<div class="slide" id="s9">
-<div class="slide-inner ex-style-109" >
-<div class="aurora-wrap"><div class="aurora-band"></div><div class="aurora-band"></div><div class="aurora-band"></div></div>
-<div  class="ex-style-110">
-<div class="slide-label a d1">WHY IT MATTERS</div>
-<h2 class="pf a d2 ex-style-111" >The Case for Sustainable Development</h2>
-<div  class="ex-style-112">
-<div class="gcard as d3 ex-style-113" ><div  class="ex-style-114">🌿</div><h3  class="ex-style-115">Environmental Protection</h3><p  class="ex-style-116">Protecting biodiversity, clean air, and water systems that sustain all life — for today and every generation that follows.</p></div>
-<div class="gcard as d4 ex-style-117" ><div  class="ex-style-118">📈</div><h3  class="ex-style-115">Economic Stability</h3><p  class="ex-style-116">Sustainable economies grow without destroying those resources they depend on, creating planet-positive jobs.</p></div>
-<div class="gcard as d5 ex-style-119" ><div  class="ex-style-120">🤝</div><h3  class="ex-style-115">Social Equity</h3><p  class="ex-style-116">Ensuring access to education, healthcare & opportunity regardless of gender, income, or geography.</p></div>
-<div class="gcard as d6 ex-style-121" ><div  class="ex-style-122">🌐</div><h3  class="ex-style-115">Long-Term Resilience</h3><p  class="ex-style-116">Building systems robust enough to absorb future shocks — climate crises, pandemics & geopolitical disruptions.</p></div>
-</div>
-</div>
-</div></div>
+        <div class="slide" id="s9">
+            <div class="slide-inner ex-style-109">
+                <div class="aurora-wrap">
+                    <div class="aurora-band"></div>
+                    <div class="aurora-band"></div>
+                    <div class="aurora-band"></div>
+                </div>
+                <div class="ex-style-110">
+                    <div class="slide-label a d1">WHY IT MATTERS</div>
+                    <h2 class="pf a d2 ex-style-111">The Case for Sustainable Development</h2>
+                    <div class="ex-style-112">
+                        <div class="gcard as d3 ex-style-113">
+                            <div class="ex-style-114">🌿</div>
+                            <h3 class="ex-style-115">Environmental Protection</h3>
+                            <p class="ex-style-116">Protecting biodiversity, clean air, and water systems that sustain
+                                all life — for today and every generation that follows.</p>
+                        </div>
+                        <div class="gcard as d4 ex-style-117">
+                            <div class="ex-style-118">📈</div>
+                            <h3 class="ex-style-115">Economic Stability</h3>
+                            <p class="ex-style-116">Sustainable economies grow without destroying those resources they
+                                depend on, creating planet-positive jobs.</p>
+                        </div>
+                        <div class="gcard as d5 ex-style-119">
+                            <div class="ex-style-120">🤝</div>
+                            <h3 class="ex-style-115">Social Equity</h3>
+                            <p class="ex-style-116">Ensuring access to education, healthcare & opportunity regardless of
+                                gender, income, or geography.</p>
+                        </div>
+                        <div class="gcard as d6 ex-style-121">
+                            <div class="ex-style-122">🌐</div>
+                            <h3 class="ex-style-115">Long-Term Resilience</h3>
+                            <p class="ex-style-116">Building systems robust enough to absorb future shocks — climate
+                                crises, pandemics & geopolitical disruptions.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<!-- ============= SLIDE 10: ROLES ============= -->
-<div class="slide" id="s10">
-<div class="slide-inner ex-style-23" >
-<div  class="ex-style-123">
-<div class="aurora-wrap"><div class="aurora-band ex-style-124" ></div></div>
-<h2 class="pf al d2 ex-style-125" >Individuals</h2>
-<div class="mono al d3 ex-style-126" >PERSONAL RESPONSIBILITY</div>
-<div class="al d4 ex-style-127" ><span  class="ex-style-128"></span><div><strong  class="ex-style-129">♻️ Reduce &amp; Recycle</strong><p  class="ex-style-130">Minimize single-use plastics, compost organics, opt for circular products.</p></div></div>
-<div class="al d5 ex-style-127" ><span  class="ex-style-128"></span><div><strong  class="ex-style-129">💡 Cut Energy Use</strong><p  class="ex-style-130">Switch to LEDs, reduce standby power, prefer public transit.</p></div></div>
-<div class="al d6 ex-style-127" ><span  class="ex-style-128"></span><div><strong  class="ex-style-129">🛒 Ethical Consumption</strong><p  class="ex-style-130">Support local businesses, sustainable brands. Avoid fast fashion.</p></div></div>
-<div class="al d7 ex-style-131" ><span  class="ex-style-128"></span><div><strong  class="ex-style-129">📢 Advocate &amp; Educate</strong><p  class="ex-style-130">Raise awareness, vote for green policies, engage your community.</p></div></div>
-</div>
-<div  class="ex-style-132">
-<div class="aurora-wrap"><div class="aurora-band ex-style-133" ></div></div>
-<h2 class="pf ar d2 ex-style-125" >Governments</h2>
-<div class="mono ar d3 ex-style-126" >INSTITUTIONAL RESPONSIBILITY</div>
-<div class="ar d4 ex-style-127" ><span  class="ex-style-134"></span><div><strong  class="ex-style-129">📜 Policy &amp; Legislation</strong><p  class="ex-style-130">Binding laws on emissions caps, waste management & labor rights.</p></div></div>
-<div class="ar d5 ex-style-127" ><span  class="ex-style-134"></span><div><strong  class="ex-style-129">🌱 Climate Investment</strong><p  class="ex-style-130">Fund renewable infrastructure, set net-zero timelines, protect green corridors.</p></div></div>
-<div class="ar d6 ex-style-127" ><span  class="ex-style-134"></span><div><strong  class="ex-style-129">🎓 Education Systems</strong><p  class="ex-style-130">Integrate sustainability into national curricula at every level.</p></div></div>
-<div class="ar d7 ex-style-131" ><span  class="ex-style-134"></span><div><strong  class="ex-style-129">🌍 Global Commitments</strong><p  class="ex-style-130">Honor Paris Agreement pledges, scale ODA to developing nations.</p></div></div>
-</div>
-</div></div>
+        <div class="slide" id="s10">
+            <div class="slide-inner ex-style-23">
+                <div class="ex-style-123">
+                    <div class="aurora-wrap">
+                        <div class="aurora-band ex-style-124"></div>
+                    </div>
+                    <h2 class="pf al d2 ex-style-125">Individuals</h2>
+                    <div class="mono al d3 ex-style-126">PERSONAL RESPONSIBILITY</div>
+                    <div class="al d4 ex-style-127"><span class="ex-style-128"></span>
+                        <div><strong class="ex-style-129">♻️ Reduce &amp; Recycle</strong>
+                            <p class="ex-style-130">Minimize single-use plastics, compost organics, opt for circular
+                                products.</p>
+                        </div>
+                    </div>
+                    <div class="al d5 ex-style-127"><span class="ex-style-128"></span>
+                        <div><strong class="ex-style-129">💡 Cut Energy Use</strong>
+                            <p class="ex-style-130">Switch to LEDs, reduce standby power, prefer public transit.</p>
+                        </div>
+                    </div>
+                    <div class="al d6 ex-style-127"><span class="ex-style-128"></span>
+                        <div><strong class="ex-style-129">🛒 Ethical Consumption</strong>
+                            <p class="ex-style-130">Support local businesses, sustainable brands. Avoid fast fashion.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="al d7 ex-style-131"><span class="ex-style-128"></span>
+                        <div><strong class="ex-style-129">📢 Advocate &amp; Educate</strong>
+                            <p class="ex-style-130">Raise awareness, vote for green policies, engage your community.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="ex-style-132">
+                    <div class="aurora-wrap">
+                        <div class="aurora-band ex-style-133"></div>
+                    </div>
+                    <h2 class="pf ar d2 ex-style-125">Governments</h2>
+                    <div class="mono ar d3 ex-style-126">INSTITUTIONAL RESPONSIBILITY</div>
+                    <div class="ar d4 ex-style-127"><span class="ex-style-134"></span>
+                        <div><strong class="ex-style-129">📜 Policy &amp; Legislation</strong>
+                            <p class="ex-style-130">Binding laws on emissions caps, waste management & labor rights.</p>
+                        </div>
+                    </div>
+                    <div class="ar d5 ex-style-127"><span class="ex-style-134"></span>
+                        <div><strong class="ex-style-129">🌱 Climate Investment</strong>
+                            <p class="ex-style-130">Fund renewable infrastructure, set net-zero timelines, protect green
+                                corridors.</p>
+                        </div>
+                    </div>
+                    <div class="ar d6 ex-style-127"><span class="ex-style-134"></span>
+                        <div><strong class="ex-style-129">🎓 Education Systems</strong>
+                            <p class="ex-style-130">Integrate sustainability into national curricula at every level.</p>
+                        </div>
+                    </div>
+                    <div class="ar d7 ex-style-131"><span class="ex-style-134"></span>
+                        <div><strong class="ex-style-129">🌍 Global Commitments</strong>
+                            <p class="ex-style-130">Honor Paris Agreement pledges, scale ODA to developing nations.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<!-- ============= SLIDE 11: CHALLENGES ============= -->
-<div class="slide" id="s11">
-<div class="slide-inner ex-style-135" >
-<div class="aurora-wrap"><div class="aurora-band ex-style-136" ></div><div class="aurora-band"></div></div>
-<div  class="ex-style-110">
-<div class="slide-label a d1 ex-style-137" >THE ROAD AHEAD</div>
-<h2 class="pf a d2 ex-style-111" >Barriers to Achieving the SDGs</h2>
-<div  class="ex-style-112">
-<div class="gcard as d3 ex-style-138" ><div  class="ex-style-139">🌡️</div><h3  class="ex-style-115">Climate Change</h3><p  class="ex-style-116">Accelerating temperatures, intensifying disasters & rising seas hit the most vulnerable hardest.</p></div>
-<div class="gcard as d4 ex-style-140" ><div  class="ex-style-139">📉</div><h3  class="ex-style-115">Poverty &amp; Inequality</h3><p  class="ex-style-116">The wealth gap is widening within and between nations — undermining progress on all 17 goals.</p></div>
-<div class="gcard as d5 ex-style-141" ><div  class="ex-style-139">💸</div><h3  class="ex-style-115">Financing Gap</h3><p  class="ex-style-116">Developing nations face a $4.2 trillion annual SDG funding gap with aid falling far short.</p></div>
-<div class="gcard as d6 ex-style-142" ><div  class="ex-style-139">🌐</div><h3  class="ex-style-115">Geopolitical Fragmentation</h3><p  class="ex-style-116">Rising nationalism & fractured multilateralism erode the coordinated global action SDGs demand.</p></div>
-</div>
-</div>
-</div></div>
+        <div class="slide" id="s11">
+            <div class="slide-inner ex-style-135">
+                <div class="aurora-wrap">
+                    <div class="aurora-band ex-style-136"></div>
+                    <div class="aurora-band"></div>
+                </div>
+                <div class="ex-style-110">
+                    <div class="slide-label a d1 ex-style-137">THE ROAD AHEAD</div>
+                    <h2 class="pf a d2 ex-style-111">Barriers to Achieving the SDGs</h2>
+                    <div class="ex-style-112">
+                        <div class="gcard as d3 ex-style-138">
+                            <div class="ex-style-139">🌡️</div>
+                            <h3 class="ex-style-115">Climate Change</h3>
+                            <p class="ex-style-116">Accelerating temperatures, intensifying disasters & rising seas hit
+                                the most vulnerable hardest.</p>
+                        </div>
+                        <div class="gcard as d4 ex-style-140">
+                            <div class="ex-style-139">📉</div>
+                            <h3 class="ex-style-115">Poverty &amp; Inequality</h3>
+                            <p class="ex-style-116">The wealth gap is widening within and between nations — undermining
+                                progress on all 17 goals.</p>
+                        </div>
+                        <div class="gcard as d5 ex-style-141">
+                            <div class="ex-style-139">💸</div>
+                            <h3 class="ex-style-115">Financing Gap</h3>
+                            <p class="ex-style-116">Developing nations face a $4.2 trillion annual SDG funding gap with
+                                aid falling far short.</p>
+                        </div>
+                        <div class="gcard as d6 ex-style-142">
+                            <div class="ex-style-139">🌐</div>
+                            <h3 class="ex-style-115">Geopolitical Fragmentation</h3>
+                            <p class="ex-style-116">Rising nationalism & fractured multilateralism erode the coordinated
+                                global action SDGs demand.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<!-- ============= SLIDE 12: FUTURE ============= -->
-<div class="slide" id="s12">
-<div class="slide-inner ex-style-143" >
-<div class="aurora-wrap"><div class="aurora-band"></div></div>
-<div  class="ex-style-144">
-<div class="slide-label al d1 ex-style-145" >LOOKING FORWARD</div>
-<h2 class="pf al d2 ex-style-146" >The Future of<br/>Sustainable Development</h2>
-<p class="al d3 ex-style-147" >The Decade of Action (2020–2030) demands transformative change. Technology, innovation, and political will must converge — faster than ever — to bend the arc toward sustainability.</p>
-</div>
-<div  class="ex-style-148">
-<div class="gcard as d4 ex-style-149" ><div  class="ex-style-150">⚡</div><div  class="ex-style-17">Renewable Energy</div></div>
-<div class="gcard as d5 ex-style-151" ><div  class="ex-style-152">🏙️</div><div  class="ex-style-17">Smart &amp; Green Cities</div></div>
-<div class="gcard as d6 ex-style-153" ><div  class="ex-style-154">🤖</div><div  class="ex-style-17">AI &amp; Green Tech</div></div>
-<div class="gcard as d7 ex-style-155" ><div  class="ex-style-156">📚</div><div  class="ex-style-17">Climate Literacy</div></div>
-</div>
-</div></div>
+        <div class="slide" id="s12">
+            <div class="slide-inner ex-style-143">
+                <div class="aurora-wrap">
+                    <div class="aurora-band"></div>
+                </div>
+                <div class="ex-style-144">
+                    <div class="slide-label al d1 ex-style-145">LOOKING FORWARD</div>
+                    <h2 class="pf al d2 ex-style-146">The Future of<br />Sustainable Development</h2>
+                    <p class="al d3 ex-style-147">The Decade of Action (2020–2030) demands transformative change.
+                        Technology, innovation, and political will must converge — faster than ever — to bend the arc
+                        toward sustainability.</p>
+                </div>
+                <div class="ex-style-148">
+                    <div class="gcard as d4 ex-style-149">
+                        <div class="ex-style-150">⚡</div>
+                        <div class="ex-style-17">Renewable Energy</div>
+                    </div>
+                    <div class="gcard as d5 ex-style-151">
+                        <div class="ex-style-152">🏙️</div>
+                        <div class="ex-style-17">Smart &amp; Green Cities</div>
+                    </div>
+                    <div class="gcard as d6 ex-style-153">
+                        <div class="ex-style-154">🤖</div>
+                        <div class="ex-style-17">AI &amp; Green Tech</div>
+                    </div>
+                    <div class="gcard as d7 ex-style-155">
+                        <div class="ex-style-156">📚</div>
+                        <div class="ex-style-17">Climate Literacy</div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<!-- ============= SLIDE 13: CONCLUSION ============= -->
-<div class="slide" id="s13">
-<div class="slide-inner ex-style-2" >
-<div class="aurora-wrap"><div class="aurora-band"></div><div class="aurora-band"></div><div class="aurora-band"></div></div>
-<div  class="ex-style-157">
-<div class="a d2 ex-style-158" >🌱</div>
-<h2 class="pf a d3 ex-style-159" >Our Collective Responsibility</h2>
-<div class="a d5 ex-style-160" >
-<div class="pill ex-style-161" >17 Goals</div>
-<div class="pill ex-style-162" >169 Targets</div>
-<div class="pill ex-style-163" >2030 Deadline</div>
-</div>
-<p class="a d7 ex-style-164" >The SDGs are humanity's shared roadmap — not a government checklist. Real change comes from students who question, citizens who demand, and innovators who build. The deadline is close. The stakes are absolute.</p>
-<p class="pf a d9 ex-style-165" >"We are the first generation to feel the impact of climate change and the last generation that can do something about it."</p>
-<p class="mono a d10 ex-style-166" >— Barack Obama</p>
-</div>
-</div></div>
+        <div class="slide" id="s13">
+            <div class="slide-inner ex-style-2">
+                <div class="aurora-wrap">
+                    <div class="aurora-band"></div>
+                    <div class="aurora-band"></div>
+                    <div class="aurora-band"></div>
+                </div>
+                <div class="ex-style-157">
+                    <div class="a d2 ex-style-158">🌱</div>
+                    <h2 class="pf a d3 ex-style-159">Our Collective Responsibility</h2>
+                    <div class="a d5 ex-style-160">
+                        <div class="pill ex-style-161">17 Goals</div>
+                        <div class="pill ex-style-162">169 Targets</div>
+                        <div class="pill ex-style-163">2030 Deadline</div>
+                    </div>
+                    <p class="a d7 ex-style-164">The SDGs are humanity's shared roadmap — not a government checklist.
+                        Real change comes from students who question, citizens who demand, and innovators who build. The
+                        deadline is close. The stakes are absolute.</p>
+                    <p class="pf a d9 ex-style-165">"We are the first generation to feel the impact of climate change
+                        and the last generation that can do something about it."</p>
+                    <p class="mono a d10 ex-style-166">— Barack Obama</p>
+                </div>
+            </div>
+        </div>
 
-<!-- ============= SLIDE 14: THANK YOU ============= -->
-<div class="slide" id="s14">
-<div class="slide-inner ex-style-2" >
-<div class="aurora-wrap"><div class="aurora-band"></div><div class="aurora-band"></div><div class="aurora-band"></div></div>
-<div class="orbit ex-style-167" ><div class="orbit-dot"></div></div>
-<div class="orbit ex-style-168" ><div class="orbit-dot ex-style-5" ></div></div>
-<div class="morph-blob ex-style-169" ></div>
-<div class="morph-blob ex-style-170" ></div>
-<div  class="ex-style-171">
-<h1 class="pf a d3 shimmer ex-style-172" >Thank You</h1>
-<p class="a d5 ex-style-173" >Together, we build a world worth inheriting.</p>
-<div class="a d7 ex-style-174"  id="sdgDotsRow"></div>
-<p class="mono a d9 ex-style-175" >Faisal Khan · Sheikh Hemayoou Jawaid · Yash Vishesh · Utsav Upadhyay</p>
-</div>
-</div></div>
+        <div class="slide" id="s14">
+            <div class="slide-inner ex-style-2">
+                <div class="aurora-wrap">
+                    <div class="aurora-band"></div>
+                    <div class="aurora-band"></div>
+                    <div class="aurora-band"></div>
+                </div>
+                <div class="orbit ex-style-167">
+                    <div class="orbit-dot"></div>
+                </div>
+                <div class="orbit ex-style-168">
+                    <div class="orbit-dot ex-style-5"></div>
+                </div>
+                <div class="morph-blob ex-style-169"></div>
+                <div class="morph-blob ex-style-170"></div>
+                <div class="ex-style-171">
+                    <h1 class="pf a d3 shimmer ex-style-172">Thank You</h1>
+                    <p class="a d5 ex-style-173">Together, we build a world worth inheriting.</p>
+                    <div class="a d7 ex-style-174" id="sdgDotsRow"></div>
+                    <p class="mono a d9 ex-style-175">Faisal Khan · Sheikh Hemayoou Jawaid · Yash Vishesh · Utsav
+                        Upadhyay</p>
+                </div>
+            </div>
+        </div>
 
-<!-- NAV -->
-<nav class="nav-bar">
-<button class="nav-btn" onclick="prev()" aria-label="Previous">←</button>
-<div class="nav-dots" id="navDots"></div>
-<span class="nav-counter" id="navC">1 / 14</span>
-<button class="nav-btn" onclick="next()" aria-label="Next">→</button>
-</nav>
+        <button class="side-btn left" onclick="prev()" aria-label="Previous Slide">&#10094;</button>
+        <button class="side-btn right" onclick="next()" aria-label="Next Slide">&#10095;</button>
 
-<script>
-const T=14;let cur=1,lock=false;
-const sdgs=[
-{n:1,l:'No Poverty',c:'#E5243B',e:'🏚️'},{n:2,l:'Zero Hunger',c:'#DDA63A',e:'🍽️'},{n:3,l:'Good Health',c:'#4C9F38',e:'💚'},
-{n:4,l:'Quality Education',c:'#C5192D',e:'📚'},{n:5,l:'Gender Equality',c:'#FF3A21',e:'⚧️'},{n:6,l:'Clean Water',c:'#26BDE2',e:'💧'},
-{n:7,l:'Clean Energy',c:'#FCC30B',e:'⚡'},{n:8,l:'Decent Work',c:'#A21942',e:'💼'},{n:9,l:'Innovation',c:'#FD6925',e:'🏭'},
-{n:10,l:'Reduced Inequality',c:'#DD1367',e:'⚖️'},{n:11,l:'Smart Cities',c:'#FD9D24',e:'🏙️'},{n:12,l:'Consumption',c:'#BF8B2E',e:'♻️'},
-{n:13,l:'Climate Action',c:'#3F7E44',e:'🌡️'},{n:14,l:'Life Below Water',c:'#0A97D9',e:'🐟'},{n:15,l:'Life On Land',c:'#56C02B',e:'🌳'},
-{n:16,l:'Peace & Justice',c:'#00689D',e:'🕊️'},{n:17,l:'Partnerships',c:'#19486A',e:'🤝'}
-];
-// SDG Grid
-const gr=document.getElementById('sdgGrid');
-if(gr) sdgs.forEach((s,i)=>{const t=document.createElement('div');t.className='sdg-tile as d'+(Math.min((i%11)+3,13));
-t.style.background=`linear-gradient(135deg,${s.c},${s.c}dd)`;t.innerHTML=`<div class="num">${s.n}</div><div class="lbl">${s.l}</div><div class="bg-e">${s.e}</div>`;
-gr.appendChild(t);});
-// Nav dots
-const dots=document.getElementById('navDots');
-for(let i=1;i<=T;i++){const d=document.createElement('div');d.className='nav-dot'+(i===1?' active':'');d.onclick=()=>goTo(i);dots.appendChild(d);}
-// === CANVAS PARTICLE SYSTEM ===
-const cvs=document.getElementById('particleCanvas'),ctx=cvs.getContext('2d');
-let W,H,particles=[];
-function resize(){W=cvs.width=window.innerWidth;H=cvs.height=window.innerHeight;}
-resize();window.addEventListener('resize',resize);
-class P{constructor(){this.reset()}
-reset(){this.x=Math.random()*W;this.y=Math.random()*H;this.vx=(Math.random()-.5)*.3;this.vy=(Math.random()-.5)*.3;this.r=Math.random()*1.5+.5;this.a=Math.random()*.3+.05;this.color=Math.random()>.7?'212,168,75':Math.random()>.5?'86,192,43':'38,189,226'}
-update(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>W||this.y<0||this.y>H)this.reset();
-const dx=mx-this.x,dy=my-this.y,dist=Math.sqrt(dx*dx+dy*dy);
-if(dist<150){this.x-=dx*.01;this.y-=dy*.01;this.a=Math.min(this.a+.02,.6)}else{this.a=Math.max(this.a-.005,.05)}}
-draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);ctx.fillStyle=`rgba(${this.color},${this.a})`;ctx.fill()}}
-for(let i=0;i<80;i++)particles.push(new P());
-function drawLines(){for(let i=0;i<particles.length;i++)for(let j=i+1;j<particles.length;j++){
-const d=Math.hypot(particles[i].x-particles[j].x,particles[i].y-particles[j].y);
-if(d<120){ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);
-ctx.strokeStyle=`rgba(212,168,75,${.08*(1-d/120)})`;ctx.lineWidth=.5;ctx.stroke();}}}
-function animCanvas(){ctx.clearRect(0,0,W,H);particles.forEach(p=>{p.update();p.draw()});drawLines();requestAnimationFrame(animCanvas);}
-animCanvas();
-// === NAVIGATION ===
-function goTo(n){if(lock||n<1||n>T||n===cur)return;lock=true;
-const o=document.getElementById('s'+cur),nw=document.getElementById('s'+n);
-if(!o||!nw){lock=false;return;}
-o.style.animation='slideExitUp .6s cubic-bezier(.16,1,.3,1) forwards';
-setTimeout(()=>{
-o.style.display='none';o.style.animation='';o.classList.remove('active');
-nw.style.display='';nw.classList.add('active');nw.style.animation='slideEnterUp .7s cubic-bezier(.16,1,.3,1) forwards';
-setTimeout(()=>{nw.style.animation='';lock=false;},700);},400);
-cur=n;updUI();trigCount(n);}
-function next(){goTo(cur+1)}function prev(){goTo(cur-1)}
-function updUI(){document.getElementById('navC').textContent=cur+' / '+T;
-document.getElementById('progress').style.width=(cur/T*100)+'%';
-document.querySelectorAll('.nav-dot').forEach((d,i)=>d.classList.toggle('active',i+1===cur));}
-// Counters
-function trigCount(n){if(n===2)document.querySelectorAll('.stat-num[data-count]').forEach(el=>{
-const tgt=+el.dataset.count;const dur=1800,st=performance.now();
-(function t(now){const p=Math.min((now-st)/dur,1),e=1-Math.pow(1-p,4);
-el.textContent=Math.floor(e*tgt);if(p<1)requestAnimationFrame(t);else el.textContent=tgt;})(st);});}
-// Keyboard
-document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' ')next();if(e.key==='ArrowLeft')prev();});
-// Touch
-let tx=0;document.addEventListener('touchstart',e=>tx=e.touches[0].clientX);
-document.addEventListener('touchend',e=>{const d=tx-e.changedTouches[0].clientX;if(Math.abs(d)>50){d>0?next():prev();}});
-// === CURSOR + SPOTLIGHT ===
-const dot=document.getElementById('cDot'),ring=document.getElementById('cRing'),spot=document.getElementById('spotlight');
-let mx=W/2,my=H/2,rx=W/2,ry=H/2;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.transform=`translate(${mx-4}px,${my-4}px)`;spot.style.left=mx+'px';spot.style.top=my+'px';});
-(function lag(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;ring.style.transform=`translate(${rx-20}px,${ry-20}px)`;requestAnimationFrame(lag)})();
-// Click ripple
-document.addEventListener('click',e=>{const r=document.createElement('div');r.className='click-ripple';r.style.left=(e.clientX-10)+'px';r.style.top=(e.clientY-10)+'px';document.body.appendChild(r);setTimeout(()=>r.remove(),800);});
-// SDG dots row
-const dr=document.getElementById('sdgDotsRow');
-if(dr) sdgs.forEach(s=>{const d=document.createElement('div');d.style.cssText=`width:18px;height:18px;border-radius:50%;background:${s.c};box-shadow:0 0 10px ${s.c}66;animation:pulse 3s ease-in-out infinite;animation-delay:${s.n*.15}s;transition:transform .3s`;d.onmouseenter=()=>d.style.transform='scale(1.6)';d.onmouseleave=()=>d.style.transform='';dr.appendChild(d);});
-</script>
+        <nav class="nav-bar">
+            <button class="nav-btn" onclick="prev()" aria-label="Previous">←</button>
+            <div class="nav-dots" id="navDots"></div>
+            <span class="nav-counter" id="navC">1 / 14</span>
+            <button class="nav-btn" onclick="next()" aria-label="Next">→</button>
+        </nav>
+
+        <script>
+            const T = 14; let cur = 1, lock = false;
+            const sdgs = [
+                { n: 1, l: 'No Poverty', c: '#E5243B', e: '🏚️' }, { n: 2, l: 'Zero Hunger', c: '#DDA63A', e: '🍽️' }, { n: 3, l: 'Good Health', c: '#4C9F38', e: '💚' },
+                { n: 4, l: 'Quality Education', c: '#C5192D', e: '📚' }, { n: 5, l: 'Gender Equality', c: '#FF3A21', e: '⚧️' }, { n: 6, l: 'Clean Water', c: '#26BDE2', e: '💧' },
+                { n: 7, l: 'Clean Energy', c: '#FCC30B', e: '⚡' }, { n: 8, l: 'Decent Work', c: '#A21942', e: '💼' }, { n: 9, l: 'Innovation', c: '#FD6925', e: '🏭' },
+                { n: 10, l: 'Reduced Inequality', c: '#DD1367', e: '⚖️' }, { n: 11, l: 'Smart Cities', c: '#FD9D24', e: '🏙️' }, { n: 12, l: 'Consumption', c: '#BF8B2E', e: '♻️' },
+                { n: 13, l: 'Climate Action', c: '#3F7E44', e: '🌡️' }, { n: 14, l: 'Life Below Water', c: '#0A97D9', e: '🐟' }, { n: 15, l: 'Life On Land', c: '#56C02B', e: '🌳' },
+                { n: 16, l: 'Peace & Justice', c: '#00689D', e: '🕊️' }, { n: 17, l: 'Partnerships', c: '#19486A', e: '🤝' }
+            ];
+            // SDG Grid
+            const gr = document.getElementById('sdgGrid');
+            if (gr) sdgs.forEach((s, i) => {
+                const t = document.createElement('div'); t.className = 'sdg-tile as d' + (Math.min((i % 11) + 3, 13));
+                t.style.background = `linear-gradient(135deg,${s.c},${s.c}dd)`; t.innerHTML = `<div class="num">${s.n}</div><div class="lbl">${s.l}</div><div class="bg-e">${s.e}</div>`;
+                gr.appendChild(t);
+            });
+            // Nav dots
+            const dots = document.getElementById('navDots');
+            for (let i = 1; i <= T; i++) { const d = document.createElement('div'); d.className = 'nav-dot' + (i === 1 ? ' active' : ''); d.onclick = () => goTo(i); dots.appendChild(d); }
+            // === CANVAS PARTICLE SYSTEM ===
+            const cvs = document.getElementById('particleCanvas'), ctx = cvs.getContext('2d');
+            let W, H, particles = [];
+            function resize() { W = cvs.width = window.innerWidth; H = cvs.height = window.innerHeight; }
+            resize(); window.addEventListener('resize', resize);
+            class P {
+                constructor() { this.reset() }
+                reset() { this.x = Math.random() * W; this.y = Math.random() * H; this.vx = (Math.random() - .5) * .3; this.vy = (Math.random() - .5) * .3; this.r = Math.random() * 1.5 + .5; this.a = Math.random() * .3 + .05; this.color = Math.random() > .7 ? '212,168,75' : Math.random() > .5 ? '86,192,43' : '38,189,226' }
+                update() {
+                    this.x += this.vx; this.y += this.vy; if (this.x < 0 || this.x > W || this.y < 0 || this.y > H) this.reset();
+                    const dx = mx - this.x, dy = my - this.y, dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 150) { this.x -= dx * .01; this.y -= dy * .01; this.a = Math.min(this.a + .02, .6) } else { this.a = Math.max(this.a - .005, .05) }
+                }
+                draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2); ctx.fillStyle = `rgba(${this.color},${this.a})`; ctx.fill() }
+            }
+            for (let i = 0; i < 80; i++)particles.push(new P());
+            function drawLines() {
+                for (let i = 0; i < particles.length; i++)for (let j = i + 1; j < particles.length; j++) {
+                    const d = Math.hypot(particles[i].x - particles[j].x, particles[i].y - particles[j].y);
+                    if (d < 120) {
+                        ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(212,168,75,${.08 * (1 - d / 120)})`; ctx.lineWidth = .5; ctx.stroke();
+                    }
+                }
+            }
+            function animCanvas() { ctx.clearRect(0, 0, W, H); particles.forEach(p => { p.update(); p.draw() }); drawLines(); requestAnimationFrame(animCanvas); }
+            animCanvas();
+            // === NAVIGATION ===
+            function goTo(n) {
+                if (lock || n < 1 || n > T || n === cur) return; lock = true;
+                const o = document.getElementById('s' + cur), nw = document.getElementById('s' + n);
+                if (!o || !nw) { lock = false; return; }
+                o.style.animation = 'slideExitUp .6s cubic-bezier(.16,1,.3,1) forwards';
+                setTimeout(() => {
+                    o.style.display = 'none'; o.style.animation = ''; o.classList.remove('active');
+
+                    // --- Added forced reflow logic to guarantee CSS transitions restart properly ---
+                    nw.style.display = '';
+                    void nw.offsetWidth; // Force rendering reflow
+
+                    nw.classList.add('active'); nw.style.animation = 'slideEnterUp .7s cubic-bezier(.16,1,.3,1) forwards';
+                    setTimeout(() => { nw.style.animation = ''; lock = false; }, 700);
+                }, 400);
+                cur = n; updUI(); trigCount(n);
+            }
+            function next() { goTo(cur + 1) } function prev() { goTo(cur - 1) }
+            function updUI() {
+                document.getElementById('navC').textContent = cur + ' / ' + T;
+                document.getElementById('progress').style.width = (cur / T * 100) + '%';
+                document.querySelectorAll('.nav-dot').forEach((d, i) => d.classList.toggle('active', i + 1 === cur));
+            }
+            // Counters
+            function trigCount(n) {
+                if (n === 2) document.querySelectorAll('.stat-num[data-count]').forEach(el => {
+                    const tgt = +el.dataset.count; const dur = 1800, st = performance.now();
+                    (function t(now) {
+                        const p = Math.min((now - st) / dur, 1), e = 1 - Math.pow(1 - p, 4);
+                        el.textContent = Math.floor(e * tgt); if (p < 1) requestAnimationFrame(t); else el.textContent = tgt;
+                    })(st);
+                });
+            }
+            // Keyboard & iframe postMessage support
+            const handleKey = e => { 
+                const k = e.key || ''; const c = e.keyCode || 0;
+                if (['ArrowRight', 'ArrowDown', 'PageDown', ' '].includes(k) || [39, 40, 34, 32].includes(c)) next(); 
+                if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(k) || [37, 38, 33].includes(c)) prev(); 
+            };
+            document.addEventListener('keydown', handleKey);
+            window.addEventListener('message', e => {
+                if (e.data === 'next') next();
+                if (e.data === 'prev') prev();
+            });
+            // Touch
+            let tx = 0; document.addEventListener('touchstart', e => tx = e.touches[0].clientX);
+            document.addEventListener('touchend', e => { const d = tx - e.changedTouches[0].clientX; if (Math.abs(d) > 50) { d > 0 ? next() : prev(); } });
+            // === CURSOR + SPOTLIGHT ===
+            const dot = document.getElementById('cDot'), ring = document.getElementById('cRing'), spot = document.getElementById('spotlight');
+            let mx = W / 2, my = H / 2, rx = W / 2, ry = H / 2;
+            document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; dot.style.transform = `translate(${mx - 4}px,${my - 4}px)`; spot.style.left = mx + 'px'; spot.style.top = my + 'px'; });
+            (function lag() { rx += (mx - rx) * .1; ry += (my - ry) * .1; ring.style.transform = `translate(${rx - 20}px,${ry - 20}px)`; requestAnimationFrame(lag) })();
+            // Click ripple
+            document.addEventListener('click', e => { const r = document.createElement('div'); r.className = 'click-ripple'; r.style.left = (e.clientX - 10) + 'px'; r.style.top = (e.clientY - 10) + 'px'; document.body.appendChild(r); setTimeout(() => r.remove(), 800); });
+            // SDG dots row
+            const dr = document.getElementById('sdgDotsRow');
+            if (dr) sdgs.forEach(s => { const d = document.createElement('div'); d.style.cssText = `width:18px;height:18px;border-radius:50%;background:${s.c};box-shadow:0 0 10px ${s.c}66;animation:pulse 3s ease-in-out infinite;animation-delay:${s.n * .15}s;transition:transform .3s`; d.onmouseenter = () => d.style.transform = 'scale(1.6)'; d.onmouseleave = () => d.style.transform = ''; dr.appendChild(d); });
+        </script>
 </body>
+
 </html>
