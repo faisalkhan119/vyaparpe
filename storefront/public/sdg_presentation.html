@@ -168,14 +168,31 @@
             from {
                 opacity: 0;
                 transform: translateY(80px) scale(.95);
-                filter: blur(25px)
+                filter: blur(25px);
+                letter-spacing: -1.5px;
             }
 
             to {
                 opacity: 1;
                 transform: translateY(0) scale(1);
-                filter: blur(0)
+                filter: blur(0);
+                letter-spacing: normal;
             }
+        }
+        
+        @keyframes glassSheen {
+            0% { transform: translateX(-150%) skewX(-20deg); }
+            100% { transform: translateX(200%) skewX(-20deg); }
+        }
+        
+        .gcard, .gcard-light { position: relative; overflow: hidden; }
+        .gcard::after, .gcard-light::after {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+            transform: translateX(-150%) skewX(-20deg); pointer-events: none; z-index: 10;
+        }
+        .slide.active .gcard::after, .slide.active .gcard-light::after {
+            animation: glassSheen 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; animation-delay: 1.2s;
         }
 
         @keyframes slideInLeft {
@@ -2683,6 +2700,7 @@
                     void nw.offsetWidth; // Force rendering reflow
 
                     nw.classList.add('active'); nw.style.animation = 'slideEnterUp 1s cubic-bezier(.16,1,.3,1) forwards';
+                    const activeInner = nw.querySelector('.slide-inner'); if (activeInner) activeInner.style.transform = '';
                     setTimeout(() => { nw.style.animation = ''; lock = false; }, 1000);
                 }, 500);
                 cur = n; updUI(); trigCount(n);
@@ -2717,9 +2735,18 @@
             // Touch
             let tx = 0; document.addEventListener('touchstart', e => tx = e.touches[0].clientX);
             document.addEventListener('touchend', e => { const d = tx - e.changedTouches[0].clientX; if (Math.abs(d) > 50) { d > 0 ? next() : prev(); } });
-            // === CURSOR + SPOTLIGHT ===
+            // === CURSOR + SPOTLIGHT + 3D PARALLAX ===
             const dot = document.getElementById('cDot'), ring = document.getElementById('cRing'), spot = document.getElementById('spotlight');
-            document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; dot.style.transform = `translate(${mx - 4}px,${my - 4}px)`; spot.style.left = mx + 'px'; spot.style.top = my + 'px'; });
+            document.addEventListener('mousemove', e => { 
+                mx = e.clientX; my = e.clientY; 
+                dot.style.transform = `translate(${mx - 4}px,${my - 4}px)`; spot.style.left = mx + 'px'; spot.style.top = my + 'px'; 
+                
+                if (!lock && W > 768) {
+                    const xTilt = (mx / W - 0.5) * 8; const yTilt = (my / H - 0.5) * -8;
+                    const activeInner = document.querySelector('.slide.active .slide-inner');
+                    if (activeInner) activeInner.style.transform = `perspective(2000px) rotateX(${yTilt}deg) rotateY(${xTilt}deg) scale3d(1.01, 1.01, 1.01)`;
+                }
+            });
             (function lag() { rx += (mx - rx) * .1; ry += (my - ry) * .1; ring.style.transform = `translate(${rx - 20}px,${ry - 20}px)`; requestAnimationFrame(lag) })();
             // Click ripple
             document.addEventListener('click', e => { const r = document.createElement('div'); r.className = 'click-ripple'; r.style.left = (e.clientX - 10) + 'px'; r.style.top = (e.clientY - 10) + 'px'; document.body.appendChild(r); setTimeout(() => r.remove(), 800); });
