@@ -346,20 +346,34 @@
         /* ── Hint ── */
         .hint {
             position: fixed;
-            bottom: 8px;
-            right: 8px;
-            background: rgba(76, 29, 149, .85);
-            border: 1px solid #6d28d9;
-            border-radius: 6px;
-            padding: 5px 10px;
-            font-size: 9px;
-            color: #c4b5fd;
-            z-index: 99;
-            -webkit-backdrop-filter: blur(6px);
-            backdrop-filter: blur(6px)
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #ccc;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            pointer-events: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
         }
 
-        /* ── Print ── */
+        /* Generated Legend Classes */
+        .leg-super-admin { background: #7c3aed; }
+        .leg-plat-admin { background: #1e40af; }
+        .leg-plat-plan { background: #4c1d95; }
+        .leg-seller { background: #0369a1; }
+        .leg-store { background: #0e7490; }
+        .leg-product { background: #065f46; }
+        .leg-customer { background: #166534; }
+        .leg-wallet { background: #b45309; }
+        .leg-orders { background: #1e3a8a; }
+        .leg-sub { background: #7c2d12; }
+        .leg-feat { background: #374151; }
+        .leg-edge { background: #991b1b; border: 1px dashed #fca5a5; }
         @media print {
 
             .topbar,
@@ -453,40 +467,40 @@
     <div class="legend">
         <h4>Color Legend</h4>
         <div class="leg-item">
-            <div class="leg-dot" style="background:#7c3aed"></div>Super Admin
+            <div class="leg-dot leg-super-admin"></div>Super Admin
         </div>
         <div class="leg-item">
-            <div class="leg-dot" style="background:#1e40af"></div>Platform Admins
+            <div class="leg-dot leg-plat-admin"></div>Platform Admins
         </div>
         <div class="leg-item">
-            <div class="leg-dot" style="background:#4c1d95"></div>Platform Plan
+            <div class="leg-dot leg-plat-plan"></div>Platform Plan
         </div>
         <div class="leg-item">
-            <div class="leg-dot" style="background:#0369a1"></div>Seller
+            <div class="leg-dot leg-seller"></div>Seller
         </div>
         <div class="leg-item">
-            <div class="leg-dot" style="background:#0e7490"></div>Store
+            <div class="leg-dot leg-store"></div>Store
         </div>
         <div class="leg-item">
-            <div class="leg-dot" style="background:#065f46"></div>Products / Services
+            <div class="leg-dot leg-product"></div>Products / Services
         </div>
         <div class="leg-item">
-            <div class="leg-dot" style="background:#166534"></div>Customer
+            <div class="leg-dot leg-customer"></div>Customer
         </div>
         <div class="leg-item">
-            <div class="leg-dot" style="background:#b45309"></div>Wallet
+            <div class="leg-dot leg-wallet"></div>Wallet
         </div>
         <div class="leg-item">
-            <div class="leg-dot" style="background:#1e3a8a"></div>Orders
+            <div class="leg-dot leg-orders"></div>Orders
         </div>
         <div class="leg-item">
-            <div class="leg-dot" style="background:#7c2d12"></div>Subscriptions
+            <div class="leg-dot leg-sub"></div>Subscriptions
         </div>
         <div class="leg-item">
-            <div class="leg-dot" style="background:#374151"></div>Store Features
+            <div class="leg-dot leg-feat"></div>Store Features
         </div>
         <div class="leg-item">
-            <div class="leg-dot" style="background:#991b1b;border:1px dashed #fca5a5"></div>⚠ Edge Case
+            <div class="leg-dot leg-edge"></div>⚠ Edge Case
         </div>
     </div>
 

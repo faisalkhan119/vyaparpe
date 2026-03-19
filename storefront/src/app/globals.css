@@ -111,8 +111,8 @@ a {
 }
 
 .dark .glass-panel {
-  backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
   box-shadow: var(--shadow-glass);
 }
 
@@ -259,8 +259,8 @@ a {
       max-height: 100vh;
       display: flex !important;
       flex-direction: column;
-      backdrop-filter: none !important;
       -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
   }
 
   body.show-mobile-filters .mobileFilterBackdrop {
@@ -271,8 +271,8 @@ a {
       right: 0;
       bottom: 0;
       background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(4px);
       -webkit-backdrop-filter: blur(4px);
+      backdrop-filter: blur(4px);
       z-index: 99998 !important;
   }
 
@@ -390,8 +390,18 @@ a {
       padding: 1rem;
   }
   
-  /* Hide the desktop header inside the mobile drawer */
   body.show-mobile-filters .desktop-filter-header {
       display: none !important;
   }
+}
+
+/* Fullscreen Iframe Presentation Utility */
+.fullscreen-iframe {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  border: none;
+  z-index: 9999;
 }
