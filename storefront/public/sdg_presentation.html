@@ -152,13 +152,17 @@
         }
 
         .slide-inner {
-            width: min(100vw, 177.78vh);
-            height: min(100vh, 56.25vw);
-            position: relative;
+            width: 1920px !important;
+            height: 1080px !important;
+            position: absolute;
+            top: 50%; left: 50%;
+            margin-top: -540px; margin-left: -960px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            transform: scale(var(--z, 1));
+            will-change: transform;
             overflow: hidden;
             transform-style: preserve-3d
         }
@@ -2660,8 +2664,12 @@
             for (let i = 1; i <= T; i++) { const d = document.createElement('div'); d.className = 'nav-dot' + (i === 1 ? ' active' : ''); d.onclick = () => goTo(i); dots.appendChild(d); }
             // === CANVAS PARTICLE SYSTEM ===
             const cvs = document.getElementById('particleCanvas'), ctx = cvs.getContext('2d');
-            let W, H, particles = [];
-            function resize() { W = cvs.width = window.innerWidth; H = cvs.height = window.innerHeight; }
+            let W, H, particles = []; let baseScale = 1;
+            function resize() { 
+                W = window.innerWidth; H = window.innerHeight; cvs.width = W; cvs.height = H;
+                baseScale = Math.min(W / 1920, H / 1080); document.documentElement.style.setProperty('--z', baseScale);
+                const activeInner = document.querySelector('.slide.active .slide-inner'); if (activeInner) activeInner.style.transform = `scale(${baseScale})`;
+            }
             resize(); window.addEventListener('resize', resize);
             let mx = W / 2, my = H / 2, rx = W / 2, ry = H / 2;
             class P {
@@ -2700,7 +2708,7 @@
                     void nw.offsetWidth; // Force rendering reflow
 
                     nw.classList.add('active'); nw.style.animation = 'slideEnterUp 1s cubic-bezier(.16,1,.3,1) forwards';
-                    const activeInner = nw.querySelector('.slide-inner'); if (activeInner) activeInner.style.transform = '';
+                    const activeInner = nw.querySelector('.slide-inner'); if (activeInner) activeInner.style.transform = `scale(${baseScale})`;
                     setTimeout(() => { nw.style.animation = ''; lock = false; }, 1000);
                 }, 500);
                 cur = n; updUI(); trigCount(n);
@@ -2744,7 +2752,7 @@
                 if (!lock && W > 768) {
                     const xTilt = (mx / W - 0.5) * 8; const yTilt = (my / H - 0.5) * -8;
                     const activeInner = document.querySelector('.slide.active .slide-inner');
-                    if (activeInner) activeInner.style.transform = `perspective(2000px) rotateX(${yTilt}deg) rotateY(${xTilt}deg) scale3d(1.01, 1.01, 1.01)`;
+                    if (activeInner) activeInner.style.transform = `perspective(2000px) rotateX(${yTilt}deg) rotateY(${xTilt}deg) scale3d(${baseScale * 1.01}, ${baseScale * 1.01}, ${baseScale * 1.01})`;
                 }
             });
             (function lag() { rx += (mx - rx) * .1; ry += (my - ry) * .1; ring.style.transform = `translate(${rx - 20}px,${ry - 20}px)`; requestAnimationFrame(lag) })();
